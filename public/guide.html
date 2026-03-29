@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Advisor Pro — The Complete Guide | الدليل الكامل</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d3b66;
+  --navy-light: #1a5276;
+  --navy-dark: #071e38;
+  --navy-deep: #050e1a;
+  --gold: #c9a84c;
+  --gold-light: #dab95e;
+  --gold-dark: #b08f3a;
+  --gold-pale: #f5ecd4;
+  --gold-glow: rgba(201,168,76,0.25);
+  --cream: #faf8f2;
+  --cream-dark: #f0ebe0;
+  --white: #ffffff;
+  --text: #1a1f36;
+  --text-light: #5e6a82;
+  --text-faint: #8b92a5;
+  --border: #e2ddd2;
+  --success: #0f5132;
+  --success-bg: #e8f5ef;
+  --danger: #b03a2e;
+  --danger-bg: #fde8e5;
+  --info-bg: #e8eff8;
+
+  --font-display: 'Playfair Display', 'Noto Sans Arabic', serif;
+  --font-body: 'Lato', 'Noto Sans Arabic', sans-serif;
+
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 20px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 40px rgba(13,59,102,0.10);
+  --shadow-gold: 0 0 30px rgba(201,168,76,0.2);
+
+  --radius: 6px;
+  --radius-lg: 14px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* ── SCROLL PROGRESS ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  z-index: 10000;
+  transition: width 0.1s linear;
+}
+
+/* ── SIDEBAR NAVIGATION ── */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--navy-deep);
+  color: white;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 0;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
+
+.sidebar-header {
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+}
+.sidebar-header .logo-icon {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 8px;
+}
+.sidebar-header h2 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+}
+.sidebar-header .subtitle {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.nav-section {
+  padding: 20px 16px 8px;
+}
+.nav-section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold-dark);
+  font-weight: 700;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+.nav-item:hover {
+  background: rgba(201,168,76,0.08);
+  color: white;
+}
+.nav-item.active {
+  background: rgba(201,168,76,0.12);
+  color: var(--gold);
+  font-weight: 700;
+}
+.nav-item .nav-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.nav-item.active .nav-num {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border-color: var(--gold);
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-light) 100%);
+  color: white;
+  padding: 100px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  max-width: 650px;
+}
+.hero h1 .gold { color: var(--gold); }
+.hero .hero-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+  direction: rtl;
+}
+.hero p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  max-width: 560px;
+  font-weight: 300;
+}
+
+/* ── CHAPTER ── */
+.chapter {
+  padding: 80px 60px;
+  max-width: 840px;
+  border-bottom: 1px solid var(--border);
+  animation: fadeUp 0.5s ease both;
+}
+.chapter:last-child { border-bottom: none; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  color: var(--gold-dark);
+  margin-bottom: 12px;
+}
+.chapter-label .line {
+  width: 30px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.chapter h2 {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.chapter .h2-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-light);
+  direction: rtl;
+  margin-bottom: 28px;
+}
+
+.chapter h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 36px 0 14px;
+  padding-left: 16px;
+  border-left: 3px solid var(--gold);
+}
+
+.chapter p {
+  margin-bottom: 16px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.chapter p .ar {
+  display: block;
+  direction: rtl;
+  text-align: right;
+  color: var(--text-light);
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* ── LUXURY CARDS ── */
+.info-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px;
+  margin: 24px 0;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.22s ease;
+  position: relative;
+}
+.info-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.info-card.gold-border {
+  border-left: 4px solid var(--gold);
+}
+.info-card.navy-border {
+  border-left: 4px solid var(--navy);
+}
+.info-card .card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-card p {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+/* ── TIP BOXES ── */
+.tip-box {
+  display: flex;
+  gap: 14px;
+  padding: 20px 22px;
+  border-radius: var(--radius-lg);
+  margin: 24px 0;
+}
+.tip-box.gold {
+  background: var(--gold-pale);
+  border: 1px solid rgba(201,168,76,0.3);
+}
+.tip-box.green {
+  background: var(--success-bg);
+  border: 1px solid rgba(15,81,50,0.15);
+}
+.tip-box.blue {
+  background: var(--info-bg);
+  border: 1px solid rgba(13,59,102,0.12);
+}
+.tip-box.red {
+  background: var(--danger-bg);
+  border: 1px solid rgba(176,58,46,0.15);
+}
+.tip-box .tip-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.tip-box .tip-content {
+  flex: 1;
+}
+.tip-box .tip-label {
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  color: var(--navy);
+}
+.tip-box p { font-size: 14px; margin-bottom: 4px; }
+
+/* ── STEP CARDS (for app guide) ── */
+.step-guide {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin: 28px 0;
+}
+.step-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(13,59,102,0.15);
+}
+.step-body {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+}
+.step-body h4 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.step-body p { font-size: 14px; line-height: 1.7; margin-bottom: 6px; }
+
+/* ── TABLE ── */
+.tax-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.tax-table thead {
+  background: var(--navy);
+  color: var(--gold);
+}
+.tax-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.tax-table td {
+  padding: 12px 18px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.tax-table tr:last-child td { border-bottom: none; }
+.tax-table tr:hover td { background: var(--cream); }
+
+/* ── KEYBOARD SHORTCUTS / BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.badge.gold { background: var(--gold-pale); color: var(--gold-dark); }
+.badge.navy { background: var(--info-bg); color: var(--navy); }
+
+/* ── FOOTER ── */
+.guide-footer {
+  background: var(--navy-deep);
+  color: rgba(255,255,255,0.5);
+  padding: 48px 60px;
+  text-align: center;
+  font-size: 13px;
+}
+.guide-footer .gold { color: var(--gold); }
+
+/* ── MOBILE MENU ── */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 2000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--gold);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .main { margin-left: 0; }
+  .hero { padding: 80px 24px 60px; }
+  .hero h1 { font-size: 32px; }
+  .hero .hero-ar { font-size: 20px; }
+  .chapter { padding: 50px 24px; }
+  .chapter h2 { font-size: 26px; }
+  .guide-footer { padding: 36px 24px; }
+}
+
+/* ── PRINT ── */
+@media print {
+  .sidebar, .mobile-menu-btn, .scroll-progress { display: none !important; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px; }
+  .chapter { page-break-inside: avoid; padding: 30px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Mobile Menu Button -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="logo-icon">⚖️</span>
+    <h2>Tax Advisor Pro</h2>
+    <div class="subtitle">The Complete Guide</div>
+  </div>
+
+  <div style="padding:16px 16px 0;">
+    <a href="index.html" class="nav-item" style="background:var(--gold);color:var(--navy-deep);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;">
+      ← Back to App — الرجوع للتطبيق
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Part I — Taxes</div>
+    <a class="nav-item" href="#ch1" data-target="ch1" onclick="scrollToChapter(event,'ch1')"><span class="nav-num">1</span> How Taxes Work</a>
+    <a class="nav-item" href="#ch2" data-target="ch2" onclick="scrollToChapter(event,'ch2')"><span class="nav-num">2</span> Income Types</a>
+    <a class="nav-item" href="#ch3" data-target="ch3" onclick="scrollToChapter(event,'ch3')"><span class="nav-num">3</span> Filing Status</a>
+    <a class="nav-item" href="#ch4" data-target="ch4" onclick="scrollToChapter(event,'ch4')"><span class="nav-num">4</span> Deductions</a>
+    <a class="nav-item" href="#ch5" data-target="ch5" onclick="scrollToChapter(event,'ch5')"><span class="nav-num">5</span> Tax Credits</a>
+    <a class="nav-item" href="#ch6" data-target="ch6" onclick="scrollToChapter(event,'ch6')"><span class="nav-num">6</span> Filing & Deadlines</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Part II — Your App</div>
+    <a class="nav-item" href="#ch7" data-target="ch7" onclick="scrollToChapter(event,'ch7')"><span class="nav-num">7</span> Getting Started</a>
+    <a class="nav-item" href="#ch8" data-target="ch8" onclick="scrollToChapter(event,'ch8')"><span class="nav-num">8</span> The 9 Steps</a>
+    <a class="nav-item" href="#ch9" data-target="ch9" onclick="scrollToChapter(event,'ch9')"><span class="nav-num">9</span> AI Chatbot</a>
+    <a class="nav-item" href="#ch10" data-target="ch10" onclick="scrollToChapter(event,'ch10')"><span class="nav-num">10</span> Upload & Scan</a>
+    <a class="nav-item" href="#ch11" data-target="ch11" onclick="scrollToChapter(event,'ch11')"><span class="nav-num">11</span> Tips & FAQ</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-badge">✦ 2025 Tax Year — Edition</div>
+    <h1>The Complete<br><span class="gold">Tax Guide</span></h1>
+    <div class="hero-ar">الدليل الكامل للضرائب الأمريكية</div>
+    <p>Everything you need to understand U.S. taxes and master your Tax Advisor Pro app, explained clearly in English and Arabic.</p>
+  </header>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PART I: HOW TAXES WORK                     -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- CHAPTER 1 -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="line"></span> Chapter 1</div>
+    <h2>How U.S. Taxes Work</h2>
+    <div class="h2-ar">كيف تشتغل الضرائب الأمريكية</div>
+
+    <p>The United States has a <strong>progressive income tax system</strong>. This means you don't pay the same tax rate on all your income. Instead, different portions of your income are taxed at different rates, from 10% up to 37%.
+    <span class="ar">النظام الضريبي الأمريكي تصاعدي — يعني مش كل دخلك يتحسب بنفس النسبة. كل شريحة من دخلك لها نسبة مختلفة.</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🏛️ The Big Picture</div>
+      <p>Every year, you file a <strong>tax return</strong> (Form 1040) to tell the IRS how much you earned, how much you already paid in taxes, and whether you owe more or get a refund.</p>
+      <p><span class="ar">كل سنة بتعبي فورم 1040 عشان تقول للـ IRS كم كسبت، كم دفعت ضرائب، واذا لازم تدفع أكثر أو بترجعلك فلوس.</span></p>
+    </div>
+
+    <h3>2025 Tax Brackets (Single Filers)</h3>
+
+    <table class="tax-table">
+      <thead>
+        <tr><th>Income Range</th><th>Tax Rate</th><th>المبلغ</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>$0 — $11,925</td><td>10%</td><td>أول ١١,٩٢٥$</td></tr>
+        <tr><td>$11,926 — $48,475</td><td>12%</td><td>من ١١,٩٢٦ لـ ٤٨,٤٧٥$</td></tr>
+        <tr><td>$48,476 — $103,350</td><td>22%</td><td>من ٤٨,٤٧٦ لـ ١٠٣,٣٥٠$</td></tr>
+        <tr><td>$103,351 — $197,300</td><td>24%</td><td>من ١٠٣,٣٥١ لـ ١٩٧,٣٠٠$</td></tr>
+        <tr><td>$197,301 — $250,525</td><td>32%</td><td>من ١٩٧,٣٠١ لـ ٢٥٠,٥٢٥$</td></tr>
+        <tr><td>$250,526 — $626,350</td><td>35%</td><td>من ٢٥٠,٥٢٦ لـ ٦٢٦,٣٥٠$</td></tr>
+        <tr><td>$626,351+</td><td>37%</td><td>فوق ٦٢٦,٣٥١$</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box gold">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <div class="tip-label">Example</div>
+        <p>If you earn $60,000, you don't pay 22% on all of it. You pay 10% on the first $11,925, then 12% on the next chunk, then 22% on the rest. Your <strong>effective rate</strong> ends up around 14%.</p>
+        <p><span class="ar">لو دخلك ٦٠ ألف، مش كله بيتحسب ٢٢٪. كل شريحة بتتحسب لحالها. النسبة الفعلية بتطلع تقريبا ١٤٪.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 2 -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="line"></span> Chapter 2</div>
+    <h2>Income Types</h2>
+    <div class="h2-ar">أنواع الدخل</div>
+
+    <p>The IRS cares about <strong>all</strong> your income. Here are the two most common types for most people:</p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">📄 W-2 Income (Employee)</div>
+      <p>If you work for a company, you get a <strong>W-2 form</strong> every January. It shows your total wages, federal taxes withheld, Social Security, and Medicare taxes. Your employer already deducted taxes from each paycheck.</p>
+      <p><span class="ar">لو تشتغل عند شركة، بتوصلك ورقة W-2 بشهر يناير. فيها كل دخلك، والضرائب اللي انخصمت من راتبك.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">📋 1099-NEC Income (Self-Employed / Freelance)</div>
+      <p>If you do freelance work, drive for Uber, or have your own business, clients send you a <strong>1099-NEC</strong>. No taxes are deducted, so you owe both income tax AND self-employment tax (15.3% for Social Security + Medicare).</p>
+      <p><span class="ar">لو تشتغل حر (فريلانس) أو عندك بزنس، بتوصلك ورقة 1099. ما في ضرائب مخصومة — لازم تدفع ضريبة الدخل + ضريبة العمل الحر (١٥.٣٪).</span></p>
+    </div>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Important — مهم</div>
+        <p>If you have 1099 income, you may need to pay <strong>quarterly estimated taxes</strong> (every 3 months) to avoid penalties. The dates are: April 15, June 15, September 15, and January 15.</p>
+        <p><span class="ar">لو عندك دخل من 1099، لازم تدفع ضرائب تقديرية كل ٣ شهور عشان ما تتفاجأ بغرامات.</span></p>
+      </div>
+    </div>
+
+    <h3>Other Income Types</h3>
+    <p><strong>Interest income</strong> (1099-INT) from bank accounts, <strong>investment income</strong> (1099-B/1099-DIV) from stocks and dividends, <strong>rental income</strong> from property, and <strong>retirement distributions</strong> (1099-R) are all taxable and must be reported.</p>
+    <p><span class="ar">دخل الفوائد من البنك، دخل الأسهم، دخل الإيجار، وسحب التقاعد — كلهم لازم تبلّغ عنهم.</span></p>
+  </section>
+
+  <!-- CHAPTER 3 -->
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="line"></span> Chapter 3</div>
+    <h2>Filing Status</h2>
+    <div class="h2-ar">حالة التقديم</div>
+
+    <p>Your filing status affects your tax brackets, standard deduction, and which credits you qualify for. Choose the one that fits your situation on December 31 of the tax year.</p>
+
+    <table class="tax-table">
+      <thead>
+        <tr><th>Status</th><th>Standard Deduction</th><th>Who Qualifies — مين يقدر</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Single</strong></td><td>$15,000</td><td>Unmarried — أعزب/عزباء</td></tr>
+        <tr><td><strong>Married Filing Jointly</strong></td><td>$30,000</td><td>Married couple filing together — متزوجين يقدمون سوا</td></tr>
+        <tr><td><strong>Married Filing Separately</strong></td><td>$15,000</td><td>Married but filing alone — متزوج بس يقدم لحاله</td></tr>
+        <tr><td><strong>Head of Household</strong></td><td>$22,500</td><td>Unmarried + pay 50%+ of household + qualifying dependent — أعزب ومعيل</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box green">
+      <div class="tip-icon">✅</div>
+      <div class="tip-content">
+        <div class="tip-label">Pro Tip</div>
+        <p><strong>Head of Household</strong> gives you better tax brackets than Single. If you're unmarried with a dependent child, this is usually the best option.</p>
+        <p><span class="ar">حالة "معيل" أحسن من "أعزب" بالشرائح الضريبية. لو عندك أولاد ومش متزوج، هاي أفضل خيار.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 4 -->
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="line"></span> Chapter 4</div>
+    <h2>Deductions</h2>
+    <div class="h2-ar">الخصومات — تقلل دخلك الخاضع للضريبة</div>
+
+    <p>Deductions reduce your <strong>taxable income</strong>. Less taxable income means less tax. You choose between the <strong>standard deduction</strong> (a fixed amount) or <strong>itemized deductions</strong> (listing individual expenses).</p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">📊 Standard vs. Itemized</div>
+      <p><strong>Standard Deduction:</strong> A fixed dollar amount ($15,000 for single, $30,000 for married filing jointly in 2025). No receipts needed. Most people use this because it's higher than their itemized total.</p>
+      <p><strong>Itemized Deductions:</strong> You list specific expenses: mortgage interest, medical bills over 7.5% of income, state/local taxes (max $10,000), and charitable donations. Only choose this if your total exceeds the standard deduction.</p>
+      <p><span class="ar">الخصم المعياري: مبلغ ثابت بدون ما تحتاج إيصالات. الخصم المفصّل: تعدّ كل مصاريفك. اختار اللي يعطيك خصم أكبر.</span></p>
+    </div>
+
+    <h3>Business Expenses (Schedule C)</h3>
+    <p>If you have 1099 self-employment income, you can deduct business expenses <strong>before</strong> calculating your tax. Common deductions include:</p>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">💼</div>
+      <div class="tip-content">
+        <div class="tip-label">Common Business Deductions</div>
+        <p><strong>Home Office:</strong> $5 per square foot (up to 300 sq ft) = max $1,500. Or calculate actual expenses.</p>
+        <p><strong>Vehicle:</strong> 70 cents per business mile in 2025. Keep a mileage log!</p>
+        <p><strong>Supplies:</strong> Computer, software, tools, printer — anything used for your business.</p>
+        <p><strong>Phone/Internet:</strong> The business percentage of your monthly bill.</p>
+        <p><strong>Professional Services:</strong> Accountant fees, legal fees, subscriptions.</p>
+        <p><span class="ar">مكتب بالبيت، سيارة، أدوات، تلفون وإنترنت، خدمات محاسبية — كلها تنخصم من دخل الفريلانس.</span></p>
+      </div>
+    </div>
+
+    <h3>Above-the-Line Deductions</h3>
+    <p>These special deductions reduce your income even if you take the standard deduction: <strong>IRA contributions</strong> (up to $7,000), <strong>Student loan interest</strong> (up to $2,500), <strong>HSA contributions</strong> ($4,300 individual / $8,550 family), and <strong>Self-employed health insurance</strong> premiums.</p>
+    <p><span class="ar">هاي الخصومات تنخصم حتى لو اخترت الخصم المعياري — تقاعد IRA، فوائد قرض الطالب، حساب صحي HSA، وتأمين صحي للعاملين لحالهم.</span></p>
+  </section>
+
+  <!-- CHAPTER 5 -->
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="line"></span> Chapter 5</div>
+    <h2>Tax Credits</h2>
+    <div class="h2-ar">الائتمانات الضريبية — تقلل الضريبة مباشرة</div>
+
+    <p>Credits are even better than deductions. A deduction reduces your income, but a <strong>credit reduces your actual tax bill dollar-for-dollar</strong>. A $2,000 credit saves you $2,000.</p>
+    <p><span class="ar">الائتمانات أحسن من الخصومات! الائتمان ينقص من الضريبة مباشرة — يعني ائتمان ٢٠٠٠$ = ٢٠٠٠$ أقل ضرائب.</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">👶 Child Tax Credit</div>
+      <p>Up to <strong>$2,000 per child</strong> under 17. If your income is under $200,000 (single) or $400,000 (married), you likely qualify. Up to $1,700 is refundable, meaning you can get it even if you owe $0 in taxes.</p>
+      <p><span class="ar">لحد ٢٠٠٠$ لكل طفل تحت ١٧ سنة. لحد ١٧٠٠$ ممكن ترجعلك حتى لو ما عليك ضرائب.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">💰 Earned Income Tax Credit (EITC)</div>
+      <p>For low-to-moderate income workers. Worth up to <strong>$7,830</strong> with 3+ children. Fully refundable. Income limits depend on filing status and number of children.</p>
+      <p><span class="ar">للعمال بدخل منخفض أو متوسط. ممكن توصل لـ ٧,٨٣٠$ — كلها ترجعلك كاش!</span></p>
+    </div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🎓 Education Credits</div>
+      <p><strong>American Opportunity Credit:</strong> Up to $2,500/year for the first 4 years of college. <strong>Lifetime Learning Credit:</strong> Up to $2,000/year for any post-secondary education.</p>
+      <p><span class="ar">ائتمان الجامعة لحد ٢,٥٠٠$ لأول ٤ سنين. ائتمان التعلم المستمر لحد ٢,٠٠٠$ لأي تعليم بعد الثانوية.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">🔋 Energy Credits</div>
+      <p>Bought a new electric vehicle? You may get up to <strong>$7,500</strong>. Installed solar panels? Up to <strong>30%</strong> of the cost. Made energy-efficient home improvements? Up to <strong>$3,200</strong>.</p>
+      <p><span class="ar">سيارة كهربائية لحد ٧,٥٠٠$. ألواح شمسية ٣٠٪ من التكلفة. تحسينات طاقة بالبيت لحد ٣,٢٠٠$.</span></p>
+    </div>
+  </section>
+
+  <!-- CHAPTER 6 -->
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="line"></span> Chapter 6</div>
+    <h2>Filing & Deadlines</h2>
+    <div class="h2-ar">مواعيد التقديم والدفع</div>
+
+    <div class="tip-box red">
+      <div class="tip-icon">📅</div>
+      <div class="tip-content">
+        <div class="tip-label">Key Date</div>
+        <p>The deadline to file your 2025 tax return is <strong>April 15, 2026</strong>. If you can't make it, file for an automatic 6-month extension (Form 4868) — but you must still <strong>pay</strong> what you owe by April 15.</p>
+        <p><span class="ar">آخر موعد لتقديم إقرار ٢٠٢٥ هو ١٥ أبريل ٢٠٢٦. ممكن تمدد ٦ شهور بس لازم تدفع بالموعد.</span></p>
+      </div>
+    </div>
+
+    <h3>What Happens if You Owe?</h3>
+    <p>If your tax return shows you owe money, you can pay online at <strong>IRS.gov/payments</strong>. The IRS also offers <strong>installment plans</strong> if you can't pay all at once. Penalties for late filing (5% per month) are steeper than late payment (0.5% per month), so always file on time even if you can't pay.</p>
+    <p><span class="ar">لو طلع عليك مبلغ، ادفع أونلاين. الـ IRS يقبل أقساط. غرامة التأخر بالتقديم أكبر من التأخر بالدفع — قدّم بالوقت دايماً!</span></p>
+
+    <h3>What Happens if You Get a Refund?</h3>
+    <p>If you overpaid taxes during the year, the IRS sends you a refund. Most refunds arrive within <strong>21 days</strong> if you file electronically and choose direct deposit. You can check your status at <strong>IRS.gov/refunds</strong>.</p>
+    <p><span class="ar">لو دفعت ضرائب زيادة، الـ IRS يرجعلك الفرق. أغلب المرتجعات توصل خلال ٢١ يوم لو قدمت إلكتروني.</span></p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PART II: YOUR APP                          -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- CHAPTER 7 -->
+  <section class="chapter" id="ch7">
+    <div class="chapter-label"><span class="line"></span> Chapter 7</div>
+    <h2>Getting Started</h2>
+    <div class="h2-ar">كيف تبدأ مع التطبيق</div>
+
+    <p>Tax Advisor Pro runs on your own computer. No data goes to any third party except the AI provider (Anthropic/Claude) for answering your questions. Your tax data stays in a local database on your machine.</p>
+    <p><span class="ar">التطبيق يشتغل على جهازك. ما في بيانات تروح لأي جهة غير الـ AI. بياناتك الضريبية تنحفظ على جهازك بس.</span></p>
+
+    <div class="step-guide">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Double-click start.bat</h4>
+        <p>Open the <code>tax-advisor-pro</code> folder and double-click <strong>start.bat</strong>. A black command window opens. Wait for the message: <em>"Ready! Open http://localhost:3000 in your browser."</em></p>
+        <p><span class="ar">افتح مجلد tax-advisor-pro ودبل كلك على start.bat. استنى لما يقولك "Ready".</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Open Chrome</h4>
+        <p>Go to <strong>http://localhost:3000</strong> in Google Chrome. The app loads with all 9 steps visible in the top progress bar.</p>
+        <p><span class="ar">افتح كروم وروح على localhost:3000. التطبيق يفتح ومعاه ٩ خطوات بشريط التقدم.</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Keep the black window open</h4>
+        <p>The command window is your server. Closing it stops the app. Minimize it if you want, but don't close it while working.</p>
+        <p><span class="ar">النافذة السوداء هي السيرفر. لا تسكرها! صغّرها بس خليها مفتوحة.</span></p>
+      </div>
+    </div>
+
+    <div class="tip-box gold">
+      <div class="tip-icon">🔑</div>
+      <div class="tip-content">
+        <div class="tip-label">API Key</div>
+        <p>The AI chatbot needs a Claude API key. It's stored in the <code>.env</code> file inside the <code>tax-advisor-pro</code> folder. If the chatbot says "API key invalid", open <code>.env</code> with Notepad and update the key.</p>
+        <p><span class="ar">الشات بوت يحتاج مفتاح API. المفتاح محفوظ بملف .env. لو الشات قال "مفتاح غلط"، عدّل الملف بالنوتباد.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 8 -->
+  <section class="chapter" id="ch8">
+    <div class="chapter-label"><span class="line"></span> Chapter 8</div>
+    <h2>The 9 Steps</h2>
+    <div class="h2-ar">الخطوات التسعة لتعبئة إقرارك</div>
+
+    <p>The app guides you through 9 steps, from uploading documents to reviewing your final return. You can go back to any completed step to make changes.</p>
+
+    <div class="step-guide">
+      <div class="step-num">0</div>
+      <div class="step-body">
+        <h4>Welcome <span class="badge gold">أهلاً</span></h4>
+        <p>Introduction and overview. Just click "Get Started" to begin.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Upload Documents <span class="badge gold">رفع الأوراق</span></h4>
+        <p>Drag and drop your W-2s, 1099s, or any tax documents. The AI can scan them and auto-fill your forms. Supports PDF and images (photos of paper documents).</p>
+        <p><span class="ar">ارفع أوراقك — W-2، 1099، أي مستند ضريبي. الذكاء الاصطناعي يقرأهم ويعبي الفورمات تلقائي!</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Personal Information <span class="badge navy">معلومات شخصية</span></h4>
+        <p>Enter your full name, Social Security Number, date of birth, and address. This information goes on the top of your Form 1040.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Filing Status <span class="badge navy">حالة التقديم</span></h4>
+        <p>Choose: Single, Married Filing Jointly, Married Filing Separately, or Head of Household. If you have dependents (children), add them here too.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>W-2 Income <span class="badge gold">دخل الوظيفة</span></h4>
+        <p>Enter each W-2 form: employer name, total wages (Box 1), federal tax withheld (Box 2), Social Security wages (Box 3), Medicare wages (Box 5), and state tax (Box 17). Click "Add W-2" for multiple employers.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>1099 Income <span class="badge gold">دخل الفريلانس</span></h4>
+        <p>Enter 1099-NEC forms: payer/client name, amount received, and EIN. Below that, enter your business expenses (home office, vehicle, supplies, etc.).</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h4>Deductions <span class="badge navy">الخصومات</span></h4>
+        <p>Choose standard or itemized deduction. If itemized, enter medical expenses, state/local taxes (SALT), mortgage interest, and charitable donations. Also enter above-the-line deductions (IRA, student loans, HSA).</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <h4>Tax Credits <span class="badge gold">الائتمانات</span></h4>
+        <p>Select any credits that apply to you: Child Tax Credit, EITC, Education, Child Care, Saver's Credit, or Energy credits. The app checks eligibility based on your data.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <h4>Review & Results <span class="badge navy">المراجعة</span></h4>
+        <p>See your complete tax calculation: total income, deductions, taxable income, tax owed, credits applied, and whether you get a <strong>refund</strong> or <strong>owe</strong>. Download your return as a PDF.</p>
+        <p><span class="ar">شوف النتيجة النهائية — كم دخلك، كم الخصومات، كم الضريبة، واذا بترجعلك فلوس أو عليك مبلغ. حمّل كـ PDF.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 9 -->
+  <section class="chapter" id="ch9">
+    <div class="chapter-label"><span class="line"></span> Chapter 9</div>
+    <h2>The AI Chatbot</h2>
+    <div class="h2-ar">المستشار الذكي — شات بوت الضرائب</div>
+
+    <p>The chatbot (💬 button at the bottom-right) is your personal tax advisor. It speaks English and Arabic, knows U.S. tax law, and — most importantly — <strong>it sees everything on your screen</strong>.</p>
+    <p><span class="ar">الشات بوت (زر 💬 تحت يمين) هو مستشارك الضريبي. يحكي إنجليزي وعربي، ويعرف قانون الضرائب — والأهم: يشوف كل بياناتك على الموقع!</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🧠 Context-Aware</div>
+      <p>The AI has live access to all your form data: personal info, income, deductions, credits, uploaded documents, and even extracted text from scanned files. Ask it anything about YOUR specific situation.</p>
+      <p><span class="ar">الذكاء الاصطناعي يشوف كل بياناتك لحظة بلحظة — معلوماتك الشخصية، دخلك، خصوماتك، المستندات المرفوعة. اسأله أي شي عن وضعك!</span></p>
+    </div>
+
+    <h3>Two Modes</h3>
+
+    <div class="info-card navy-border">
+      <div class="card-title">🎙️ Tax Interview Mode</div>
+      <p>Click <strong>"Start Tax Interview"</strong> and the AI conducts a face-to-face meeting — asking about your income, deductions, dependents, and credits one question at a time. At the end, click <strong>"Fill All My Forms"</strong> and it auto-fills everything.</p>
+      <p><span class="ar">اضغط "ابدأ المقابلة" والـ AI يسألك سؤال سؤال زي المحاسب الحقيقي. بالنهاية يعبي كل الفورمات تلقائي!</span></p>
+    </div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">💬 Free Chat Mode</div>
+      <p>Just type any question: <em>"What deductions can I take?"</em>, <em>"Am I eligible for EITC?"</em>, <em>"How much is my refund?"</em>, <em>"ممكن تشرحلي W-2?"</em> — the AI gives personalized answers based on your actual data.</p>
+    </div>
+
+    <h3>Uploading Files in Chat</h3>
+    <p>Click the 📎 button next to the text input to attach images or documents directly in the chat. You can send photos of W-2s, 1099s, receipts, or any tax document. The AI can read and discuss them with you.</p>
+    <p><span class="ar">اضغط 📎 عشان ترفق صور أو مستندات بالشات مباشرة. ارسل صور W-2 أو إيصالات والـ AI يقرأهم ويناقشهم معك.</span></p>
+
+    <h3>Chat History</h3>
+    <p>All messages are automatically saved. When you reopen the chat, your previous conversation loads back. Use the <strong>🗑 Clear</strong> button to start fresh if needed.</p>
+    <p><span class="ar">كل الرسائل تنحفظ تلقائي. لما تفتح الشات مرة ثانية، المحادثة السابقة تطلع. اضغط "مسح" لو تبي تبدأ من جديد.</span></p>
+  </section>
+
+  <!-- CHAPTER 10 -->
+  <section class="chapter" id="ch10">
+    <div class="chapter-label"><span class="line"></span> Chapter 10</div>
+    <h2>Upload & Auto-Scan</h2>
+    <div class="h2-ar">رفع المستندات والمسح التلقائي</div>
+
+    <p>The upload feature (Step 1) is one of the most powerful parts of the app. Here's how to use it:</p>
+
+    <div class="step-guide">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Upload your documents</h4>
+        <p>Drag files into the upload zone or click to browse. Supports: PDF files, photos (JPG/PNG), and images of paper documents.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Click "Scan & Auto-Fill"</h4>
+        <p>The AI reads each document: extracts text from PDFs, reads numbers from photos using vision AI. It identifies W-2 fields, 1099 amounts, and other data.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Review the auto-filled forms</h4>
+        <p>Go through each step and verify the numbers the AI entered. Always double-check — AI is accurate but not perfect.</p>
+        <p><span class="ar">راجع الأرقام اللي الـ AI عبّاها. دايماً تأكد — الذكاء الاصطناعي دقيق بس مش كامل.</span></p>
+      </div>
+    </div>
+
+    <div class="tip-box gold">
+      <div class="tip-icon">📸</div>
+      <div class="tip-content">
+        <div class="tip-label">Photo Tips</div>
+        <p>For best results: use good lighting, take the photo straight-on (not angled), and make sure all numbers are legible. The AI handles both printed and some handwritten documents.</p>
+        <p><span class="ar">للنتائج الأفضل: إضاءة جيدة، صوّر مباشرة (مش من زاوية)، تأكد الأرقام واضحة.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 11 -->
+  <section class="chapter" id="ch11">
+    <div class="chapter-label"><span class="line"></span> Chapter 11</div>
+    <h2>Tips & FAQ</h2>
+    <div class="h2-ar">نصائح وأسئلة شائعة</div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">❓ The chatbot says "Connection error"</div>
+      <p>Make sure the black command window (start.bat) is still open and running. If it closed, double-click start.bat again. Then refresh Chrome (F5).</p>
+      <p><span class="ar">تأكد النافذة السوداء لسا مفتوحة. لو انسكرت، شغّل start.bat مرة ثانية وحدّث الصفحة.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">❓ Can I save my work and come back later?</div>
+      <p>Yes! Your data is saved automatically to a local database. When you reopen localhost:3000, your session and chat history will be there.</p>
+      <p><span class="ar">أيوا! بياناتك تنحفظ تلقائي. لما ترجع وتفتح localhost:3000 كل شي بيكون موجود.</span></p>
+    </div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">❓ Is my data secure?</div>
+      <p>Your tax data stays on your computer in a local database file. The only external connection is to Claude AI (Anthropic) for chatbot answers. No data is stored on any cloud server.</p>
+      <p><span class="ar">بياناتك على جهازك بس. الاتصال الوحيد الخارجي هو مع Claude AI للإجابات. ما في بيانات تنحفظ على أي سيرفر.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">❓ Can I use this to actually file my taxes?</div>
+      <p>This app helps you <strong>prepare</strong> your return and understand your tax situation. To officially file with the IRS, you'll need to submit through an IRS-approved e-file provider or print and mail your forms.</p>
+      <p><span class="ar">التطبيق يساعدك تجهّز إقرارك وتفهم وضعك الضريبي. للتقديم الرسمي، لازم تستخدم موقع معتمد من الـ IRS أو تطبع وترسل بالبريد.</span></p>
+    </div>
+
+    <div class="tip-box green">
+      <div class="tip-icon">🚀</div>
+      <div class="tip-content">
+        <div class="tip-label">Quick Shortcut — اختصار سريع</div>
+        <p>Use <strong>push.bat</strong> to quickly save your project to Git. Just double-click it and it does <code>git add . → commit → push</code> automatically!</p>
+        <p><span class="ar">استخدم push.bat عشان تحفظ مشروعك على Git بسرعة. دبل كلك وهو يسوي كل شي تلقائي!</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="guide-footer">
+    <div style="font-size:28px;margin-bottom:12px;">⚖️</div>
+    <p style="font-family:var(--font-display);font-size:18px;color:var(--gold);margin-bottom:8px;">Tax Advisor Pro</p>
+    <p>The Complete Guide — الدليل الكامل</p>
+    <p style="margin-top:16px;">2025 Tax Year (Filing 2026) &middot; Built with ♥ for <span class="gold">Mina</span></p>
+  </footer>
+
+</div>
+
+<script>
+// ── SCROLL TO CHAPTER (main navigation handler) ──
+function scrollToChapter(event, targetId) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  // Scroll the target into view
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Update active state immediately
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const clickedNav = document.querySelector('.nav-item[data-target="' + targetId + '"]');
+  if (clickedNav) clickedNav.classList.add('active');
+
+  // Update URL hash safely (skip if inside iframe)
+  try {
+    if (window.top === window.self) {
+      history.replaceState(null, '', '#' + targetId);
+    }
+  } catch(e) { /* ignore in iframe */ }
+
+  // Close mobile sidebar if open
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+}
+
+// ── Scroll progress bar ──
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+  if (height > 0) {
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  }
+});
+
+// ── Active nav highlight on scroll ──
+const chapters = document.querySelectorAll('.chapter');
+const navItems = document.querySelectorAll('.nav-item');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(item => item.classList.remove('active'));
+      const id = entry.target.id;
+      const activeNav = document.querySelector('.nav-item[data-target="' + id + '"]');
+      if (activeNav) activeNav.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+chapters.forEach(ch => observer.observe(ch));
+
+// ── Mobile sidebar toggle ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// ── Handle hash on page load ──
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    setTimeout(() => {
+      const target = document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  }
+});
+
+// ── Fade-in on scroll ──
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+chapters.forEach(ch => {
+  ch.style.animationPlayState = 'paused';
+  fadeObserver.observe(ch);
+});
+</script>
+</body>
+</html>
