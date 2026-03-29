@@ -4,37 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tax Advisor Pro — مستشار الضرائب</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Noto+Sans+Arabic:wght@600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Noto+Sans+Arabic:wght@600;700;800&display=swap" rel="stylesheet"></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
 <style>
 :root {
-  --primary: #355ebe;
-  --primary-light: #4a73d4;
-  --primary-dark: #2a4b99;
-  --accent: #d52b1d;
-  --accent-light: #e84437;
-  --bg: #f5f6fa;
+  --primary: #0d3b66;
+  --primary-light: #1a5276;
+  --primary-dark: #092847;
+  --accent: #c9a84c;
+  --accent-light: #dab95e;
+  --accent-dark: #b08f3a;
+  --danger: #b03a2e;
+  --danger-light: #e74c3c;
+  --bg: #f4f5f7;
   --surface: #ffffff;
-  --border: #e0e4ef;
-  --text: #1a1a2e;
-  --text-muted: #6b7280;
-  --success: #007a5e;
-  --success-light: #e6f7f2;
-  --warning: #f59e0b;
-  --warning-light: #fef3c7;
-  --info: #355ebe;
-  --info-light: #e8edf8;
+  --surface-alt: #fafbfc;
+  --border: #dce1e8;
+  --border-light: #e8ecf1;
+  --text: #1a1f36;
+  --text-muted: #5e6a82;
+  --success: #0f5132;
+  --success-light: #e8f5ef;
+  --warning: #d4a017;
+  --warning-light: #fef9e7;
+  --info: #0d3b66;
+  --info-light: #e8eff8;
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
-  --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
-  --font-heading: 'Nunito', 'Noto Sans Arabic', sans-serif;
-  --font-body: 'Nunito', 'Noto Sans Arabic', sans-serif;
+  --shadow-xs: 0 1px 2px rgba(13,59,102,0.04);
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 16px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 32px rgba(13,59,102,0.10);
+  --shadow-glow: 0 0 20px rgba(201,168,76,0.25);
+  --font-heading: 'Plus Jakarta Sans', 'Noto Sans Arabic', sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Noto Sans Arabic', sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,16 +49,17 @@ body {
   font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.6;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ── TOPNAV ── */
 .topnav {
-  background: var(--surface);
-  border-bottom: 3px solid var(--primary);
-  height: 62px;
+  background: var(--primary-dark);
+  border-bottom: 3px solid var(--accent);
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -60,16 +67,17 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 12px rgba(9,40,71,0.18);
 }
 .topnav .logo {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 20px;
-  color: var(--primary);
+  font-size: 19px;
+  color: #ffffff;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  letter-spacing: -0.3px;
 }
 .topnav .logo .icon { font-size: 24px; }
 .topnav .nav-right {
@@ -78,12 +86,14 @@ body {
   gap: 16px;
 }
 .topnav .tax-year {
-  background: var(--info-light);
-  color: var(--primary);
-  padding: 4px 14px;
+  background: rgba(201,168,76,0.15);
+  color: var(--accent);
+  padding: 5px 16px;
   border-radius: var(--radius-full);
   font-weight: 700;
   font-size: 13px;
+  border: 1px solid rgba(201,168,76,0.3);
+  letter-spacing: 0.3px;
 }
 
 /* ── MAIN LAYOUT ── */
@@ -130,9 +140,9 @@ body {
   border: 3px solid var(--bg);
 }
 .progress-steps .step-dot.active {
-  background: var(--primary);
-  color: white;
-  box-shadow: 0 0 0 4px rgba(53,94,190,0.2);
+  background: var(--accent);
+  color: var(--primary-dark);
+  box-shadow: 0 0 0 4px rgba(201,168,76,0.25);
 }
 .progress-steps .step-dot.completed {
   background: var(--success);
@@ -150,7 +160,8 @@ body {
   width: 80px;
 }
 .progress-labels span.active {
-  color: var(--primary);
+  color: var(--accent-dark);
+  font-weight: 800;
 }
 
 /* ── CARD ── */
@@ -158,8 +169,9 @@ body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 32px;
+  padding: 36px;
   box-shadow: var(--shadow-sm);
+  border-top: 3px solid var(--primary);
 }
 
 @keyframes fadeUp {
@@ -170,24 +182,27 @@ body {
 /* ── SECTION HEADER ── */
 .section-header {
   margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
 }
 .section-header h2 {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 26px;
-  color: var(--text);
-  margin-bottom: 8px;
+  font-size: 24px;
+  color: var(--primary);
+  margin-bottom: 6px;
+  letter-spacing: -0.4px;
 }
 .section-header .subtitle {
   color: var(--text-muted);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 /* ── ADVISOR TIP ── */
 .advisor-tip {
   background: var(--info-light);
-  border-left: 4px solid var(--primary);
+  border-left: 4px solid var(--accent);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
   padding: 16px 20px;
   margin-bottom: 24px;
@@ -206,13 +221,13 @@ body {
 .advisor-tip .tip-icon { font-size: 22px; flex-shrink: 0; }
 .advisor-tip .tip-text {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 .advisor-tip .tip-text .ar {
-  color: var(--primary-dark);
-  font-weight: 700;
+  color: var(--accent-dark);
+  font-weight: 600;
 }
 
 /* ── FORM ELEMENTS ── */
@@ -249,8 +264,8 @@ body {
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(53,94,190,0.12);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
 }
 .form-group input::placeholder { color: #b0b5c3; font-weight: 500; }
 .form-row {
@@ -275,12 +290,13 @@ body {
   background: var(--surface);
 }
 .option-card:hover {
-  border-color: var(--primary-light);
+  border-color: var(--accent);
+  background: var(--surface-alt);
 }
 .option-card.selected {
-  border-color: var(--primary);
-  background: var(--info-light);
-  box-shadow: 0 0 0 3px rgba(53,94,190,0.12);
+  border-color: var(--accent);
+  background: var(--warning-light);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
 }
 .option-card .opt-title {
   font-weight: 800;
@@ -305,16 +321,17 @@ body {
 }
 .btn {
   padding: 12px 32px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-md);
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
   border: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  letter-spacing: 0.2px;
 }
 .btn-primary {
   background: var(--primary);
@@ -323,6 +340,8 @@ body {
 }
 .btn-primary:hover {
   background: var(--primary-light);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 .btn-outline {
   background: transparent;
@@ -331,6 +350,17 @@ body {
 }
 .btn-outline:hover {
   background: var(--info-light);
+}
+.btn-accent {
+  background: var(--accent);
+  color: var(--primary-dark);
+  font-weight: 800;
+  box-shadow: var(--shadow-sm);
+}
+.btn-accent:hover {
+  background: var(--accent-light);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
 }
 .btn-ghost {
   background: transparent;
@@ -342,11 +372,11 @@ body {
   background: var(--bg);
 }
 .btn-danger {
-  background: var(--accent);
+  background: var(--danger);
   color: white;
 }
 .btn-danger:hover {
-  background: var(--accent-light);
+  background: var(--danger-light);
 }
 
 /* ── INCOME ENTRY TABLE ── */
@@ -370,13 +400,13 @@ body {
   margin-left: auto;
   background: none;
   border: none;
-  color: var(--accent);
+  color: var(--danger);
   cursor: pointer;
   font-size: 18px;
   font-weight: 800;
   transition: color 0.15s ease;
 }
-.remove-btn:hover { color: var(--accent-light); }
+.remove-btn:hover { color: var(--danger-light); }
 
 /* ── SUMMARY TABLE ── */
 .summary-table {
@@ -386,14 +416,14 @@ body {
   margin-bottom: 20px;
 }
 .summary-table thead th {
-  background: var(--info-light);
-  color: var(--primary);
+  background: var(--primary-dark);
+  color: var(--accent);
   text-transform: uppercase;
   font-size: 11px;
   font-weight: 800;
   padding: 12px 16px;
   text-align: left;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 }
 .summary-table thead th:first-child { border-radius: var(--radius-md) 0 0 0; }
 .summary-table thead th:last-child { border-radius: 0 var(--radius-md) 0 0; text-align: right; }
@@ -419,7 +449,7 @@ body {
   border-bottom: none;
 }
 .summary-table .refund-row td.positive { color: var(--success); }
-.summary-table .refund-row td.negative { color: var(--accent); }
+.summary-table .refund-row td.negative { color: var(--danger); }
 
 /* ── CHECKLIST ── */
 .checklist-item {
@@ -466,15 +496,16 @@ body {
 .welcome-hero h1 {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 36px;
-  color: var(--text);
+  font-size: 34px;
+  color: var(--primary);
   margin-bottom: 4px;
+  letter-spacing: -0.5px;
 }
 .welcome-hero .ar-title {
   font-family: 'Noto Sans Arabic', var(--font-heading);
   font-weight: 800;
-  font-size: 28px;
-  color: var(--primary);
+  font-size: 26px;
+  color: var(--accent-dark);
   margin-bottom: 16px;
 }
 .welcome-hero p {
@@ -525,8 +556,8 @@ body {
   gap: 10px;
 }
 .deduction-item:hover {
-  border-color: var(--primary-light);
-  background: var(--info-light);
+  border-color: var(--accent);
+  background: var(--warning-light);
 }
 .deduction-item.selected {
   border-color: var(--success);
@@ -539,17 +570,18 @@ body {
 /* ── RESULT CARD ── */
 .result-highlight {
   text-align: center;
-  padding: 32px;
-  background: linear-gradient(135deg, var(--info-light), var(--success-light));
+  padding: 36px;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
   border-radius: var(--radius-lg);
   margin-bottom: 24px;
+  border: 1px solid rgba(201,168,76,0.2);
 }
 .result-highlight .result-label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  color: var(--text-muted);
+  color: rgba(255,255,255,0.7);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   margin-bottom: 8px;
 }
 .result-highlight .result-amount {
@@ -557,8 +589,8 @@ body {
   font-weight: 800;
   font-family: var(--font-heading);
 }
-.result-highlight .result-amount.refund { color: var(--success); }
-.result-highlight .result-amount.owe { color: var(--accent); }
+.result-highlight .result-amount.refund { color: #4ade80; }
+.result-highlight .result-amount.owe { color: #fca5a5; }
 
 /* ── STEP HIDDEN ── */
 .step-content { display: none; contain: content; }
@@ -576,8 +608,8 @@ body {
   position: relative;
 }
 .upload-zone:hover, .upload-zone.dragover {
-  border-color: var(--primary);
-  background: var(--info-light);
+  border-color: var(--accent);
+  background: var(--warning-light);
 }
 .upload-zone .upload-icon { font-size: 52px; margin-bottom: 16px; }
 .upload-zone h3 { font-weight: 800; font-size: 18px; margin-bottom: 6px; }
@@ -624,19 +656,19 @@ body {
   background: var(--success-light); color: var(--success);
 }
 .uploaded-file .file-status.error {
-  background: #fde8e8; color: var(--accent);
+  background: #fde8e8; color: var(--danger);
 }
 .uploaded-file .file-remove {
   background: none; border: none; color: var(--text-muted);
   cursor: pointer; font-size: 18px; padding: 4px;
   transition: color 0.15s ease;
 }
-.uploaded-file .file-remove:hover { color: var(--accent); }
+.uploaded-file .file-remove:hover { color: var(--danger); }
 
 /* ── PROCESSING OVERLAY ── */
 .process-overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(26,26,46,0.75);
+  background: rgba(9,40,71,0.8);
   z-index: 10000; align-items: center; justify-content: center;
 }
 .process-overlay.visible { display: flex; }
@@ -647,7 +679,7 @@ body {
 }
 .process-box .spinner {
   width: 56px; height: 56px; border: 4px solid var(--border);
-  border-top-color: var(--primary); border-radius: 50%;
+  border-top-color: var(--accent); border-radius: 50%;
   animation: spin 0.8s linear infinite; margin: 0 auto 20px;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -662,7 +694,7 @@ body {
 .process-box .process-log .log-line { display: flex; align-items: center; gap: 6px; }
 .process-box .process-log .log-ok { color: var(--success); }
 .process-box .process-log .log-work { color: var(--warning); }
-.process-box .process-log .log-err { color: var(--accent); }
+.process-box .process-log .log-err { color: var(--danger); }
 
 /* Progress bar */
 .progress-container {
@@ -674,11 +706,11 @@ body {
 }
 .progress-bar-fill {
   height: 100%; width: 0%; border-radius: 20px;
-  background: linear-gradient(90deg, var(--primary), #56b3e6);
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent));
   transition: width 0.4s ease;
 }
 .progress-pct {
-  font-size: 14px; font-weight: 800; color: var(--primary);
+  font-size: 14px; font-weight: 800; color: var(--accent-dark);
   margin-top: 6px; text-align: center;
 }
 .doc-progress-list {
@@ -701,7 +733,7 @@ body {
 .doc-status.pending { color: var(--text-muted); }
 .doc-status.working { color: var(--warning); }
 .doc-status.done { color: var(--success); }
-.doc-status.error { color: var(--accent); }
+.doc-status.error { color: var(--danger); }
 
 /* ── AUTO-FILL BADGE ── */
 .autofilled {
@@ -775,8 +807,9 @@ body {
 <!-- TOPNAV -->
 <nav class="topnav">
   <div class="logo">
-    <span class="icon">🏛️</span>
-    Tax Advisor Pro — مستشار الضرائب
+    <span class="icon" style="color:#c9a84c">🏛️</span>
+    <span>Tax Advisor Pro</span>
+    <span style="font-weight:500;font-size:14px;opacity:0.7;margin-left:4px">— مستشار الضرائب</span>
   </div>
   <div class="nav-right">
     <span class="tax-year">Tax Year 2025</span>
@@ -1458,15 +1491,25 @@ body {
 </div><!-- /app-container -->
 
 <script>
-// ── API KEY IS NOW ON THE SERVER — SECURE! ──
-const API_BASE = window.location.origin;
+// ── API CONNECTION ──
+// The app must run from the local server so the browser never needs an API key.
+const IS_SERVER = window.location.protocol === 'http:' || window.location.protocol === 'https:';
+const API_BASE = IS_SERVER ? window.location.origin : null;
+const LOCAL_START_URL = 'http://localhost:3000';
+
+function createServerModeError() {
+  return new Error('This app must run from the local server. Run start.bat, then open ' + LOCAL_START_URL + ' in Chrome.');
+}
 
 // Session management
 let sessionId = localStorage.getItem('taxSessionId');
 if (!sessionId) { sessionId = crypto.randomUUID(); localStorage.setItem('taxSessionId', sessionId); }
 
-// Server-side Claude call (no API key in browser!)
+// Claude API call — always uses the local server proxy
 async function callServerClaude(messages, maxTokens = 4096) {
+  if (!API_BASE) {
+    throw createServerModeError();
+  }
   const response = await fetchWithRetry(API_BASE + '/api/claude', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -1474,13 +1517,14 @@ async function callServerClaude(messages, maxTokens = 4096) {
   });
   if (!response.ok) {
     const err = await response.json().catch(() => ({}));
-    throw new Error(err.error || 'Server error ' + response.status);
+    throw new Error(err.error?.message || err.error || 'API error ' + response.status);
   }
   return response.json();
 }
 
-// Save all form data to server
+// Save all form data to server (only if server is running)
 async function saveProgress() {
+  if (!API_BASE) return;
   try {
     const taxData = collectAllFormData();
     await fetch(API_BASE + '/api/tax-data', {
@@ -1493,6 +1537,7 @@ async function saveProgress() {
 
 // Load saved progress from server
 async function loadProgress() {
+  if (!API_BASE) return false;
   try {
     const resp = await fetch(API_BASE + '/api/tax-data/' + sessionId);
     if (resp.ok) {
@@ -1505,6 +1550,7 @@ async function loadProgress() {
 
 // Download PDF tax return
 async function downloadPDF() {
+  if (!API_BASE) { alert('PDF download requires the server. Run start.bat first!\nالـ PDF يحتاج السيرفر. شغّل start.bat أول!'); return; }
   try {
     const taxData = collectAllFormData();
     const resp = await fetch(API_BASE + '/api/generate-pdf', {
@@ -2523,6 +2569,15 @@ function setVal(id, val) {
 
 // ── INIT ──
 renderProgress();
+
+// Show warning if opened as file (not through server)
+if (!IS_SERVER) {
+  const banner = document.createElement('div');
+  banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#f59e0b;color:#1a1a2e;text-align:center;padding:10px 16px;font-size:13px;font-weight:700;font-family:var(--font-body);';
+  banner.innerHTML = '⚠️ Running from file:// — AI, upload, save, and PDF need the local server. Run <strong>start.bat</strong>, then open <strong>' + LOCAL_START_URL + '</strong>. <button onclick="this.parentElement.remove()" style="margin-left:12px;background:none;border:1px solid #1a1a2e;border-radius:12px;padding:2px 10px;cursor:pointer;font-weight:700;">✕</button>';
+  document.body.prepend(banner);
+}
+
 // Auto-load saved progress from server
 loadProgress().then(restored => {
   if (restored) console.log('Session restored from server');
@@ -2544,19 +2599,21 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
   height: 62px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
-  border: none;
+  color: var(--accent);
+  border: 2px solid rgba(201,168,76,0.3);
   cursor: pointer;
-  box-shadow: 0 6px 24px rgba(53,94,190,0.4);
+  box-shadow: 0 6px 24px rgba(9,40,71,0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 28px;
   z-index: 9999;
-  transition: background 0.15s ease;
+  transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
 }
 .chat-toggle:hover {
   background: var(--primary-light);
+  box-shadow: 0 8px 32px rgba(9,40,71,0.4);
+  transform: translateY(-2px);
 }
 .chat-toggle .badge {
   position: absolute;
@@ -2565,6 +2622,7 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
   width: 20px;
   height: 20px;
   background: var(--accent);
+  color: var(--primary-dark);
   border-radius: 50%;
   font-size: 11px;
   font-weight: 800;
@@ -2583,11 +2641,12 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
   max-height: 600px;
   background: var(--surface);
   border-radius: var(--radius-xl);
-  box-shadow: 0 12px 48px rgba(0,0,0,0.18), 0 0 0 1px var(--border);
+  box-shadow: 0 12px 48px rgba(9,40,71,0.2), 0 0 0 1px var(--border);
   z-index: 9998;
   display: none;
   flex-direction: column;
   overflow: hidden;
+  border-top: 3px solid var(--accent);
 }
 .chat-panel.open {
   display: flex;
@@ -2595,19 +2654,21 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
 
 /* ── CHAT HEADER ── */
 .chat-header {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: var(--primary-dark);
   color: white;
   padding: 18px 20px;
   display: flex;
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
 }
 .chat-avatar {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.2);
+  background: rgba(201,168,76,0.2);
+  border: 1px solid rgba(201,168,76,0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2674,13 +2735,13 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
   box-shadow: var(--shadow-xs);
 }
 .chat-msg.user {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
   border-bottom-right-radius: 4px;
   align-self: flex-end;
 }
 .chat-msg .ar-text {
-  color: var(--primary-dark);
+  color: var(--accent-dark);
   font-weight: 700;
 }
 .chat-msg.user .ar-text {
@@ -2712,7 +2773,7 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--primary);
+  background: var(--accent);
   opacity: 0.4;
   animation: typingBounce 1.4s ease-in-out infinite;
 }
@@ -2746,8 +2807,9 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
   white-space: nowrap;
 }
 .quick-btn:hover {
-  border-color: var(--primary);
-  background: var(--info-light);
+  border-color: var(--accent);
+  background: var(--warning-light);
+  color: var(--accent-dark);
 }
 
 /* ── CHAT INPUT ── */
@@ -2773,27 +2835,28 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
 }
 .chat-input-row input:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(53,94,190,0.12);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
 }
 .chat-input-row input::placeholder { color: #b0b5c3; font-weight: 500; }
 .chat-send {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--primary);
-  color: white;
+  background: var(--accent);
+  color: var(--primary-dark);
   border: none;
   cursor: pointer;
   font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s ease;
+  transition: background 0.18s ease, box-shadow 0.18s ease;
   flex-shrink: 0;
 }
 .chat-send:hover {
-  background: var(--primary-light);
+  background: var(--accent-light);
+  box-shadow: 0 0 12px rgba(201,168,76,0.3);
 }
 .chat-send:disabled {
   background: var(--border);
@@ -2801,63 +2864,6 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
   transform: none;
 }
 
-/* ── VOICE MODE ── */
-.voice-btn {
-  width: 40px; height: 40px; border-radius: 50%; border: none;
-  cursor: pointer; font-size: 18px; display: flex; align-items: center;
-  justify-content: center; transition: background 0.15s ease; flex-shrink: 0;
-  background: var(--bg); color: var(--text-muted);
-}
-.voice-btn:hover { background: var(--info-light); color: var(--primary); }
-.voice-btn.listening {
-  background: var(--accent); color: white;
-  animation: voicePulse 1.2s ease infinite;
-}
-@keyframes voicePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(213,43,29,0.4); }
-  50% { box-shadow: 0 0 0 10px rgba(213,43,29,0); }
-}
-.voice-btn.speaking { background: var(--success); color: white; }
-
-.voice-mode-bar {
-  display: none; padding: 10px 16px; background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-  border-top: 1px solid var(--border); text-align: center; gap: 10px;
-  align-items: center; justify-content: center; flex-direction: column;
-}
-.voice-mode-bar.active { display: flex; }
-.voice-mode-bar .voice-status {
-  color: white; font-size: 13px; font-weight: 700;
-}
-.voice-wave {
-  display: flex; align-items: center; justify-content: center; gap: 3px; height: 30px;
-}
-.voice-wave .bar {
-  width: 4px; border-radius: 2px; background: rgba(255,255,255,0.7);
-  animation: waveBar 0.8s ease-in-out infinite;
-}
-.voice-wave .bar:nth-child(1) { height: 8px; animation-delay: 0s; }
-.voice-wave .bar:nth-child(2) { height: 16px; animation-delay: 0.1s; }
-.voice-wave .bar:nth-child(3) { height: 24px; animation-delay: 0.2s; }
-.voice-wave .bar:nth-child(4) { height: 16px; animation-delay: 0.3s; }
-.voice-wave .bar:nth-child(5) { height: 8px; animation-delay: 0.4s; }
-@keyframes waveBar {
-  0%, 100% { transform: scaleY(0.5); }
-  50% { transform: scaleY(1.3); }
-}
-.voice-toggle-row {
-  display: flex; gap: 8px; padding: 6px 16px; background: var(--bg);
-  border-top: 1px solid var(--border); align-items: center; justify-content: center;
-}
-.voice-toggle-btn {
-  padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--border);
-  background: var(--surface); font-family: var(--font-body); font-size: 11px;
-  font-weight: 700; color: var(--text-muted); cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
-}
-.voice-toggle-btn:hover { border-color: var(--primary); color: var(--primary); }
-.voice-toggle-btn.active {
-  background: var(--primary); color: white; border-color: var(--primary);
-}
 
 /* ── MOBILE CHAT ── */
 @media (max-width: 768px) {
@@ -2921,23 +2927,7 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
     </button>
   </div>
 
-  <!-- VOICE MODE OVERLAY -->
-  <div class="voice-mode-bar" id="voiceModeBar">
-    <div class="voice-wave" id="voiceWave">
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-    </div>
-    <div class="voice-status" id="voiceStatus">🎤 Listening... — بسمعك...</div>
-    <button class="voice-btn" id="voiceStopBtn" onclick="stopVoiceMode()" style="background:rgba(255,255,255,0.2);color:white;width:36px;height:36px;font-size:14px;">✕</button>
-  </div>
-
-  <!-- VOICE TOGGLE ROW -->
-  <div class="voice-toggle-row">
-    <button class="voice-toggle-btn" id="voiceAutoReply" onclick="toggleVoiceReply()" title="AI talks back — الذكاء الاصطناعي يرد بصوت">🔊 Voice Reply</button>
-    <button class="voice-toggle-btn" id="voiceLiveBtn" onclick="startVoiceMode()" title="Live conversation — محادثة حية">🎙️ Live Talk</button>
-  </div>
-
   <div class="chat-input-row">
-    <button class="voice-btn" id="micBtn" onclick="toggleMic()" title="Hold to talk — اضغط لتحكي">🎤</button>
     <input type="text" id="chatInput" placeholder="Ask anything... اسأل أي شي..."
            onkeydown="if(event.key==='Enter' && !event.shiftKey) sendMessage()">
     <button class="chat-send" id="chatSendBtn" onclick="sendMessage()">➤</button>
@@ -3039,6 +3029,7 @@ let chatOpen = false;
 let interviewMode = false;
 let activeSystemPrompt = SYSTEM_PROMPT;
 
+let chatTestedOnce = false;
 function toggleChat() {
   chatOpen = !chatOpen;
   document.getElementById('chatPanel').classList.toggle('open', chatOpen);
@@ -3046,6 +3037,55 @@ function toggleChat() {
   if (chatOpen) {
     document.getElementById('chatInput').focus();
     scrollChat();
+    // First open — test connection silently
+    if (!chatTestedOnce) {
+      chatTestedOnce = true;
+      testChatConnection();
+    }
+  }
+}
+
+async function testChatConnection() {
+  if (!API_BASE) {
+    addMessage('system-info',
+      '⚠️ <strong>Cannot reach AI — مش قادر أوصل للذكاء الاصطناعي</strong><br>' +
+      '<span style="font-size:12px;color:var(--text-muted);">You opened the app as <code>file://</code>.<br>' +
+      '<strong>Fix:</strong> Run <strong>start.bat</strong> → open <strong>' + LOCAL_START_URL + '</strong> in Chrome<br>' +
+      'شغّل start.bat وافتح localhost:3000 بالكروم</span>'
+    );
+    return;
+  }
+  try {
+    const testMsg = [{ role: 'user', content: 'Hi' }];
+    const url = API_BASE + '/api/claude';
+    const opts = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: testMsg, max_tokens: 10 })
+    };
+    const resp = await Promise.race([
+      fetch(url, opts),
+      new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 8000))
+    ]);
+    if (resp.ok) {
+      console.log('[Chat] Connection OK via', API_BASE ? 'server' : 'direct API');
+    } else {
+      const e = await resp.json().catch(() => ({}));
+      console.warn('[Chat] API returned', resp.status, e.error?.message || '');
+      addMessage('system-info',
+        '⚠️ <strong>API issue detected</strong><br>' +
+        '<span style="font-size:12px;color:var(--text-muted);">Status: ' + resp.status + ' — ' + (e.error?.message || 'Unknown error') + '<br>' +
+        'Check your <strong>.env</strong> API key and keep using <strong>' + LOCAL_START_URL + '</strong>.</span>'
+      );
+    }
+  } catch(err) {
+    console.warn('[Chat] Connection test failed:', err.message);
+    addMessage('system-info',
+      '⚠️ <strong>Server not responding — السيرفر مش راد</strong><br>' +
+      '<span style="font-size:12px;color:var(--text-muted);">Is the server running? Run <strong>start.bat</strong> and check the CMD window.<br>' +
+      'Open <strong>' + LOCAL_START_URL + '</strong> after it starts.<br>' +
+      'Error: ' + err.message + '</span>'
+    );
   }
 }
 
@@ -3106,6 +3146,7 @@ function addMessage(role, text) {
         document.getElementById('fillFormsBar').style.display = 'block';
       }, 500);
     }
+
   } else {
     msgDiv.className = 'chat-msg user';
     msgDiv.textContent = text;
@@ -3133,8 +3174,41 @@ async function callChatAPI(messages) {
     { role: 'assistant', content: 'Understood. I will follow these instructions.' },
     ...messages.slice(-20)
   ];
-  const data = await callServerClaude(fullMessages, 1024);
+  const data = await callServerClaudeChat(fullMessages, 1024);
   return data.content[0].text;
+}
+
+// Dedicated chat API call — shorter timeout (30s), clear errors
+async function callServerClaudeChat(messages, maxTokens = 1024) {
+  const CHAT_TIMEOUT = 30000; // 30 seconds — chat should be fast
+  if (!API_BASE) {
+    throw createServerModeError();
+  }
+  let response;
+  const body = JSON.stringify({ messages, max_tokens: maxTokens });
+
+  try {
+    response = await fetchWithTimeout(API_BASE + '/api/claude', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body
+    }, CHAT_TIMEOUT);
+  } catch (fetchErr) {
+    if (fetchErr.message.includes('timed out')) {
+      throw new Error('Request timed out (30s). Is the server running? شغّل start.bat أول');
+    }
+    throw new Error('Network error: ' + fetchErr.message);
+  }
+
+  if (!response.ok) {
+    const errData = await response.json().catch(() => ({}));
+    const msg = errData.error?.message || errData.error || '';
+    if (response.status === 401) throw new Error('API key is invalid or expired — المفتاح منتهي. Check .env file.');
+    if (response.status === 404) throw new Error('Server route not found (404). Are you running start.bat? شغّل start.bat');
+    if (response.status === 529 || response.status === 529) throw new Error('Claude is overloaded — السيرفر مشغول. Try again in a minute.');
+    throw new Error(msg || 'API error ' + response.status);
+  }
+  return response.json();
 }
 
 async function sendMessage() {
@@ -3150,6 +3224,7 @@ async function sendMessage() {
   document.getElementById('quickActions').style.display = 'none';
 
   showTyping(true);
+  console.log('[Chat] Sending to', API_BASE ? API_BASE + '/api/claude' : 'file:// (server required)', '| messages:', chatHistory.length);
 
   try {
     const reply = await callChatAPI(chatHistory);
@@ -3158,9 +3233,10 @@ async function sendMessage() {
     addMessage('assistant', reply);
   } catch (err) {
     showTyping(false);
-    console.error('Chat error:', err);
+    console.error('[Chat] Error:', err);
+    const mode = API_BASE ? 'Server mode (' + API_BASE + ')' : 'Standalone mode (file://)';
     addMessage('assistant',
-      `⚠️ Sorry, connection issue — في مشكلة بالاتصال.\n\n**Error:** ${err.message}\n\nTry again — جرب مرة ثانية.`
+      `⚠️ Connection issue — في مشكلة بالاتصال.\n\n**${mode}**\n**Error:** ${err.message}\n\n💡 **Fix:** Run **start.bat** then open **${LOCAL_START_URL}** in Chrome.\nجرب شغّل start.bat وافتح localhost:3000`
     );
   }
 }
@@ -3294,246 +3370,6 @@ Use 0 for numbers not mentioned. Use "" for strings not mentioned. Set booleans 
     setTimeout(() => overlay.classList.remove('visible'), 2000);
     addMessage('assistant', `⚠️ Error filling forms — صار خطأ: ${err.message}\n\nTry again or fill manually — جرب مرة ثانية أو عبي يدوي.`);
   }
-}
-
-// ══════════════════════════════════════════════
-// ── VOICE ENGINE — Speech-to-Text + Text-to-Speech + Live Mode ──
-// ══════════════════════════════════════════════
-
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const speechSynth = window.speechSynthesis;
-let recognition = null;
-let isListening = false;
-let voiceReplyOn = false;
-let voiceLiveMode = false;
-let currentUtterance = null;
-
-// ── Initialize Speech Recognition ──
-if (SpeechRecognition) {
-  recognition = new SpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.lang = 'en-US'; // Also understands Arabic mixed in
-
-  let finalTranscript = '';
-  let interimTranscript = '';
-
-  recognition.onresult = (event) => {
-    interimTranscript = '';
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      const t = event.results[i][0].transcript;
-      if (event.results[i].isFinal) {
-        finalTranscript += t + ' ';
-      } else {
-        interimTranscript = t;
-      }
-    }
-    // Show live text in input
-    const input = document.getElementById('chatInput');
-    input.value = finalTranscript + interimTranscript;
-    input.scrollLeft = input.scrollWidth;
-  };
-
-  recognition.onend = () => {
-    if (voiceLiveMode && isListening) {
-      // In live mode: auto-send what was said, then keep listening after AI replies
-      const text = finalTranscript.trim();
-      finalTranscript = '';
-      interimTranscript = '';
-      if (text.length > 2) {
-        document.getElementById('chatInput').value = text;
-        sendMessage();
-      } else if (isListening) {
-        // Nothing said, restart listening
-        try { recognition.start(); } catch(e) {}
-      }
-    } else {
-      // Normal mic mode ended
-      setMicState(false);
-      const text = finalTranscript.trim();
-      finalTranscript = '';
-      interimTranscript = '';
-      if (text) {
-        document.getElementById('chatInput').value = text;
-      }
-    }
-  };
-
-  recognition.onerror = (e) => {
-    console.warn('Speech error:', e.error);
-    if (e.error !== 'no-speech' && e.error !== 'aborted') {
-      setMicState(false);
-      voiceLiveMode = false;
-      updateVoiceModeUI();
-    }
-  };
-} else {
-  // Browser doesn't support speech recognition
-  document.querySelectorAll('.voice-btn, .voice-toggle-btn, .voice-toggle-row').forEach(el => el.style.display = 'none');
-}
-
-// ── Mic Button (tap to start/stop) ──
-function toggleMic() {
-  if (!recognition) return alert('Speech recognition not supported in this browser — جرب Chrome');
-  if (isListening) {
-    recognition.stop();
-    setMicState(false);
-  } else {
-    recognition.lang = 'en-US';
-    try { recognition.start(); } catch(e) {}
-    setMicState(true);
-  }
-}
-
-function setMicState(listening) {
-  isListening = listening;
-  const btn = document.getElementById('micBtn');
-  btn.classList.toggle('listening', listening);
-  btn.textContent = listening ? '⏹' : '🎤';
-}
-
-// ── Voice Reply (TTS) ──
-function toggleVoiceReply() {
-  voiceReplyOn = !voiceReplyOn;
-  document.getElementById('voiceAutoReply').classList.toggle('active', voiceReplyOn);
-}
-
-function speakText(text) {
-  if (!speechSynth || !voiceReplyOn) return Promise.resolve();
-  return new Promise((resolve) => {
-    // Stop any current speech
-    speechSynth.cancel();
-
-    // Clean text for speech (remove HTML, emojis, markdown)
-    const clean = text
-      .replace(/<[^>]*>/g, '')
-      .replace(/[*_~`#]/g, '')
-      .replace(/[\u{1F600}-\u{1F9FF}]/gu, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-
-    if (!clean) { resolve(); return; }
-
-    // Split long text into chunks (max ~200 chars per utterance for reliability)
-    const chunks = [];
-    const sentences = clean.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [clean];
-    let current = '';
-    for (const s of sentences) {
-      if ((current + s).length > 200) {
-        if (current) chunks.push(current.trim());
-        current = s;
-      } else {
-        current += s;
-      }
-    }
-    if (current.trim()) chunks.push(current.trim());
-
-    let idx = 0;
-    function speakNext() {
-      if (idx >= chunks.length) { resolve(); return; }
-      const utter = new SpeechSynthesisUtterance(chunks[idx]);
-      currentUtterance = utter;
-      utter.rate = 1.05;
-      utter.pitch = 1.0;
-      utter.volume = 1.0;
-
-      // Try to pick a good English voice
-      const voices = speechSynth.getVoices();
-      const preferred = voices.find(v => v.name.includes('Google') && v.lang.startsWith('en'))
-        || voices.find(v => v.lang.startsWith('en-US'))
-        || voices.find(v => v.lang.startsWith('en'));
-      if (preferred) utter.voice = preferred;
-
-      utter.onend = () => { idx++; speakNext(); };
-      utter.onerror = () => { idx++; speakNext(); };
-
-      // Update mic button to show speaking
-      document.getElementById('micBtn').classList.add('speaking');
-      speechSynth.speak(utter);
-    }
-    speakNext();
-  }).finally(() => {
-    document.getElementById('micBtn').classList.remove('speaking');
-    currentUtterance = null;
-  });
-}
-
-// ── Live Voice Mode (continuous conversation) ──
-function startVoiceMode() {
-  if (!recognition) return alert('Speech recognition not supported — جرب Chrome');
-
-  if (voiceLiveMode) {
-    stopVoiceMode();
-    return;
-  }
-
-  voiceLiveMode = true;
-  voiceReplyOn = true; // Auto-enable voice reply in live mode
-  document.getElementById('voiceAutoReply').classList.add('active');
-  document.getElementById('voiceLiveBtn').classList.add('active');
-  updateVoiceModeUI();
-
-  // Start listening
-  recognition.lang = 'en-US';
-  try { recognition.start(); } catch(e) {}
-  setMicState(true);
-}
-
-function stopVoiceMode() {
-  voiceLiveMode = false;
-  document.getElementById('voiceLiveBtn').classList.remove('active');
-  if (speechSynth) speechSynth.cancel();
-  if (isListening) {
-    try { recognition.stop(); } catch(e) {}
-  }
-  setMicState(false);
-  updateVoiceModeUI();
-}
-
-function updateVoiceModeUI() {
-  document.getElementById('voiceModeBar').classList.toggle('active', voiceLiveMode && isListening);
-}
-
-// ── Patch sendMessage to add TTS and live mode resume ──
-const _origSendMessage = sendMessage;
-
-// We need to intercept the assistant reply to speak it
-// Override addMessage to catch bot replies
-const _origAddMessage = addMessage;
-addMessage = function(role, text) {
-  _origAddMessage(role, text);
-  if (role === 'assistant' && voiceReplyOn) {
-    speakText(text).then(() => {
-      // In live mode, resume listening after AI finishes speaking
-      if (voiceLiveMode) {
-        updateVoiceModeUI();
-        setTimeout(() => {
-          try { recognition.start(); } catch(e) {}
-          setMicState(true);
-          document.getElementById('voiceStatus').textContent = '🎤 Listening... — بسمعك...';
-          updateVoiceModeUI();
-        }, 300);
-      }
-    });
-    if (voiceLiveMode) {
-      document.getElementById('voiceStatus').textContent = '🔊 Speaking... — بحكي...';
-    }
-  }
-};
-
-// Update voice status when AI is thinking
-const _origShowTyping = showTyping;
-showTyping = function(show) {
-  _origShowTyping(show);
-  if (voiceLiveMode && show) {
-    document.getElementById('voiceStatus').textContent = '🤔 Thinking... — بفكر...';
-  }
-};
-
-// Load voices (some browsers load them async)
-if (speechSynth) {
-  speechSynth.getVoices();
-  speechSynth.onvoiceschanged = () => speechSynth.getVoices();
 }
 
 </script>

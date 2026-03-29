@@ -1,11 +1,24 @@
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+require('dotenv').config({ path: path.join(__dirname, '..', '.env'), override: true });
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 const db = require('./db');
 const pdfGenerator = require('./pdf-generator');
+
+// Polyfill fetch for Node < 18
+if (typeof globalThis.fetch === 'undefined') {
+  try {
+    const nodeFetch = require('node-fetch');
+    globalThis.fetch = nodeFetch;
+  } catch (e) {
+    console.error('\n  [ERROR] Your Node.js version does not have fetch() built-in.');
+    console.error('  Either upgrade to Node 18+ OR run: npm install node-fetch@2');
+    console.error('  Then restart the server.\n');
+    process.exit(1);
+  }
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
