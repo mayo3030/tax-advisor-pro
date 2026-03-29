@@ -2801,6 +2801,64 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
   transform: none;
 }
 
+/* ── VOICE MODE ── */
+.voice-btn {
+  width: 40px; height: 40px; border-radius: 50%; border: none;
+  cursor: pointer; font-size: 18px; display: flex; align-items: center;
+  justify-content: center; transition: background 0.15s ease; flex-shrink: 0;
+  background: var(--bg); color: var(--text-muted);
+}
+.voice-btn:hover { background: var(--info-light); color: var(--primary); }
+.voice-btn.listening {
+  background: var(--accent); color: white;
+  animation: voicePulse 1.2s ease infinite;
+}
+@keyframes voicePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(213,43,29,0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(213,43,29,0); }
+}
+.voice-btn.speaking { background: var(--success); color: white; }
+
+.voice-mode-bar {
+  display: none; padding: 10px 16px; background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  border-top: 1px solid var(--border); text-align: center; gap: 10px;
+  align-items: center; justify-content: center; flex-direction: column;
+}
+.voice-mode-bar.active { display: flex; }
+.voice-mode-bar .voice-status {
+  color: white; font-size: 13px; font-weight: 700;
+}
+.voice-wave {
+  display: flex; align-items: center; justify-content: center; gap: 3px; height: 30px;
+}
+.voice-wave .bar {
+  width: 4px; border-radius: 2px; background: rgba(255,255,255,0.7);
+  animation: waveBar 0.8s ease-in-out infinite;
+}
+.voice-wave .bar:nth-child(1) { height: 8px; animation-delay: 0s; }
+.voice-wave .bar:nth-child(2) { height: 16px; animation-delay: 0.1s; }
+.voice-wave .bar:nth-child(3) { height: 24px; animation-delay: 0.2s; }
+.voice-wave .bar:nth-child(4) { height: 16px; animation-delay: 0.3s; }
+.voice-wave .bar:nth-child(5) { height: 8px; animation-delay: 0.4s; }
+@keyframes waveBar {
+  0%, 100% { transform: scaleY(0.5); }
+  50% { transform: scaleY(1.3); }
+}
+.voice-toggle-row {
+  display: flex; gap: 8px; padding: 6px 16px; background: var(--bg);
+  border-top: 1px solid var(--border); align-items: center; justify-content: center;
+}
+.voice-toggle-btn {
+  padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--border);
+  background: var(--surface); font-family: var(--font-body); font-size: 11px;
+  font-weight: 700; color: var(--text-muted); cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.voice-toggle-btn:hover { border-color: var(--primary); color: var(--primary); }
+.voice-toggle-btn.active {
+  background: var(--primary); color: white; border-color: var(--primary);
+}
+
 /* ── MOBILE CHAT ── */
 @media (max-width: 768px) {
   .chat-panel {
@@ -2863,7 +2921,23 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
     </button>
   </div>
 
+  <!-- VOICE MODE OVERLAY -->
+  <div class="voice-mode-bar" id="voiceModeBar">
+    <div class="voice-wave" id="voiceWave">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <div class="voice-status" id="voiceStatus">🎤 Listening... — بسمعك...</div>
+    <button class="voice-btn" id="voiceStopBtn" onclick="stopVoiceMode()" style="background:rgba(255,255,255,0.2);color:white;width:36px;height:36px;font-size:14px;">✕</button>
+  </div>
+
+  <!-- VOICE TOGGLE ROW -->
+  <div class="voice-toggle-row">
+    <button class="voice-toggle-btn" id="voiceAutoReply" onclick="toggleVoiceReply()" title="AI talks back — الذكاء الاصطناعي يرد بصوت">🔊 Voice Reply</button>
+    <button class="voice-toggle-btn" id="voiceLiveBtn" onclick="startVoiceMode()" title="Live conversation — محادثة حية">🎙️ Live Talk</button>
+  </div>
+
   <div class="chat-input-row">
+    <button class="voice-btn" id="micBtn" onclick="toggleMic()" title="Hold to talk — اضغط لتحكي">🎤</button>
     <input type="text" id="chatInput" placeholder="Ask anything... اسأل أي شي..."
            onkeydown="if(event.key==='Enter' && !event.shiftKey) sendMessage()">
     <button class="chat-send" id="chatSendBtn" onclick="sendMessage()">➤</button>
@@ -3221,6 +3295,247 @@ Use 0 for numbers not mentioned. Use "" for strings not mentioned. Set booleans 
     addMessage('assistant', `⚠️ Error filling forms — صار خطأ: ${err.message}\n\nTry again or fill manually — جرب مرة ثانية أو عبي يدوي.`);
   }
 }
+
+// ══════════════════════════════════════════════
+// ── VOICE ENGINE — Speech-to-Text + Text-to-Speech + Live Mode ──
+// ══════════════════════════════════════════════
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const speechSynth = window.speechSynthesis;
+let recognition = null;
+let isListening = false;
+let voiceReplyOn = false;
+let voiceLiveMode = false;
+let currentUtterance = null;
+
+// ── Initialize Speech Recognition ──
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US'; // Also understands Arabic mixed in
+
+  let finalTranscript = '';
+  let interimTranscript = '';
+
+  recognition.onresult = (event) => {
+    interimTranscript = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const t = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        finalTranscript += t + ' ';
+      } else {
+        interimTranscript = t;
+      }
+    }
+    // Show live text in input
+    const input = document.getElementById('chatInput');
+    input.value = finalTranscript + interimTranscript;
+    input.scrollLeft = input.scrollWidth;
+  };
+
+  recognition.onend = () => {
+    if (voiceLiveMode && isListening) {
+      // In live mode: auto-send what was said, then keep listening after AI replies
+      const text = finalTranscript.trim();
+      finalTranscript = '';
+      interimTranscript = '';
+      if (text.length > 2) {
+        document.getElementById('chatInput').value = text;
+        sendMessage();
+      } else if (isListening) {
+        // Nothing said, restart listening
+        try { recognition.start(); } catch(e) {}
+      }
+    } else {
+      // Normal mic mode ended
+      setMicState(false);
+      const text = finalTranscript.trim();
+      finalTranscript = '';
+      interimTranscript = '';
+      if (text) {
+        document.getElementById('chatInput').value = text;
+      }
+    }
+  };
+
+  recognition.onerror = (e) => {
+    console.warn('Speech error:', e.error);
+    if (e.error !== 'no-speech' && e.error !== 'aborted') {
+      setMicState(false);
+      voiceLiveMode = false;
+      updateVoiceModeUI();
+    }
+  };
+} else {
+  // Browser doesn't support speech recognition
+  document.querySelectorAll('.voice-btn, .voice-toggle-btn, .voice-toggle-row').forEach(el => el.style.display = 'none');
+}
+
+// ── Mic Button (tap to start/stop) ──
+function toggleMic() {
+  if (!recognition) return alert('Speech recognition not supported in this browser — جرب Chrome');
+  if (isListening) {
+    recognition.stop();
+    setMicState(false);
+  } else {
+    recognition.lang = 'en-US';
+    try { recognition.start(); } catch(e) {}
+    setMicState(true);
+  }
+}
+
+function setMicState(listening) {
+  isListening = listening;
+  const btn = document.getElementById('micBtn');
+  btn.classList.toggle('listening', listening);
+  btn.textContent = listening ? '⏹' : '🎤';
+}
+
+// ── Voice Reply (TTS) ──
+function toggleVoiceReply() {
+  voiceReplyOn = !voiceReplyOn;
+  document.getElementById('voiceAutoReply').classList.toggle('active', voiceReplyOn);
+}
+
+function speakText(text) {
+  if (!speechSynth || !voiceReplyOn) return Promise.resolve();
+  return new Promise((resolve) => {
+    // Stop any current speech
+    speechSynth.cancel();
+
+    // Clean text for speech (remove HTML, emojis, markdown)
+    const clean = text
+      .replace(/<[^>]*>/g, '')
+      .replace(/[*_~`#]/g, '')
+      .replace(/[\u{1F600}-\u{1F9FF}]/gu, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (!clean) { resolve(); return; }
+
+    // Split long text into chunks (max ~200 chars per utterance for reliability)
+    const chunks = [];
+    const sentences = clean.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [clean];
+    let current = '';
+    for (const s of sentences) {
+      if ((current + s).length > 200) {
+        if (current) chunks.push(current.trim());
+        current = s;
+      } else {
+        current += s;
+      }
+    }
+    if (current.trim()) chunks.push(current.trim());
+
+    let idx = 0;
+    function speakNext() {
+      if (idx >= chunks.length) { resolve(); return; }
+      const utter = new SpeechSynthesisUtterance(chunks[idx]);
+      currentUtterance = utter;
+      utter.rate = 1.05;
+      utter.pitch = 1.0;
+      utter.volume = 1.0;
+
+      // Try to pick a good English voice
+      const voices = speechSynth.getVoices();
+      const preferred = voices.find(v => v.name.includes('Google') && v.lang.startsWith('en'))
+        || voices.find(v => v.lang.startsWith('en-US'))
+        || voices.find(v => v.lang.startsWith('en'));
+      if (preferred) utter.voice = preferred;
+
+      utter.onend = () => { idx++; speakNext(); };
+      utter.onerror = () => { idx++; speakNext(); };
+
+      // Update mic button to show speaking
+      document.getElementById('micBtn').classList.add('speaking');
+      speechSynth.speak(utter);
+    }
+    speakNext();
+  }).finally(() => {
+    document.getElementById('micBtn').classList.remove('speaking');
+    currentUtterance = null;
+  });
+}
+
+// ── Live Voice Mode (continuous conversation) ──
+function startVoiceMode() {
+  if (!recognition) return alert('Speech recognition not supported — جرب Chrome');
+
+  if (voiceLiveMode) {
+    stopVoiceMode();
+    return;
+  }
+
+  voiceLiveMode = true;
+  voiceReplyOn = true; // Auto-enable voice reply in live mode
+  document.getElementById('voiceAutoReply').classList.add('active');
+  document.getElementById('voiceLiveBtn').classList.add('active');
+  updateVoiceModeUI();
+
+  // Start listening
+  recognition.lang = 'en-US';
+  try { recognition.start(); } catch(e) {}
+  setMicState(true);
+}
+
+function stopVoiceMode() {
+  voiceLiveMode = false;
+  document.getElementById('voiceLiveBtn').classList.remove('active');
+  if (speechSynth) speechSynth.cancel();
+  if (isListening) {
+    try { recognition.stop(); } catch(e) {}
+  }
+  setMicState(false);
+  updateVoiceModeUI();
+}
+
+function updateVoiceModeUI() {
+  document.getElementById('voiceModeBar').classList.toggle('active', voiceLiveMode && isListening);
+}
+
+// ── Patch sendMessage to add TTS and live mode resume ──
+const _origSendMessage = sendMessage;
+
+// We need to intercept the assistant reply to speak it
+// Override addMessage to catch bot replies
+const _origAddMessage = addMessage;
+addMessage = function(role, text) {
+  _origAddMessage(role, text);
+  if (role === 'assistant' && voiceReplyOn) {
+    speakText(text).then(() => {
+      // In live mode, resume listening after AI finishes speaking
+      if (voiceLiveMode) {
+        updateVoiceModeUI();
+        setTimeout(() => {
+          try { recognition.start(); } catch(e) {}
+          setMicState(true);
+          document.getElementById('voiceStatus').textContent = '🎤 Listening... — بسمعك...';
+          updateVoiceModeUI();
+        }, 300);
+      }
+    });
+    if (voiceLiveMode) {
+      document.getElementById('voiceStatus').textContent = '🔊 Speaking... — بحكي...';
+    }
+  }
+};
+
+// Update voice status when AI is thinking
+const _origShowTyping = showTyping;
+showTyping = function(show) {
+  _origShowTyping(show);
+  if (voiceLiveMode && show) {
+    document.getElementById('voiceStatus').textContent = '🤔 Thinking... — بفكر...';
+  }
+};
+
+// Load voices (some browsers load them async)
+if (speechSynth) {
+  speechSynth.getVoices();
+  speechSynth.onvoiceschanged = () => speechSynth.getVoices();
+}
+
 </script>
 
 </body>
