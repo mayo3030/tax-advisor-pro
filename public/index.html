@@ -96,6 +96,79 @@ body {
   letter-spacing: 0.3px;
 }
 
+/* ── NAV LINK HOVER ── */
+.nav-link-hover {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  transition: opacity 0.18s;
+  opacity: 1;
+}
+.nav-link-hover:hover {
+  opacity: 0.7;
+}
+
+/* ── WELCOME BUTTON ── */
+.welcome-btn {
+  font-size: 13px;
+  padding: 10px 20px;
+  background: var(--info-light);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.18s ease;
+}
+.welcome-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ── GUIDE BUTTON (Accent Border) ── */
+.guide-btn-accent {
+  font-size: 15px;
+  padding: 14px 32px;
+  background: var(--surface);
+  color: var(--primary);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.18s ease;
+}
+.guide-btn-accent:hover {
+  background: var(--accent);
+  color: var(--primary-dark);
+}
+
+/* ── GUIDE BUTTON (Border) ── */
+.guide-btn-border {
+  font-size: 15px;
+  padding: 14px 32px;
+  background: var(--surface);
+  color: var(--primary);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.18s ease;
+}
+.guide-btn-border:hover {
+  background: var(--info-light);
+  border-color: var(--primary);
+}
+
 /* ── MAIN LAYOUT ── */
 .app-container {
   max-width: 960px;
@@ -268,6 +341,20 @@ body {
   box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
 }
 .form-group input::placeholder { color: #b0b5c3; font-weight: 500; }
+
+/* ── SSN Masking ── */
+.ssn-masked {
+  -webkit-text-security: disc;
+  text-security: disc;
+  font-family: var(--font-body);
+  letter-spacing: 2px;
+}
+.ssn-masked.revealed {
+  -webkit-text-security: none;
+  text-security: none;
+  letter-spacing: normal;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -745,6 +832,55 @@ body {
   font-size: 10px; font-weight: 800; color: var(--success);
   background: var(--success-light); padding: 2px 8px;
   border-radius: var(--radius-full); border: 1px solid var(--success);
+}
+
+/* ── REFUND TRACKER ── */
+.refund-tracker {
+  position: sticky;
+  top: 72px;
+  z-index: 50;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  border-radius: var(--radius-lg);
+  padding: 14px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(201,168,76,0.2);
+  transition: all 0.3s ease;
+}
+.refund-tracker.hidden { display: none; }
+.refund-tracker .rt-label {
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.refund-tracker .rt-label .ar {
+  color: rgba(201,168,76,0.7);
+  font-weight: 600;
+  font-size: 11px;
+}
+.refund-tracker .rt-amount {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  transition: color 0.3s;
+}
+.refund-tracker .rt-amount.refund { color: #4ade80; }
+.refund-tracker .rt-amount.owed { color: #f87171; }
+.refund-tracker .rt-amount.zero { color: var(--accent); }
+.refund-tracker .rt-detail {
+  color: rgba(255,255,255,0.5);
+  font-size: 11px;
+  font-weight: 600;
+}
+@media (max-width: 480px) {
+  .refund-tracker { padding: 10px 16px; flex-wrap: wrap; gap: 4px; }
+  .refund-tracker .rt-amount { font-size: 22px; }
 }
 
 /* ── TABLET (768px and below) ── */
@@ -1445,7 +1581,7 @@ body {
 </div>
 
 <!-- TOPNAV -->
-<nav class="topnav">
+<nav class="topnav" role="navigation" aria-label="Main navigation">
   <div class="logo">
     <span class="icon" style="color:#c9a84c">🏛️</span>
     <span>Tax Advisor Pro</span>
@@ -1454,19 +1590,27 @@ body {
   <div class="nav-right">
     <span class="tax-year">Tax Year 2025</span>
     <div class="nav-menu" style="display: flex; align-items: center; gap: 16px; margin-left: 24px; padding-left: 24px; border-left: 1px solid rgba(255,255,255,0.2);">
-      <a href="tax-planner.html" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 13px; transition: opacity 0.18s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">📊 Tax Planner</a>
-      <a href="itin-guide.html" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 13px; transition: opacity 0.18s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">🗽 ITIN Guide</a>
-      <a href="efile.html" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 13px; transition: opacity 0.18s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">📮 E-File</a>
-      <a href="auth.html" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 13px; transition: opacity 0.18s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">👤 My Account</a>
+      <a href="tax-planner.html" class="nav-link-hover">📊 Tax Planner</a>
+      <a href="itin-guide.html" class="nav-link-hover">🗽 ITIN Guide</a>
+      <a href="efile.html" class="nav-link-hover">📮 E-File</a>
+      <a href="auth.html" class="nav-link-hover">👤 My Account</a>
     </div>
   </div>
 </nav>
 
-<div class="app-container">
+<div class="app-container" role="main">
+
+  <div class="refund-tracker hidden" id="refundTracker" role="status" aria-live="polite">
+    <div>
+      <div class="rt-label">Estimated Refund <span class="ar">المبلغ المسترد المتوقع</span></div>
+      <div class="rt-detail" id="rtDetail">Fill in your income to see estimate</div>
+    </div>
+    <div class="rt-amount zero" id="rtAmount">$0</div>
+  </div>
 
   <!-- PROGRESS BAR -->
   <div class="progress-section">
-    <div class="progress-steps" id="progressSteps"></div>
+    <div class="progress-steps" id="progressSteps" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="6"></div>
     <div class="progress-labels" id="progressLabels"></div>
   </div>
 
@@ -1506,10 +1650,10 @@ body {
           <button class="btn btn-primary" onclick="goToStep(1)" style="font-size: 17px; padding: 14px 48px;">
             !Let's Start — يلا نبدأ ←
           </button>
-          <a href="guide.html" class="btn" style="font-size: 15px; padding: 14px 32px; background: var(--surface); color: var(--primary); border: 2px solid var(--accent); border-radius: var(--radius-full); text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: all 0.18s ease;" onmouseover="this.style.background='var(--accent)';this.style.color='var(--primary-dark)'" onmouseout="this.style.background='var(--surface)';this.style.color='var(--primary)'">
+          <a href="guide.html" class="btn guide-btn-accent">
             📖 Tax Guide — الدليل الضريبي
           </a>
-          <a href="guides.html" class="btn" style="font-size: 15px; padding: 14px 32px; background: var(--surface); color: var(--primary); border: 2px solid var(--border); border-radius: var(--radius-full); text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: all 0.18s ease;" onmouseover="this.style.background='var(--info-light)';this.style.borderColor='var(--primary)'" onmouseout="this.style.background='var(--surface)';this.style.borderColor='var(--border)'">
+          <a href="guides.html" class="btn guide-btn-border">
             🗺️ 13 State Guides — أدلة الولايات
           </a>
         </div>
@@ -1517,13 +1661,13 @@ body {
         <div style="margin-top: 32px; padding-top: 32px; border-top: 2px solid var(--border);">
           <h3 style="text-align: center; font-weight: 800; margin-bottom: 16px; font-size: 16px;">📚 Learn More — اعرف أكثر</h3>
           <div class="btn-row" style="justify-content: center; gap: 12px; flex-wrap: wrap;">
-            <a href="tax-planner.html" class="btn" style="font-size: 13px; padding: 10px 20px; background: var(--info-light); color: var(--primary); border: 1px solid var(--primary); border-radius: 20px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: all 0.18s ease;" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='var(--info-light)';this.style.color='var(--primary)'">
+            <a href="tax-planner.html" class="btn welcome-btn">
               📊 Tax Planner
             </a>
-            <a href="itin-guide.html" class="btn" style="font-size: 13px; padding: 10px 20px; background: var(--info-light); color: var(--primary); border: 1px solid var(--primary); border-radius: 20px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: all 0.18s ease;" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='var(--info-light)';this.style.color='var(--primary)'">
+            <a href="itin-guide.html" class="btn welcome-btn">
               🗽 ITIN Guide
             </a>
-            <a href="efile.html" class="btn" style="font-size: 13px; padding: 10px 20px; background: var(--info-light); color: var(--primary); border: 1px solid var(--primary); border-radius: 20px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: all 0.18s ease;" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='var(--info-light)';this.style.color='var(--primary)'">
+            <a href="efile.html" class="btn welcome-btn">
               📮 E-File Center
             </a>
           </div>
@@ -1647,7 +1791,7 @@ body {
       <div class="form-row">
         <div class="form-group">
           <label>SSN (Social Security Number) <span class="ar">— رقم الضمان الاجتماعي</span></label>
-          <input type="text" id="ssn" placeholder="XXX-XX-XXXX" maxlength="11">
+          <input type="text" id="ssn" class="ssn-masked" placeholder="XXX-XX-XXXX" maxlength="11" autocomplete="off" aria-label="Social Security Number">
         </div>
         <div class="form-group">
           <label>Date of Birth <span class="ar">— تاريخ الميلاد</span></label>
@@ -1700,8 +1844,8 @@ body {
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-ghost" onclick="goToStep(1)">← Back</button>
-        <button class="btn btn-primary" onclick="goToStep(3)">Next: Filing Status — التالي →</button>
+        <button class="btn btn-ghost" onclick="goToStep(1)" aria-label="Previous step">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(3)" aria-label="Next step: Filing Status">Next: Filing Status — التالي →</button>
       </div>
     </div>
   </div>
@@ -1765,8 +1909,8 @@ body {
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-ghost" onclick="goToStep(2)">← Back</button>
-        <button class="btn btn-primary" onclick="goToStep(4)">Next: W-2 Income — التالي →</button>
+        <button class="btn btn-ghost" onclick="goToStep(2)" aria-label="Previous step">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(4)" aria-label="Next step: W-2 Income">Next: W-2 Income — التالي →</button>
       </div>
     </div>
   </div>
@@ -1822,7 +1966,7 @@ body {
             </div>
             <div class="form-group">
               <label>Employer EIN <span class="ar">— رقم تعريف صاحب العمل</span></label>
-              <input type="text" class="w2-ein" placeholder="XX-XXXXXXX">
+              <input type="text" class="w2-ein" placeholder="XX-XXXXXXX" aria-label="Employer Identification Number">
             </div>
           </div>
         </div>
@@ -1840,8 +1984,8 @@ body {
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-ghost" onclick="goToStep(3)">← Back</button>
-        <button class="btn btn-primary" onclick="goToStep(5)">Next: 1099 Income — التالي →</button>
+        <button class="btn btn-ghost" onclick="goToStep(3)" aria-label="Previous step">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(5)" aria-label="Next step: 1099 Income">Next: 1099 Income — التالي →</button>
       </div>
     </div>
   </div>
@@ -1877,7 +2021,7 @@ body {
             </div>
             <div class="form-group">
               <label>Payer's EIN <span class="ar">— رقم تعريف الدافع</span></label>
-              <input type="text" class="nec-ein" placeholder="XX-XXXXXXX">
+              <input type="text" class="nec-ein" placeholder="XX-XXXXXXX" aria-label="Payer's Employer Identification Number">
             </div>
           </div>
         </div>
@@ -1935,8 +2079,8 @@ body {
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-ghost" onclick="goToStep(4)">← Back</button>
-        <button class="btn btn-primary" onclick="goToStep(6)">Next: Deductions — التالي →</button>
+        <button class="btn btn-ghost" onclick="goToStep(4)" aria-label="Previous step">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(6)" aria-label="Next step: Deductions">Next: Deductions — التالي →</button>
       </div>
     </div>
   </div>
@@ -2033,8 +2177,8 @@ body {
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-ghost" onclick="goToStep(5)">← Back</button>
-        <button class="btn btn-primary" onclick="goToStep(7)">Next: Credits — التالي →</button>
+        <button class="btn btn-ghost" onclick="goToStep(5)" aria-label="Previous step">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(7)" aria-label="Next step: Credits">Next: Credits — التالي →</button>
       </div>
     </div>
   </div>
@@ -2097,8 +2241,8 @@ body {
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-ghost" onclick="goToStep(6)">← Back</button>
-        <button class="btn btn-primary" onclick="calculateAndReview()">Review & Calculate — راجع واحسب →</button>
+        <button class="btn btn-ghost" onclick="goToStep(6)" aria-label="Previous step">← Back</button>
+        <button class="btn btn-primary" onclick="calculateAndReview()" aria-label="Review and calculate tax">Review & Calculate — راجع واحسب →</button>
       </div>
     </div>
   </div>
@@ -2147,10 +2291,10 @@ body {
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-ghost" onclick="goToStep(7)">← Back — رجوع</button>
-        <button class="btn btn-outline" onclick="printSummary()">🖨️ Print — اطبع</button>
-        <button class="btn btn-primary" onclick="downloadPDF()" style="background:var(--success);">📄 Download PDF — حمّل PDF</button>
-        <button class="btn btn-outline" onclick="saveProgress().then(()=>alert('Saved! — تم الحفظ ✓'))">💾 Save — حفظ</button>
+        <button class="btn btn-ghost" onclick="goToStep(7)" aria-label="Previous step">← Back — رجوع</button>
+        <button class="btn btn-outline" onclick="printSummary()" aria-label="Print summary">🖨️ Print — اطبع</button>
+        <button class="btn btn-primary" onclick="downloadPDF()" style="background:var(--success);" aria-label="Download tax return as PDF">📄 Download PDF — حمّل PDF</button>
+        <button class="btn btn-outline" onclick="saveProgress().then(()=>alert('Saved! — تم الحفظ ✓'))" aria-label="Save progress">💾 Save — حفظ</button>
       </div>
     </div>
   </div>
@@ -2366,7 +2510,7 @@ function addDependent() {
         <div class="form-group"><label>Full Name <span class="ar">— الاسم الكامل</span></label>
           <input type="text" class="dep-name" placeholder="Dependent's full name"></div>
         <div class="form-group"><label>SSN <span class="ar">— رقم الضمان</span></label>
-          <input type="text" class="dep-ssn" placeholder="XXX-XX-XXXX"></div>
+          <input type="text" class="dep-ssn ssn-masked" placeholder="XXX-XX-XXXX" autocomplete="off" aria-label="Dependent Social Security Number"></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label>Date of Birth <span class="ar">— تاريخ الميلاد</span></label>
@@ -3251,6 +3395,90 @@ loadProgress().then(restored => {
 });
 // Auto-save every 60 seconds while filling forms
 setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
+
+// ── Real-time Refund Tracker ──
+function updateRefundTracker() {
+  const tracker = document.getElementById('refundTracker');
+  const amountEl = document.getElementById('rtAmount');
+  const detailEl = document.getElementById('rtDetail');
+  if (!tracker || !amountEl) return;
+
+  // Gather income data from form
+  let totalIncome = 0;
+  let totalWithheld = 0;
+
+  // W-2 wages and withholding
+  document.querySelectorAll('[id*="w2-wages"], [id*="wages"], [name*="wages"]').forEach(el => {
+    const v = parseFloat(el.value.replace(/[,$]/g, ''));
+    if (!isNaN(v)) totalIncome += v;
+  });
+  document.querySelectorAll('[id*="w2-fed"], [id*="federal-tax"], [id*="withh"], [name*="withh"]').forEach(el => {
+    const v = parseFloat(el.value.replace(/[,$]/g, ''));
+    if (!isNaN(v)) totalWithheld += v;
+  });
+
+  // 1099 income
+  document.querySelectorAll('[id*="1099"], [id*="nec-amount"], [name*="1099"]').forEach(el => {
+    if (el.id && (el.id.includes('amount') || el.id.includes('income') || el.id.includes('nec'))) {
+      const v = parseFloat(el.value.replace(/[,$]/g, ''));
+      if (!isNaN(v)) totalIncome += v;
+    }
+  });
+
+  // Show tracker once we have income
+  if (totalIncome > 0) {
+    tracker.classList.remove('hidden');
+  } else {
+    tracker.classList.add('hidden');
+    return;
+  }
+
+  // Get filing status
+  const filingStatus = document.querySelector('[name="filingStatus"]:checked, [id="filingStatus"]');
+  const status = filingStatus ? (filingStatus.value || 'single') : 'single';
+
+  // Standard deduction 2025
+  const stdDeductions = { single: 15000, married: 30000, mfj: 30000, mfs: 15000, hoh: 22500 };
+  const deduction = stdDeductions[status] || stdDeductions['single'];
+
+  // 2025 brackets (single as default)
+  const brackets = status === 'married' || status === 'mfj'
+    ? [[23850,0.10],[96950,0.12],[206700,0.22],[394600,0.24],[501050,0.32],[751600,0.35],[Infinity,0.37]]
+    : [[11925,0.10],[48475,0.12],[103350,0.22],[197300,0.24],[250525,0.32],[626350,0.35],[Infinity,0.37]];
+
+  const taxableIncome = Math.max(0, totalIncome - deduction);
+  let tax = 0;
+  let prev = 0;
+  for (const [limit, rate] of brackets) {
+    if (taxableIncome <= prev) break;
+    const taxable = Math.min(taxableIncome, limit) - prev;
+    tax += taxable * rate;
+    prev = limit;
+  }
+
+  const refund = totalWithheld - tax;
+  const formatted = '$' + Math.abs(Math.round(refund)).toLocaleString();
+
+  amountEl.textContent = (refund >= 0 ? '+' : '-') + formatted;
+  amountEl.className = 'rt-amount ' + (refund > 0 ? 'refund' : refund < 0 ? 'owed' : 'zero');
+  detailEl.textContent = refund >= 0
+    ? `Estimated refund based on $${totalIncome.toLocaleString()} income`
+    : `Estimated amount owed based on $${totalIncome.toLocaleString()} income`;
+}
+
+// Listen for changes on ALL form inputs
+document.addEventListener('input', function(e) {
+  if (e.target.matches('input, select')) {
+    clearTimeout(window._rtDebounce);
+    window._rtDebounce = setTimeout(updateRefundTracker, 300);
+  }
+});
+document.addEventListener('change', function(e) {
+  if (e.target.matches('input, select')) {
+    clearTimeout(window._rtDebounce);
+    window._rtDebounce = setTimeout(updateRefundTracker, 300);
+  }
+});
 </script>
 
 <!-- ═══════════════════════════════════════════════ -->
@@ -3828,20 +4056,20 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
 </style>
 
 <!-- CHAT TOGGLE BUTTON -->
-<button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
+<button class="chat-toggle" id="chatToggle" onclick="toggleChat()" aria-label="Open chat assistant">
   💬
   <span class="badge" id="chatBadge">!</span>
 </button>
 
 <!-- CHAT PANEL -->
-<div class="chat-panel" id="chatPanel">
+<div class="chat-panel" id="chatPanel" role="complementary" aria-label="AI Tax Advisor Chat">
   <div class="chat-header">
     <div class="chat-avatar">⚖️</div>
     <div class="chat-header-info">
       <h3>Tax Advisor AI — مستشارك الذكي</h3>
       <span id="chatHeaderStatus">Attorney + Accountant — محامي ومحاسب</span>
     </div>
-    <button class="chat-close" onclick="toggleChat()">✕</button>
+    <button class="chat-close" onclick="toggleChat()" aria-label="Close chat">✕</button>
   </div>
 
   <div class="chat-history-bar" id="chatHistoryBar" style="display:none;">
@@ -3852,7 +4080,7 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
     </div>
   </div>
 
-  <div class="chat-messages" id="chatMessages">
+  <div class="chat-messages" id="chatMessages" aria-live="polite" aria-atomic="false">
     <div class="chat-msg bot">
       <div class="msg-label">Tax Advisor — مستشار الضرائب</div>
       أهلاً وسهلاً! I'm your personal tax advisor — محامي ومحاسب بخدمتك. 🏛️<br><br>
@@ -3893,9 +4121,9 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
   <div class="chat-input-row">
     <button class="chat-attach-btn" onclick="document.getElementById('chatFileInput').click()" title="Attach files — ارفق ملفات 📎">📎</button>
     <input type="file" id="chatFileInput" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt" style="display:none" onchange="handleChatFiles(this)">
-    <input type="text" id="chatInput" placeholder="Ask anything... اسأل أي شي..."
+    <input type="text" id="chatInput" placeholder="Ask anything... اسأل أي شي..." aria-label="Type your message"
            onkeydown="if(event.key==='Enter' && !event.shiftKey) sendMessage()">
-    <button class="chat-send" id="chatSendBtn" onclick="sendMessage()">➤</button>
+    <button class="chat-send" id="chatSendBtn" onclick="sendMessage()" aria-label="Send message">➤</button>
   </div>
 </div>
 

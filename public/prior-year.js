@@ -268,8 +268,6 @@
             // Add employer placeholder or pre-fill if form exists
             const w2Section = document.getElementById('w2sSection');
             if (w2Section) {
-              // Log for UI layer to handle
-              console.log('Prior employer found:', employer);
               importedCount++;
             }
           });
@@ -667,6 +665,4 @@
       document.head.appendChild(style);
     }
   };
-
-  console.log('✅ PriorYearImport module loaded');
 })();

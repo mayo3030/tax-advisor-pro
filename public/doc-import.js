@@ -648,6 +648,4 @@ Return this JSON structure:
       inputEl.value = '';
     };
   }
-
-  console.log('[TaxDocImporter] Initialized — ✅ نظام استيراد المستندات الضريبية جاهز');
 })();

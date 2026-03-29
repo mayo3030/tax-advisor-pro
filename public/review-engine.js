@@ -639,8 +639,8 @@
           category: 'credits',
           titleEn: 'Child Tax Credit',
           titleAr: 'ائتمان الطفل الضريبي',
-          descEn: 'With qualifying children, you may claim $2,000 per child (2024).',
-          descAr: 'مع الأطفال المؤهلين، قد تطالب بـ $2,000 لكل طفل (2024).',
+          descEn: 'With qualifying children, you may claim $2,000 per child (2025).',
+          descAr: 'مع الأطفال المؤهلين، قد تطالب بـ $2,000 لكل طفل (2025).',
           field: 'credits.childTaxCredit'
         }));
       }
@@ -653,8 +653,8 @@
           category: 'credits',
           titleEn: 'CTC Advance Payments Not Noted',
           titleAr: 'مدفوعات CTC المسبقة لم تُلاحظ',
-          descEn: 'Did you receive advance Child Tax Credit payments in 2024? This affects your calculation.',
-          descAr: 'هل تلقيت مدفوعات مسبقة لائتمان الطفل الضريبي في 2024؟ هذا يؤثر على حسابك.',
+          descEn: 'Did you receive advance Child Tax Credit payments in 2025? This affects your calculation.',
+          descAr: 'هل تلقيت مدفوعات مسبقة لائتمان الطفل الضريبي في 2025؟ هذا يؤثر على حسابك.',
           field: 'credits.ctcPaymentReceived'
         }));
       }
@@ -822,7 +822,7 @@
         return; // No tax liability
       }
 
-      const brackets = this._getTaxBrackets(personal.filingStatus, 2024);
+      const brackets = this._getTaxBrackets(personal.filingStatus, 2025);
       let estimatedTax = 0;
 
       // Calculate estimated tax based on brackets
@@ -1321,49 +1321,49 @@
     },
 
     _getStandardDeduction(filingStatus, age) {
-      const deductions2024 = {
-        'single': age >= 65 ? 8550 : 14600,
-        'married_filing_joint': age >= 65 ? 28700 : 29200,
-        'married_filing_separate': age >= 65 ? 14700 : 14600,
-        'head_of_household': age >= 65 ? 10950 : 21900,
-        'qualifying_widow': 29200
+      const deductions2025 = {
+        'single': age >= 65 ? 19550 : 15000,
+        'married_filing_joint': age >= 65 ? 31850 : 30000,
+        'married_filing_separate': age >= 65 ? 15925 : 15000,
+        'head_of_household': age >= 65 ? 23500 : 22500,
+        'qualifying_widow': 30000
       };
-      return deductions2024[filingStatus] || 14600;
+      return deductions2025[filingStatus] || 15000;
     },
 
     _getTaxBrackets(filingStatus, year) {
-      // 2024 tax brackets
-      const brackets2024 = {
+      // 2025 tax brackets
+      const brackets2025 = {
         'single': [
-          { limit: 11600, rate: 0.10 },
-          { limit: 47150, rate: 0.12 },
-          { limit: 100525, rate: 0.22 },
-          { limit: 191950, rate: 0.24 },
-          { limit: 243725, rate: 0.32 },
-          { limit: 609350, rate: 0.35 },
+          { limit: 11925, rate: 0.10 },
+          { limit: 48475, rate: 0.12 },
+          { limit: 103350, rate: 0.22 },
+          { limit: 197300, rate: 0.24 },
+          { limit: 250525, rate: 0.32 },
+          { limit: 626350, rate: 0.35 },
           { limit: Infinity, rate: 0.37 }
         ],
         'married_filing_joint': [
-          { limit: 23200, rate: 0.10 },
-          { limit: 94300, rate: 0.12 },
-          { limit: 201050, rate: 0.22 },
-          { limit: 383900, rate: 0.24 },
-          { limit: 487450, rate: 0.32 },
-          { limit: 731200, rate: 0.35 },
+          { limit: 23850, rate: 0.10 },
+          { limit: 96950, rate: 0.12 },
+          { limit: 206700, rate: 0.22 },
+          { limit: 394600, rate: 0.24 },
+          { limit: 501050, rate: 0.32 },
+          { limit: 751600, rate: 0.35 },
           { limit: Infinity, rate: 0.37 }
         ],
         'head_of_household': [
-          { limit: 16550, rate: 0.10 },
-          { limit: 63100, rate: 0.12 },
-          { limit: 100500, rate: 0.22 },
-          { limit: 191950, rate: 0.24 },
-          { limit: 243700, rate: 0.32 },
-          { limit: 609350, rate: 0.35 },
+          { limit: 15975, rate: 0.10 },
+          { limit: 61050, rate: 0.12 },
+          { limit: 103300, rate: 0.22 },
+          { limit: 197300, rate: 0.24 },
+          { limit: 250525, rate: 0.32 },
+          { limit: 626350, rate: 0.35 },
           { limit: Infinity, rate: 0.37 }
         ]
       };
 
-      return brackets2024[filingStatus] || brackets2024['single'];
+      return brackets2025[filingStatus] || brackets2025['single'];
     },
 
     _createIssue(config) {
@@ -1522,7 +1522,6 @@
     },
 
     applyFix(issueId) {
-      console.log(`Auto-fix applied for: ${issueId}`);
       // In a real implementation, this would update taxData and re-run review
     }
   };

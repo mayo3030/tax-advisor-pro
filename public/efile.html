@@ -1247,36 +1247,58 @@
         let currentLang = 'en';
 
         // Load tax data
+        // Load real tax data from session
+        let taxData = null;
         async function loadTaxData() {
+            const sessionId = localStorage.getItem('taxSessionId') || localStorage.getItem('sessionId');
+            if (!sessionId) {
+                showToast('No tax data found. Please fill out your tax information first.', 'warning');
+                document.querySelector('.container').innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px;">
+                        <h2 style="color: var(--navy); margin-bottom: 20px;">📝 No Tax Data Found</h2>
+                        <p style="color: var(--text-light); margin-bottom: 30px;">Please complete your tax return in the main app first, then come back here to e-file.</p>
+                        <a href="index.html" class="btn btn-primary" style="display: inline-block;">
+                            ← Back to Tax Advisor Pro
+                        </a>
+                    </div>
+                `;
+                return null;
+            }
             try {
-                const response = await fetch('/api/tax-data');
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error('Error loading tax data:', error);
-                return getDefaultData();
+                const resp = await fetch('/api/tax-data/' + sessionId);
+                if (resp.ok) {
+                    taxData = await resp.json();
+                    return taxData;
+                } else {
+                    showToast('Could not load tax data. Please complete your return first.', 'warning');
+                    return null;
+                }
+            } catch(e) {
+                console.error('Error loading tax data:', e);
+                showToast('Server not connected. Run start.bat first.', 'warning');
+                return null;
             }
         }
 
         function getDefaultData() {
-            return {
-                filingStatus: 'Single',
-                totalIncome: 95000,
-                taxable_income: 82500,
-                total_tax: 12500,
-                total_withholding: 13200,
-                refund: 700,
-                dependents: 1,
-                has_w2: true,
-                has_1099: true,
-                ssn_valid: true,
-                address_complete: true,
-                deductions_complete: true,
-                credits_complete: true,
+            return taxData || {
+                filingStatus: '—',
+                totalIncome: 0,
+                taxable_income: 0,
+                total_tax: 0,
+                total_withholding: 0,
+                refund: 0,
+                dependents: 0,
+                has_w2: false,
+                has_1099: false,
+                ssn_valid: false,
+                address_complete: false,
+                deductions_complete: false,
+                credits_complete: false,
                 year: 2025,
-                firstName: 'John',
-                lastName: 'Doe',
-                state: 'CA',
+                firstName: 'User',
+                lastName: 'Data',
+                state: '—',
             };
         }
 

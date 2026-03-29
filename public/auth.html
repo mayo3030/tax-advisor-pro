@@ -1001,28 +1001,21 @@
 
       setLoading(loginBtn, true);
 
-      // Simulate API call
-      setTimeout(() => {
-        // Mock successful login
-        localStorage.setItem('authToken', 'mock_token_' + Date.now());
-        if (rememberMe) {
-          localStorage.setItem('rememberEmail', email);
-        }
-        setSuccess(loginBtn);
-      }, 800);
-
-      // Uncomment for real API:
-      /*
       try {
         const response = await fetch('/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password, rememberMe })
+          body: JSON.stringify({ email, password })
         });
 
         if (response.ok) {
           const data = await response.json();
           localStorage.setItem('authToken', data.token);
+          if (data.user) {
+            localStorage.setItem('userId', data.user.id);
+            localStorage.setItem('userEmail', data.user.email);
+            localStorage.setItem('userLanguage', data.user.language || 'en');
+          }
           if (rememberMe) {
             localStorage.setItem('rememberEmail', email);
           }
@@ -1036,7 +1029,6 @@
         showError('Network error. Please try again.', 'خطأ في الشبكة. يرجى المحاولة مرة أخرى.');
         setLoading(loginBtn, false);
       }
-      */
     });
 
     // ── SIGNUP SUBMISSION ──
@@ -1080,29 +1072,22 @@
 
       setLoading(signupBtn, true);
 
-      // Simulate API call
-      setTimeout(() => {
-        // Mock successful signup
-        localStorage.setItem('authToken', 'mock_token_' + Date.now());
-        localStorage.setItem('userLanguage', language);
-        localStorage.setItem('userName', firstName + ' ' + lastName);
-        setSuccess(signupBtn);
-      }, 800);
-
-      // Uncomment for real API:
-      /*
       try {
         const response = await fetch('/api/auth/signup', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ firstName, lastName, email, password, language })
+          body: JSON.stringify({ email, password, firstName, lastName, language })
         });
 
         if (response.ok) {
           const data = await response.json();
           localStorage.setItem('authToken', data.token);
-          localStorage.setItem('userLanguage', language);
-          localStorage.setItem('userName', firstName + ' ' + lastName);
+          if (data.user) {
+            localStorage.setItem('userId', data.user.id);
+            localStorage.setItem('userEmail', data.user.email);
+            localStorage.setItem('userLanguage', data.user.language || language);
+            localStorage.setItem('userName', data.user.firstName + ' ' + data.user.lastName);
+          }
           setSuccess(signupBtn);
         } else {
           const error = await response.json();
@@ -1113,7 +1098,6 @@
         showError('Network error. Please try again.', 'خطأ في الشبكة. يرجى المحاولة مرة أخرى.');
         setLoading(signupBtn, false);
       }
-      */
     });
 
     // ── FORGOT PASSWORD MODAL ──
