@@ -1,0 +1,3227 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Advisor Pro — مستشار الضرائب</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Noto+Sans+Arabic:wght@600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Noto+Sans+Arabic:wght@600;700;800&display=swap" rel="stylesheet"></noscript>
+<style>
+:root {
+  --primary: #355ebe;
+  --primary-light: #4a73d4;
+  --primary-dark: #2a4b99;
+  --accent: #d52b1d;
+  --accent-light: #e84437;
+  --bg: #f5f6fa;
+  --surface: #ffffff;
+  --border: #e0e4ef;
+  --text: #1a1a2e;
+  --text-muted: #6b7280;
+  --success: #007a5e;
+  --success-light: #e6f7f2;
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --info: #355ebe;
+  --info-light: #e8edf8;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --font-heading: 'Nunito', 'Noto Sans Arabic', sans-serif;
+  --font-body: 'Nunito', 'Noto Sans Arabic', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── TOPNAV ── */
+.topnav {
+  background: var(--surface);
+  border-bottom: 3px solid var(--primary);
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+.topnav .logo {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.topnav .logo .icon { font-size: 24px; }
+.topnav .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.topnav .tax-year {
+  background: var(--info-light);
+  color: var(--primary);
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* ── MAIN LAYOUT ── */
+.app-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px 96px;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-section {
+  margin-bottom: 32px;
+}
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 12px;
+}
+.progress-steps::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 24px;
+  right: 24px;
+  height: 3px;
+  background: var(--border);
+  z-index: 0;
+}
+.progress-steps .step-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-muted);
+  z-index: 1;
+  transition: background 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  border: 3px solid var(--bg);
+}
+.progress-steps .step-dot.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 0 0 4px rgba(53,94,190,0.2);
+}
+.progress-steps .step-dot.completed {
+  background: var(--success);
+  color: white;
+}
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+}
+.progress-labels span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+  width: 80px;
+}
+.progress-labels span.active {
+  color: var(--primary);
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SECTION HEADER ── */
+.section-header {
+  margin-bottom: 28px;
+}
+.section-header h2 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 26px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.section-header .subtitle {
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ── ADVISOR TIP ── */
+.advisor-tip {
+  background: var(--info-light);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.advisor-tip.warning {
+  background: var(--warning-light);
+  border-left-color: var(--warning);
+}
+.advisor-tip.success {
+  background: var(--success-light);
+  border-left-color: var(--success);
+}
+.advisor-tip .tip-icon { font-size: 22px; flex-shrink: 0; }
+.advisor-tip .tip-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.6;
+}
+.advisor-tip .tip-text .ar {
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+
+/* ── FORM ELEMENTS ── */
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.form-group label .ar {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 13px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 11px 14px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  transition: border-color 0.15s ease;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(53,94,190,0.12);
+}
+.form-group input::placeholder { color: #b0b5c3; font-weight: 500; }
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ── RADIO / CHECKBOX CARDS ── */
+.option-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.option-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  background: var(--surface);
+}
+.option-card:hover {
+  border-color: var(--primary-light);
+}
+.option-card.selected {
+  border-color: var(--primary);
+  background: var(--info-light);
+  box-shadow: 0 0 0 3px rgba(53,94,190,0.12);
+}
+.option-card .opt-title {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.option-card .opt-desc {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ── BUTTONS ── */
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  gap: 12px;
+}
+.btn {
+  padding: 12px 32px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover {
+  background: var(--primary-light);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+.btn-outline:hover {
+  background: var(--info-light);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+}
+.btn-ghost:hover {
+  color: var(--text);
+  background: var(--bg);
+}
+.btn-danger {
+  background: var(--accent);
+  color: white;
+}
+.btn-danger:hover {
+  background: var(--accent-light);
+}
+
+/* ── INCOME ENTRY TABLE ── */
+.income-entry {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.income-entry h4 {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--primary);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.remove-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+  transition: color 0.15s ease;
+}
+.remove-btn:hover { color: var(--accent-light); }
+
+/* ── SUMMARY TABLE ── */
+.summary-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+.summary-table thead th {
+  background: var(--info-light);
+  color: var(--primary);
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 12px 16px;
+  text-align: left;
+  letter-spacing: 0.5px;
+}
+.summary-table thead th:first-child { border-radius: var(--radius-md) 0 0 0; }
+.summary-table thead th:last-child { border-radius: 0 var(--radius-md) 0 0; text-align: right; }
+.summary-table tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 600;
+}
+.summary-table tbody td:last-child { text-align: right; font-weight: 700; }
+.summary-table tbody tr:hover { background: var(--bg); }
+.summary-table .total-row td {
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--primary);
+  border-top: 2px solid var(--primary);
+  border-bottom: none;
+}
+.summary-table .refund-row td {
+  font-weight: 800;
+  font-size: 18px;
+  border-top: 2px solid var(--success);
+  border-bottom: none;
+}
+.summary-table .refund-row td.positive { color: var(--success); }
+.summary-table .refund-row td.negative { color: var(--accent); }
+
+/* ── CHECKLIST ── */
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.checklist-item:last-child { border-bottom: none; }
+.check-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  font-size: 12px;
+  color: transparent;
+}
+.check-circle.checked {
+  background: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+.checklist-item .check-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.checklist-item .check-label .ar {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ── WELCOME HERO ── */
+.welcome-hero {
+  text-align: center;
+  padding: 48px 24px;
+}
+.welcome-hero h1 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 36px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.welcome-hero .ar-title {
+  font-family: 'Noto Sans Arabic', var(--font-heading);
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+.welcome-hero p {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
+}
+.welcome-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+  text-align: center;
+}
+.welcome-feature {
+  padding: 20px;
+}
+.welcome-feature .feat-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+.welcome-feature h3 {
+  font-weight: 800;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.welcome-feature p {
+  font-size: 13px;
+  margin-bottom: 0;
+}
+
+/* ── DEDUCTION PICKER ── */
+.deduction-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.deduction-item {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.deduction-item:hover {
+  border-color: var(--primary-light);
+  background: var(--info-light);
+}
+.deduction-item.selected {
+  border-color: var(--success);
+  background: var(--success-light);
+}
+.deduction-item .ded-icon { font-size: 22px; }
+.deduction-item .ded-label { font-weight: 700; font-size: 14px; }
+.deduction-item .ded-label .ar { font-weight: 600; color: var(--text-muted); font-size: 12px; display: block; }
+
+/* ── RESULT CARD ── */
+.result-highlight {
+  text-align: center;
+  padding: 32px;
+  background: linear-gradient(135deg, var(--info-light), var(--success-light));
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+}
+.result-highlight .result-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.result-highlight .result-amount {
+  font-size: 48px;
+  font-weight: 800;
+  font-family: var(--font-heading);
+}
+.result-highlight .result-amount.refund { color: var(--success); }
+.result-highlight .result-amount.owe { color: var(--accent); }
+
+/* ── STEP HIDDEN ── */
+.step-content { display: none; contain: content; }
+.step-content.active { display: block; }
+
+/* ── UPLOAD ZONE ── */
+.upload-zone {
+  border: 2.5px dashed var(--border);
+  border-radius: var(--radius-lg);
+  padding: 48px 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  background: var(--bg);
+  position: relative;
+}
+.upload-zone:hover, .upload-zone.dragover {
+  border-color: var(--primary);
+  background: var(--info-light);
+}
+.upload-zone .upload-icon { font-size: 52px; margin-bottom: 16px; }
+.upload-zone h3 { font-weight: 800; font-size: 18px; margin-bottom: 6px; }
+.upload-zone p { color: var(--text-muted); font-size: 14px; font-weight: 600; }
+.upload-zone input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 10;
+}
+.upload-zone .supported {
+  font-size: 12px; color: var(--text-muted); margin-top: 12px;
+  background: var(--surface); display: inline-block; padding: 4px 14px;
+  border-radius: var(--radius-full); border: 1px solid var(--border);
+}
+
+/* ── UPLOADED FILES LIST ── */
+.uploaded-files { margin-top: 20px; }
+.uploaded-file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+}
+.uploaded-file:hover { box-shadow: var(--shadow-sm); }
+.uploaded-file .file-icon { font-size: 28px; flex-shrink: 0; }
+.uploaded-file .file-info { flex: 1; min-width: 0; }
+.uploaded-file .file-name {
+  font-weight: 700; font-size: 14px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.uploaded-file .file-meta {
+  font-size: 12px; color: var(--text-muted); font-weight: 600;
+}
+.uploaded-file .file-status {
+  font-size: 12px; font-weight: 700; padding: 4px 10px;
+  border-radius: var(--radius-full); flex-shrink: 0;
+}
+.uploaded-file .file-status.scanning {
+  background: var(--warning-light); color: #92400e;
+}
+.uploaded-file .file-status.done {
+  background: var(--success-light); color: var(--success);
+}
+.uploaded-file .file-status.error {
+  background: #fde8e8; color: var(--accent);
+}
+.uploaded-file .file-remove {
+  background: none; border: none; color: var(--text-muted);
+  cursor: pointer; font-size: 18px; padding: 4px;
+  transition: color 0.15s ease;
+}
+.uploaded-file .file-remove:hover { color: var(--accent); }
+
+/* ── PROCESSING OVERLAY ── */
+.process-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(26,26,46,0.75);
+  z-index: 10000; align-items: center; justify-content: center;
+}
+.process-overlay.visible { display: flex; }
+.process-box {
+  background: var(--surface); border-radius: var(--radius-xl);
+  padding: 40px; text-align: center; max-width: 440px; width: 90%;
+  box-shadow: var(--shadow-lg); animation: fadeUp 0.3s ease;
+}
+.process-box .spinner {
+  width: 56px; height: 56px; border: 4px solid var(--border);
+  border-top-color: var(--primary); border-radius: 50%;
+  animation: spin 0.8s linear infinite; margin: 0 auto 20px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.process-box h3 { font-weight: 800; font-size: 18px; margin-bottom: 8px; }
+.process-box p { color: var(--text-muted); font-size: 14px; font-weight: 600; }
+.process-box .process-log {
+  text-align: left; margin-top: 16px; padding: 12px;
+  background: var(--bg); border-radius: var(--radius-md);
+  font-size: 13px; max-height: 160px; overflow-y: auto;
+  font-family: monospace; line-height: 1.8;
+}
+.process-box .process-log .log-line { display: flex; align-items: center; gap: 6px; }
+.process-box .process-log .log-ok { color: var(--success); }
+.process-box .process-log .log-work { color: var(--warning); }
+.process-box .process-log .log-err { color: var(--accent); }
+
+/* Progress bar */
+.progress-container {
+  width: 100%; margin: 16px 0 4px; text-align: left;
+}
+.progress-bar-bg {
+  width: 100%; height: 14px; background: var(--bg); border-radius: 20px;
+  overflow: hidden; border: 1px solid var(--border);
+}
+.progress-bar-fill {
+  height: 100%; width: 0%; border-radius: 20px;
+  background: linear-gradient(90deg, var(--primary), #56b3e6);
+  transition: width 0.4s ease;
+}
+.progress-pct {
+  font-size: 14px; font-weight: 800; color: var(--primary);
+  margin-top: 6px; text-align: center;
+}
+.doc-progress-list {
+  text-align: left; margin-top: 10px; display: flex; flex-direction: column; gap: 4px;
+}
+.doc-progress-item {
+  display: flex; align-items: center; gap: 8px; font-size: 12px;
+  font-family: var(--font-body); padding: 3px 0;
+}
+.doc-progress-item .doc-icon {
+  width: 18px; text-align: center; flex-shrink: 0;
+}
+.doc-progress-item .doc-name {
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--text-main);
+}
+.doc-progress-item .doc-status {
+  font-weight: 700; flex-shrink: 0;
+}
+.doc-status.pending { color: var(--text-muted); }
+.doc-status.working { color: var(--warning); }
+.doc-status.done { color: var(--success); }
+.doc-status.error { color: var(--accent); }
+
+/* ── AUTO-FILL BADGE ── */
+.autofilled {
+  position: relative;
+}
+.autofilled::after {
+  content: '✨ Auto-filled';
+  position: absolute; top: -8px; right: 8px;
+  font-size: 10px; font-weight: 800; color: var(--success);
+  background: var(--success-light); padding: 2px 8px;
+  border-radius: var(--radius-full); border: 1px solid var(--success);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .app-container { padding: 20px 16px 80px; }
+  .card { padding: 24px 20px; }
+  .form-row { grid-template-columns: 1fr; }
+  .option-cards { grid-template-columns: 1fr; }
+  .deduction-grid { grid-template-columns: 1fr; }
+  .welcome-features { grid-template-columns: 1fr; }
+  .welcome-hero h1 { font-size: 28px; }
+  .progress-labels { display: none; }
+  .topnav { padding: 0 16px; }
+  .btn-row { flex-direction: column; }
+  .btn { width: 100%; justify-content: center; }
+}
+</style>
+<!-- PDF Library — lazy loaded when needed -->
+<script>
+  let pdfJsLoaded = false;
+  function loadPdfJs() {
+    if (pdfJsLoaded) return Promise.resolve();
+    return new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      s.onload = () => {
+        if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        pdfJsLoaded = true;
+        resolve();
+      };
+      s.onerror = () => resolve();
+      document.head.appendChild(s);
+    });
+  }
+</script>
+</head>
+<body>
+
+<!-- PROCESSING OVERLAY -->
+<div class="process-overlay" id="processOverlay">
+  <div class="process-box">
+    <div class="spinner" id="processSpinner"></div>
+    <h3 id="processTitle">Scanning Documents — جاري مسح المستندات</h3>
+    <p id="processSubtitle">AI is reading your forms and extracting data — الذكاء الاصطناعي يقرأ الفورمات ويستخرج البيانات</p>
+    <div class="progress-container" id="progressContainer" style="display:none;">
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBarFill"></div></div>
+      <div class="progress-pct" id="progressPct">0%</div>
+      <div class="doc-progress-list" id="docProgressList"></div>
+    </div>
+    <div class="process-log" id="processLog"></div>
+    <button onclick="document.getElementById('processOverlay').classList.remove('visible')"
+      style="margin-top: 12px; padding: 8px 24px; border-radius: 20px; border: 2px solid var(--border);
+      background: var(--surface); font-family: var(--font-body); font-weight: 700; font-size: 13px;
+      color: var(--text-muted); cursor: pointer; display: none;" id="processCloseBtn">
+      ✕ Close — أغلق
+    </button>
+  </div>
+</div>
+
+<!-- TOPNAV -->
+<nav class="topnav">
+  <div class="logo">
+    <span class="icon">🏛️</span>
+    Tax Advisor Pro — مستشار الضرائب
+  </div>
+  <div class="nav-right">
+    <span class="tax-year">Tax Year 2025</span>
+  </div>
+</nav>
+
+<div class="app-container">
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-section">
+    <div class="progress-steps" id="progressSteps"></div>
+    <div class="progress-labels" id="progressLabels"></div>
+  </div>
+
+  <!-- ═══════════ STEP 0: WELCOME ═══════════ -->
+  <div class="step-content active" id="step-0">
+    <div class="card">
+      <div class="welcome-hero">
+        <h1>Welcome to Tax Advisor Pro</h1>
+        <div class="ar-title">!أهلاً وسهلاً — يلا نبدأ نشتغل على الضرائب</div>
+        <p>
+          Your personal tax advisor, بيفهمك كل شي step by step.
+          We'll walk you through filing your U.S. taxes — covering your W-2 income,
+          1099 self-employment, deductions, credits, وكل شي تحتاجه.
+          <br><br>
+          Think of this like sitting with a محاسب و محامي together — نصيحة قانونية ومالية بمكان واحد.
+        </p>
+
+        <div class="welcome-features">
+          <div class="welcome-feature">
+            <div class="feat-icon">📋</div>
+            <h3>Step-by-Step<br>خطوة بخطوة</h3>
+            <p>We guide you through every section — ما راح تضيع</p>
+          </div>
+          <div class="welcome-feature">
+            <div class="feat-icon">⚖️</div>
+            <h3>Attorney Advice<br>نصيحة محامي</h3>
+            <p>Legal tips to protect you — عشان تعرف حقوقك</p>
+          </div>
+          <div class="welcome-feature">
+            <div class="feat-icon">💰</div>
+            <h3>Max Refund<br>أكبر استرجاع</h3>
+            <p>Every deduction & credit — ما نترك شي عالطاولة</p>
+          </div>
+        </div>
+
+        <div class="btn-row" style="justify-content: center; margin-top: 40px;">
+          <button class="btn btn-primary" onclick="goToStep(1)" style="font-size: 17px; padding: 14px 48px;">
+            !Let's Start — يلا نبدأ ←
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 1: UPLOAD DOCUMENTS ═══════════ -->
+  <div class="step-content" id="step-1">
+    <div class="card">
+      <div class="section-header">
+        <h2>📤 Upload Your Documents — ارفع مستنداتك</h2>
+        <div class="subtitle">Upload your tax forms and we'll auto-fill everything — ارفع الفورمات ونحن نعبي كل شي أوتوماتيك</div>
+      </div>
+
+      <div class="advisor-tip">
+        <span class="tip-icon">🤖</span>
+        <div class="tip-text">
+          <strong>Smart Scan:</strong> Our AI reads your W-2, 1099, 1098, medical docs, receipts — photos or PDFs — and automatically fills in the correct fields.
+          <span class="ar">الذكاء الاصطناعي يقرأ كل الفورمات — W-2, 1099, إيصالات، مستندات طبية — صور أو PDF — ويعبي كل شي بمكانه الصح!</span>
+        </div>
+      </div>
+
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="fileInput" multiple accept="image/*,.pdf" onchange="handleFileUpload(event)">
+        <div class="upload-icon">📎</div>
+        <h3>Drop your documents here — حط المستندات هنا</h3>
+        <p>or click to browse — أو اضغط عشان تختار من الملفات</p>
+        <div class="supported">Supports: PDF, JPG, PNG, HEIC — يدعم كل أنواع الصور والـ PDF</div>
+      </div>
+
+      <div class="uploaded-files" id="uploadedFiles"></div>
+
+      <div style="margin-top: 24px;">
+        <h3 style="font-weight: 800; margin-bottom: 12px;">📋 What to upload — شو ترفع؟</h3>
+        <div class="deduction-grid">
+          <div class="deduction-item" style="cursor: default; border-color: var(--info-light); background: var(--info-light);">
+            <span class="ded-icon">🏢</span>
+            <span class="ded-label">W-2 Forms<span class="ar">فورمات من الشغل</span></span>
+          </div>
+          <div class="deduction-item" style="cursor: default; border-color: var(--info-light); background: var(--info-light);">
+            <span class="ded-icon">💼</span>
+            <span class="ded-label">1099-NEC / 1099-MISC<span class="ar">فورمات العمل الحر</span></span>
+          </div>
+          <div class="deduction-item" style="cursor: default; border-color: var(--info-light); background: var(--info-light);">
+            <span class="ded-icon">🏠</span>
+            <span class="ded-label">1098 Mortgage Interest<span class="ar">فوائد القرض العقاري</span></span>
+          </div>
+          <div class="deduction-item" style="cursor: default; border-color: var(--info-light); background: var(--info-light);">
+            <span class="ded-icon">🏥</span>
+            <span class="ded-label">Medical Bills / 1095<span class="ar">فواتير طبية / تأمين صحي</span></span>
+          </div>
+          <div class="deduction-item" style="cursor: default; border-color: var(--info-light); background: var(--info-light);">
+            <span class="ded-icon">🎓</span>
+            <span class="ded-label">1098-T Tuition<span class="ar">رسوم الدراسة</span></span>
+          </div>
+          <div class="deduction-item" style="cursor: default; border-color: var(--info-light); background: var(--info-light);">
+            <span class="ded-icon">🧾</span>
+            <span class="ded-label">Receipts & Other Docs<span class="ar">إيصالات ومستندات أخرى</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="advisor-tip warning" style="margin-top: 24px;">
+        <span class="tip-icon">🔒</span>
+        <div class="tip-text">
+          <strong>Privacy:</strong> Your documents are processed locally in your browser and sent only to the AI for reading.
+          Nothing is stored on any server — كل شي يصير بالمتصفح عندك، ما ننسخ شي على أي سيرفر.
+        </div>
+      </div>
+
+      <div id="scanResultSummary" style="display: none; margin-top: 24px;">
+        <div class="advisor-tip success">
+          <span class="tip-icon">✅</span>
+          <div class="tip-text" id="scanSummaryText">
+            Documents scanned successfully! — تم مسح المستندات بنجاح!
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goToStep(0)">← Back</button>
+        <div style="display: flex; gap: 12px;">
+          <button class="btn btn-outline" onclick="goToStep(2)">Skip — تخطى →</button>
+          <button class="btn btn-primary" id="scanAndFillBtn" onclick="scanAllAndFill()" disabled>
+            🤖 Scan & Auto-Fill — امسح واعبي →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 2: PERSONAL INFO ═══════════ -->
+  <div class="step-content" id="step-2">
+    <div class="card">
+      <div class="section-header">
+        <h2>👤 Personal Information — معلوماتك الشخصية</h2>
+        <div class="subtitle">IRS needs to know who you are — لازم نعرف الـ IRS مين إنت</div>
+      </div>
+
+      <div class="advisor-tip">
+        <span class="tip-icon">⚖️</span>
+        <div class="tip-text">
+          <strong>Attorney Tip:</strong> Your name must match EXACTLY what's on your Social Security card.
+          <span class="ar">لازم اسمك يطابق بالضبط الإسم على كارت الـ Social Security — أي غلطة ممكن تأخر الـ refund تبعك.</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name <span class="ar">— الاسم الأول</span></label>
+          <input type="text" id="firstName" placeholder="e.g. Mina">
+        </div>
+        <div class="form-group">
+          <label>Last Name <span class="ar">— اسم العائلة</span></label>
+          <input type="text" id="lastName" placeholder="e.g. Arar">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>SSN (Social Security Number) <span class="ar">— رقم الضمان الاجتماعي</span></label>
+          <input type="text" id="ssn" placeholder="XXX-XX-XXXX" maxlength="11">
+        </div>
+        <div class="form-group">
+          <label>Date of Birth <span class="ar">— تاريخ الميلاد</span></label>
+          <input type="date" id="dob">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Address <span class="ar">— العنوان</span></label>
+        <input type="text" id="address" placeholder="Street address">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>City <span class="ar">— المدينة</span></label>
+          <input type="text" id="city" placeholder="City">
+        </div>
+        <div class="form-group">
+          <label>State <span class="ar">— الولاية</span></label>
+          <select id="state">
+            <option value="">Select state...</option>
+            <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+            <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+            <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+            <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
+            <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
+            <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+            <option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option>
+            <option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
+            <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+            <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
+            <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
+            <option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option>
+            <option>Wisconsin</option><option>Wyoming</option><option>District of Columbia</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>ZIP Code <span class="ar">— الرمز البريدي</span></label>
+        <input type="text" id="zip" placeholder="e.g. 77001" maxlength="10" style="max-width: 200px;">
+      </div>
+
+      <div class="advisor-tip success">
+        <span class="tip-icon">💡</span>
+        <div class="tip-text">
+          <strong>Accountant Note:</strong> If you moved during 2025, use your address as of December 31, 2025.
+          <span class="ar">إذا انتقلت خلال 2025، استخدم عنوانك بتاريخ 31 ديسمبر 2025.</span>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goToStep(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(3)">Next: Filing Status — التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 3: FILING STATUS ═══════════ -->
+  <div class="step-content" id="step-3">
+    <div class="card">
+      <div class="section-header">
+        <h2>💍 Filing Status — حالة التقديم</h2>
+        <div class="subtitle">This affects your tax brackets and deductions — هاي تأثر على شريحة الضرائب والخصومات</div>
+      </div>
+
+      <div class="advisor-tip">
+        <span class="tip-icon">⚖️</span>
+        <div class="tip-text">
+          <strong>Attorney Tip:</strong> Your filing status is based on your marital status on December 31, 2025.
+          Even if you got married on Dec 31st, you're considered married for the whole year.
+          <span class="ar">حالتك الزوجية بتاريخ 31 ديسمبر 2025 هي اللي تحدد — حتى لو تزوجت آخر يوم بالسنة، تعتبر متزوج كل السنة.</span>
+        </div>
+      </div>
+
+      <div class="option-cards" id="filingStatusCards">
+        <div class="option-card" onclick="selectOption('filingStatus', 'single', this)">
+          <div class="opt-title">Single — أعزب/عزباء</div>
+          <div class="opt-desc">Unmarried, legally separated, or divorced on Dec 31. مو متزوج/ة بنهاية السنة</div>
+        </div>
+        <div class="option-card" onclick="selectOption('filingStatus', 'mfj', this)">
+          <div class="opt-title">Married Filing Jointly — متزوج مشترك</div>
+          <div class="opt-desc">You and your spouse file one return together. Usually gives the best refund! عادةً يعطي أحسن نتيجة</div>
+        </div>
+        <div class="option-card" onclick="selectOption('filingStatus', 'mfs', this)">
+          <div class="opt-title">Married Filing Separately — متزوج منفصل</div>
+          <div class="opt-desc">Each spouse files their own return. Sometimes helpful if one has high medical bills. أحياناً أفضل لو عندك مصاريف طبية كبيرة</div>
+        </div>
+        <div class="option-card" onclick="selectOption('filingStatus', 'hoh', this)">
+          <div class="opt-title">Head of Household — رب الأسرة</div>
+          <div class="opt-desc">Unmarried + pay >50% of household costs + have a qualifying dependent. أعزب ودافع أكثر من نص مصاريف البيت</div>
+        </div>
+      </div>
+
+      <div class="advisor-tip warning">
+        <span class="tip-icon">⚠️</span>
+        <div class="tip-text">
+          <strong>Important:</strong> Head of Household gives you a bigger standard deduction ($22,500 vs $15,000 for single).
+          But the IRS audits this status more — you MUST have a qualifying dependent.
+          <span class="ar">رب الأسرة يعطيك خصم أكبر بكثير — بس الـ IRS يدقق عليها أكثر. لازم يكون عندك dependent مؤهل.</span>
+        </div>
+      </div>
+
+      <div id="dependentsSection" style="display:none;">
+        <h3 style="font-weight: 800; margin-bottom: 16px;">👶 Dependents — المعالين</h3>
+        <div class="advisor-tip">
+          <span class="tip-icon">💡</span>
+          <div class="tip-text">
+            Each qualifying child under 17 can get you up to <strong>$2,000 Child Tax Credit</strong>.
+            <span class="ar">كل طفل تحت 17 سنة ممكن يعطيك لحد $2,000 ائتمان ضريبي — هاي فلوس ترجعلك!</span>
+          </div>
+        </div>
+        <div id="dependentsList"></div>
+        <button class="btn btn-outline" onclick="addDependent()" style="margin-top: 12px;">+ Add Dependent — أضف معال</button>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goToStep(2)">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(4)">Next: W-2 Income — التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 4: W-2 INCOME ═══════════ -->
+  <div class="step-content" id="step-4">
+    <div class="card">
+      <div class="section-header">
+        <h2>🏢 W-2 Income — دخل الوظيفة</h2>
+        <div class="subtitle">Enter info from each W-2 form your employer gave you — دخّل المعلومات من كل W-2 من الشغل</div>
+      </div>
+
+      <div class="advisor-tip">
+        <span class="tip-icon">📋</span>
+        <div class="tip-text">
+          <strong>What is a W-2?</strong> Your employer sends this form showing your total wages and taxes withheld in 2025.
+          You should have received it by January 31, 2026.
+          <span class="ar">الـ W-2 هو فورم من شغلك يبين كم ربحت وكم ضرائب انخصمت. لازم يوصلك قبل نهاية يناير.</span>
+        </div>
+      </div>
+
+      <div id="w2List">
+        <div class="income-entry" data-index="0">
+          <h4>📄 W-2 #1 <button class="remove-btn" onclick="removeW2(this)" style="display:none;">✕</button></h4>
+          <div class="form-group">
+            <label>Employer Name <span class="ar">— اسم جهة العمل</span></label>
+            <input type="text" class="w2-employer" placeholder="e.g. Amazon, Google...">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Box 1: Wages <span class="ar">— الراتب (المربع 1)</span></label>
+              <input type="number" class="w2-wages" placeholder="$ Total wages">
+            </div>
+            <div class="form-group">
+              <label>Box 2: Federal Tax Withheld <span class="ar">— الضريبة الفيدرالية المحتجزة</span></label>
+              <input type="number" class="w2-fed-tax" placeholder="$ Federal tax withheld">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Box 3: Social Security Wages <span class="ar">— أجور الضمان الاجتماعي</span></label>
+              <input type="number" class="w2-ss-wages" placeholder="$ SS wages">
+            </div>
+            <div class="form-group">
+              <label>Box 5: Medicare Wages <span class="ar">— أجور الميديكير</span></label>
+              <input type="number" class="w2-medicare" placeholder="$ Medicare wages">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Box 17: State Tax Withheld <span class="ar">— ضريبة الولاية المحتجزة</span></label>
+              <input type="number" class="w2-state-tax" placeholder="$ State tax withheld">
+            </div>
+            <div class="form-group">
+              <label>Employer EIN <span class="ar">— رقم تعريف صاحب العمل</span></label>
+              <input type="text" class="w2-ein" placeholder="XX-XXXXXXX">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-outline" onclick="addW2()" style="margin-top: 8px;">+ Add Another W-2 — أضف W-2 ثاني</button>
+
+      <div class="advisor-tip success" style="margin-top: 24px;">
+        <span class="tip-icon">💡</span>
+        <div class="tip-text">
+          <strong>Accountant Tip:</strong> Make sure Box 2 (Federal Tax Withheld) is correct — this is what determines
+          if you get a refund or owe money. The bigger this number, the more likely you get money back!
+          <span class="ar">المربع 2 هو المهم — كل ما كان أكبر، كل ما فرصتك بالاسترجاع أكبر. تأكد الرقم صح!</span>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goToStep(3)">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(5)">Next: 1099 Income — التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 5: 1099 INCOME ═══════════ -->
+  <div class="step-content" id="step-5">
+    <div class="card">
+      <div class="section-header">
+        <h2>💼 1099 Self-Employment — دخل العمل الحر</h2>
+        <div class="subtitle">Freelance, contract, or side hustle income — دخل الفريلانس أو الشغل الجانبي</div>
+      </div>
+
+      <div class="advisor-tip warning">
+        <span class="tip-icon">⚠️</span>
+        <div class="tip-text">
+          <strong>Attorney Warning:</strong> ALL self-employment income must be reported — even if you didn't get a 1099 form.
+          If someone paid you $600+ cash/Venmo/Zelle for work, you're legally required to report it.
+          <span class="ar">كل دخل من الشغل الحر لازم تبلّغ عنه — حتى لو ما وصلك فورم 1099. إذا حد دفعلك $600 أو أكثر كاش أو Venmo أو Zelle، قانونياً لازم تبلّغ.</span>
+        </div>
+      </div>
+
+      <div id="form1099List">
+        <div class="income-entry" data-index="0">
+          <h4>📄 1099-NEC #1 <button class="remove-btn" onclick="remove1099(this)" style="display:none;">✕</button></h4>
+          <div class="form-group">
+            <label>Client/Payer Name <span class="ar">— اسم العميل أو الجهة الدافعة</span></label>
+            <input type="text" class="nec-payer" placeholder="e.g. Uber, Fiverr, client name...">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Box 1: Nonemployee Compensation <span class="ar">— المبلغ المستلم</span></label>
+              <input type="number" class="nec-amount" placeholder="$ Amount received">
+            </div>
+            <div class="form-group">
+              <label>Payer's EIN <span class="ar">— رقم تعريف الدافع</span></label>
+              <input type="text" class="nec-ein" placeholder="XX-XXXXXXX">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-outline" onclick="add1099()" style="margin-top: 8px;">+ Add Another 1099 — أضف 1099 ثاني</button>
+
+      <div class="advisor-tip" style="margin-top: 24px;">
+        <span class="tip-icon">⚖️</span>
+        <div class="tip-text">
+          <strong>Attorney + Accountant Tip:</strong> Self-employment tax is 15.3% (Social Security + Medicare) on TOP of income tax.
+          But don't worry — you can deduct HALF of this tax! Plus business expenses reduce your taxable income.
+          <span class="ar">ضريبة العمل الحر 15.3% — بس الخبر الحلو: تقدر تخصم نصها! وكمان مصاريف الشغل تنقص من الدخل الخاضع للضريبة.</span>
+        </div>
+      </div>
+
+      <h3 style="font-weight: 800; margin: 28px 0 16px;">📦 Business Expenses — مصاريف الشغل</h3>
+      <div class="advisor-tip success">
+        <span class="tip-icon">💰</span>
+        <div class="tip-text">
+          <strong>Save Money!</strong> Every legitimate business expense reduces your taxable income.
+          <span class="ar">كل مصروف شرعي للشغل ينقص من الضرائب — لا تنسى شي!</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Home Office <span class="ar">— مكتب بالبيت</span></label>
+          <input type="number" id="expHomeOffice" placeholder="$ Amount (or use simplified: $5/sq ft)">
+        </div>
+        <div class="form-group">
+          <label>Vehicle/Mileage <span class="ar">— السيارة/المسافة</span></label>
+          <input type="number" id="expVehicle" placeholder="$ Amount (or 70¢/mile × miles)">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Supplies & Equipment <span class="ar">— مستلزمات ومعدات</span></label>
+          <input type="number" id="expSupplies" placeholder="$ Computer, software, tools...">
+        </div>
+        <div class="form-group">
+          <label>Phone & Internet <span class="ar">— تلفون وإنترنت</span></label>
+          <input type="number" id="expPhone" placeholder="$ Business % of your bill">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Professional Services <span class="ar">— خدمات مهنية</span></label>
+          <input type="number" id="expProfessional" placeholder="$ Accountant, legal, etc.">
+        </div>
+        <div class="form-group">
+          <label>Other Expenses <span class="ar">— مصاريف أخرى</span></label>
+          <input type="number" id="expOther" placeholder="$ Advertising, insurance...">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goToStep(4)">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(6)">Next: Deductions — التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 6: DEDUCTIONS ═══════════ -->
+  <div class="step-content" id="step-6">
+    <div class="card">
+      <div class="section-header">
+        <h2>✂️ Deductions — الخصومات</h2>
+        <div class="subtitle">Reduce your taxable income — نقلل الدخل الخاضع للضريبة</div>
+      </div>
+
+      <div class="advisor-tip">
+        <span class="tip-icon">⚖️</span>
+        <div class="tip-text">
+          <strong>Attorney Advice:</strong> You choose either the <strong>Standard Deduction</strong> or <strong>Itemized Deductions</strong> — whichever is BIGGER saves you more money.
+          For 2025: Single = $15,000 | Married Filing Jointly = $30,000 | Head of Household = $22,500.
+          <span class="ar">تختار يا الخصم القياسي يا التفصيلي — اللي أكبر، هو اللي يوفرلك أكثر. نحسبلك الاثنين ونختار الأفضل.</span>
+        </div>
+      </div>
+
+      <h3 style="font-weight: 800; margin-bottom: 16px;">Standard vs Itemized — قياسي أو تفصيلي؟</h3>
+      <div class="option-cards" id="deductionTypeCards">
+        <div class="option-card selected" onclick="selectOption('deductionType', 'standard', this)">
+          <div class="opt-title">Standard Deduction — خصم قياسي</div>
+          <div class="opt-desc">Most people use this — it's simpler and often bigger. أغلب الناس يستخدمون هذا — أسهل وعادةً أكبر</div>
+        </div>
+        <div class="option-card" onclick="selectOption('deductionType', 'itemized', this)">
+          <div class="opt-title">Itemized Deductions — خصم تفصيلي</div>
+          <div class="opt-desc">If you have big mortgage interest, medical bills, or charitable donations. لو عندك فوائد قرض بيت كبيرة أو تبرعات</div>
+        </div>
+      </div>
+
+      <div id="itemizedSection" style="display: none;">
+        <h3 style="font-weight: 800; margin: 24px 0 16px;">📝 Itemized Deductions — تفاصيل الخصومات</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Medical Expenses (over 7.5% of AGI) <span class="ar">— مصاريف طبية</span></label>
+            <input type="number" id="dedMedical" placeholder="$ Only amount OVER 7.5% of income">
+          </div>
+          <div class="form-group">
+            <label>State & Local Taxes (SALT) <span class="ar">— ضرائب ولاية ومحلية</span></label>
+            <input type="number" id="dedSALT" placeholder="$ Max $10,000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Mortgage Interest <span class="ar">— فوائد القرض العقاري</span></label>
+            <input type="number" id="dedMortgage" placeholder="$ From Form 1098">
+          </div>
+          <div class="form-group">
+            <label>Charitable Donations <span class="ar">— تبرعات خيرية</span></label>
+            <input type="number" id="dedCharity" placeholder="$ Cash + fair market value">
+          </div>
+        </div>
+
+        <div class="advisor-tip warning">
+          <span class="tip-icon">⚠️</span>
+          <div class="tip-text">
+            <strong>SALT Cap:</strong> State & Local Tax deduction is capped at $10,000. If you enter more, we'll cap it.
+            <span class="ar">خصم ضرائب الولاية محدود بـ $10,000 — هاي القاعدة الفيدرالية.</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-weight: 800; margin: 28px 0 16px;">📥 Above-the-Line Deductions — خصومات فوق الخط</h3>
+      <div class="advisor-tip success">
+        <span class="tip-icon">💡</span>
+        <div class="tip-text">
+          <strong>Accountant Pro Tip:</strong> These deductions apply REGARDLESS of whether you take standard or itemized.
+          <span class="ar">هاي الخصومات تنطبق سواء اخترت القياسي أو التفصيلي — فلا تنساها!</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>IRA Contributions <span class="ar">— مساهمات التقاعد IRA</span></label>
+          <input type="number" id="dedIRA" placeholder="$ Max $7,000 (or $8,000 if 50+)">
+        </div>
+        <div class="form-group">
+          <label>Student Loan Interest <span class="ar">— فوائد قرض الدراسة</span></label>
+          <input type="number" id="dedStudentLoan" placeholder="$ Max $2,500">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>HSA Contributions <span class="ar">— مساهمات حساب التوفير الصحي</span></label>
+          <input type="number" id="dedHSA" placeholder="$ Max $4,300 individual / $8,550 family">
+        </div>
+        <div class="form-group">
+          <label>Self-Employment Health Insurance <span class="ar">— تأمين صحي للعمل الحر</span></label>
+          <input type="number" id="dedSEHealth" placeholder="$ Premium you paid">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goToStep(5)">← Back</button>
+        <button class="btn btn-primary" onclick="goToStep(7)">Next: Credits — التالي →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 7: TAX CREDITS ═══════════ -->
+  <div class="step-content" id="step-7">
+    <div class="card">
+      <div class="section-header">
+        <h2>🎯 Tax Credits — الائتمانات الضريبية</h2>
+        <div class="subtitle">Credits reduce your tax dollar-for-dollar — better than deductions! الائتمانات تنقص الضريبة دولار بدولار — أحسن من الخصومات!</div>
+      </div>
+
+      <div class="advisor-tip">
+        <span class="tip-icon">⚖️</span>
+        <div class="tip-text">
+          <strong>Attorney + Accountant Explain:</strong> Deductions reduce your <em>taxable income</em>, but credits reduce your <em>actual tax</em>.
+          A $1,000 credit saves you exactly $1,000. A $1,000 deduction might save you only $220 (at 22% bracket).
+          <span class="ar">الفرق المهم: الخصم ينقص الدخل، بس الائتمان ينقص الضريبة مباشرة. يعني $1,000 ائتمان = $1,000 توفير حقيقي!</span>
+        </div>
+      </div>
+
+      <h3 style="font-weight: 800; margin-bottom: 16px;">Select credits that apply — اختر الائتمانات اللي تنطبق عليك</h3>
+
+      <div class="deduction-grid" id="creditsGrid">
+        <div class="deduction-item" onclick="toggleCredit(this, 'childTax')">
+          <span class="ded-icon">👶</span>
+          <span class="ded-label">Child Tax Credit<span class="ar">ائتمان الطفل — $2,000/child</span></span>
+        </div>
+        <div class="deduction-item" onclick="toggleCredit(this, 'eitc')">
+          <span class="ded-icon">💪</span>
+          <span class="ded-label">Earned Income Credit (EITC)<span class="ar">ائتمان الدخل المكتسب — up to $7,830</span></span>
+        </div>
+        <div class="deduction-item" onclick="toggleCredit(this, 'education')">
+          <span class="ded-icon">🎓</span>
+          <span class="ded-label">Education Credits<span class="ar">ائتمان التعليم — up to $2,500</span></span>
+        </div>
+        <div class="deduction-item" onclick="toggleCredit(this, 'childCare')">
+          <span class="ded-icon">🏠</span>
+          <span class="ded-label">Child & Dependent Care<span class="ar">رعاية الأطفال — up to $2,100</span></span>
+        </div>
+        <div class="deduction-item" onclick="toggleCredit(this, 'saverCredit')">
+          <span class="ded-icon">🏦</span>
+          <span class="ded-label">Saver's Credit<span class="ar">ائتمان الادخار — up to $1,000</span></span>
+        </div>
+        <div class="deduction-item" onclick="toggleCredit(this, 'energyCredit')">
+          <span class="ded-icon">⚡</span>
+          <span class="ded-label">Energy Credits<span class="ar">ائتمان الطاقة — solar, EV, etc.</span></span>
+        </div>
+      </div>
+
+      <div id="creditDetails" style="margin-top: 24px;"></div>
+
+      <div class="advisor-tip success" style="margin-top: 24px;">
+        <span class="tip-icon">💰</span>
+        <div class="tip-text">
+          <strong>Big Money Tip:</strong> The EITC is one of the most valuable credits — it's "refundable" meaning
+          you can get money back even if you owe $0 in taxes!
+          <span class="ar">الـ EITC من أهم الائتمانات — "قابل للاسترداد" يعني ممكن تاخذ فلوس حتى لو ما عليك ضريبة!</span>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goToStep(6)">← Back</button>
+        <button class="btn btn-primary" onclick="calculateAndReview()">Review & Calculate — راجع واحسب →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STEP 8: REVIEW & RESULTS ═══════════ -->
+  <div class="step-content" id="step-8">
+    <div class="card">
+      <div class="section-header">
+        <h2>📊 Tax Summary & Results — ملخص الضرائب والنتائج</h2>
+        <div class="subtitle">Here's your complete tax picture — هنا الصورة الكاملة لضرائبك</div>
+      </div>
+
+      <div id="resultCard"></div>
+
+      <table class="summary-table" id="summaryTable">
+        <thead>
+          <tr>
+            <th>Category — البند</th>
+            <th>Amount — المبلغ</th>
+          </tr>
+        </thead>
+        <tbody id="summaryBody"></tbody>
+      </table>
+
+      <div class="advisor-tip" style="margin-top: 24px;">
+        <span class="tip-icon">⚖️</span>
+        <div class="tip-text" id="finalAdvice">
+          Loading your personalized advice — جاري تحميل النصيحة الشخصية...
+        </div>
+      </div>
+
+      <h3 style="font-weight: 800; margin: 28px 0 16px;">📋 Document Checklist — قائمة المستندات</h3>
+      <div id="documentChecklist"></div>
+
+      <h3 style="font-weight: 800; margin: 28px 0 16px;">📅 Important Deadlines — مواعيد مهمة</h3>
+      <div class="advisor-tip warning">
+        <span class="tip-icon">📅</span>
+        <div class="tip-text">
+          <strong>April 15, 2026</strong> — Federal tax return deadline. إذا ما تقدر تخلص بالوقت، قدّم Form 4868 extension قبل هالتاريخ.
+          <span class="ar">بس تذكّر: الـ extension يمدد وقت التقديم، مو وقت الدفع! لازم تدفع قبل 15 أبريل.</span>
+          <br><br>
+          <strong>Quarterly Estimated Taxes (for 1099 income):</strong>
+          Q1: April 15 | Q2: June 16 | Q3: Sep 15 | Q4: Jan 15, 2027
+          <span class="ar">إذا عندك دخل 1099، لازم تدفع ضرائب تقديرية كل ربع سنة عشان ما تاخذ penalty.</span>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goToStep(7)">← Back — رجوع</button>
+        <button class="btn btn-outline" onclick="printSummary()">🖨️ Print — اطبع</button>
+        <button class="btn btn-primary" onclick="downloadPDF()" style="background:var(--success);">📄 Download PDF — حمّل PDF</button>
+        <button class="btn btn-outline" onclick="saveProgress().then(()=>alert('Saved! — تم الحفظ ✓'))">💾 Save — حفظ</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /app-container -->
+
+<script>
+// ── API KEY IS NOW ON THE SERVER — SECURE! ──
+const API_BASE = window.location.origin;
+
+// Session management
+let sessionId = localStorage.getItem('taxSessionId');
+if (!sessionId) { sessionId = crypto.randomUUID(); localStorage.setItem('taxSessionId', sessionId); }
+
+// Server-side Claude call (no API key in browser!)
+async function callServerClaude(messages, maxTokens = 4096) {
+  const response = await fetchWithRetry(API_BASE + '/api/claude', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages, max_tokens: maxTokens })
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.error || 'Server error ' + response.status);
+  }
+  return response.json();
+}
+
+// Save all form data to server
+async function saveProgress() {
+  try {
+    const taxData = collectAllFormData();
+    await fetch(API_BASE + '/api/tax-data', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId, data: taxData })
+    });
+  } catch(e) { console.warn('Auto-save failed:', e.message); }
+}
+
+// Load saved progress from server
+async function loadProgress() {
+  try {
+    const resp = await fetch(API_BASE + '/api/tax-data/' + sessionId);
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data && data.personal) { autoFillForm(data); return true; }
+    }
+  } catch(e) {}
+  return false;
+}
+
+// Download PDF tax return
+async function downloadPDF() {
+  try {
+    const taxData = collectAllFormData();
+    const resp = await fetch(API_BASE + '/api/generate-pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ taxData, formType: '1040' })
+    });
+    if (!resp.ok) throw new Error('PDF generation failed');
+    const blob = await resp.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'TaxReturn_1040_2025.pdf';
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  } catch(e) { alert('PDF error: ' + e.message); }
+}
+
+// Collect all form fields into one JSON object
+function collectAllFormData() {
+  const d = {
+    personal: {
+      firstName: document.querySelector('#firstName')?.value || '',
+      lastName: document.querySelector('#lastName')?.value || '',
+      ssn: document.querySelector('#ssn')?.value || '',
+      address: document.querySelector('#address')?.value || '',
+      city: document.querySelector('#city')?.value || '',
+      state: document.querySelector('#state')?.value || '',
+      zip: document.querySelector('#zip')?.value || ''
+    },
+    filingStatus: state.filingStatus,
+    w2s: [], nec1099s: [], deductions: {}, expenses: {}
+  };
+  document.querySelectorAll('#w2List .income-entry').forEach(el => {
+    d.w2s.push({
+      employer: el.querySelector('.w2-employer')?.value || '',
+      wages: parseFloat(el.querySelector('.w2-wages')?.value) || 0,
+      fedTaxWithheld: parseFloat(el.querySelector('.w2-fed-tax')?.value) || 0,
+      ssWages: parseFloat(el.querySelector('.w2-ss-wages')?.value) || 0,
+      medicareWages: parseFloat(el.querySelector('.w2-medicare')?.value) || 0,
+      stateTax: parseFloat(el.querySelector('.w2-state-tax')?.value) || 0,
+      ein: el.querySelector('.w2-ein')?.value || ''
+    });
+  });
+  document.querySelectorAll('#form1099List .income-entry').forEach(el => {
+    d.nec1099s.push({
+      payer: el.querySelector('.nec-payer')?.value || '',
+      amount: parseFloat(el.querySelector('.nec-amount')?.value) || 0,
+      ein: el.querySelector('.nec-ein')?.value || ''
+    });
+  });
+  ['mortgage','salt','charity','medical','ira','studentLoan','hsa','seHealth'].forEach(k => {
+    const el = document.querySelector('#ded_' + k); if (el) d.deductions[k] = parseFloat(el.value) || 0;
+  });
+  ['homeOffice','vehicle','supplies','phone','professional','other'].forEach(k => {
+    const el = document.querySelector('#exp_' + k); if (el) d.expenses[k] = parseFloat(el.value) || 0;
+  });
+  return d;
+}
+
+// ── STATE ──
+const state = {
+  currentStep: 0,
+  filingStatus: '',
+  deductionType: 'standard',
+  dependents: [],
+  selectedCredits: {},
+  w2Count: 1,
+  nec1099Count: 1
+};
+
+const steps = [
+  { label: 'Welcome', labelAr: 'أهلاً' },
+  { label: 'Upload', labelAr: 'رفع' },
+  { label: 'Personal', labelAr: 'شخصي' },
+  { label: 'Status', labelAr: 'الحالة' },
+  { label: 'W-2', labelAr: 'W-2' },
+  { label: '1099', labelAr: '1099' },
+  { label: 'Deductions', labelAr: 'خصومات' },
+  { label: 'Credits', labelAr: 'ائتمانات' },
+  { label: 'Review', labelAr: 'مراجعة' }
+];
+
+// ── PROGRESS ──
+let progressBuilt = false;
+function renderProgress() {
+  const stepsDiv = document.getElementById('progressSteps');
+  const labelsDiv = document.getElementById('progressLabels');
+  if (!progressBuilt) {
+    stepsDiv.innerHTML = '';
+    labelsDiv.innerHTML = '';
+    steps.forEach((s, i) => {
+      const dot = document.createElement('div');
+      dot.id = 'stepDot' + i;
+      dot.className = 'step-dot';
+      dot.textContent = i;
+      dot.onclick = () => { if (i <= state.currentStep) goToStep(i); };
+      stepsDiv.appendChild(dot);
+      const label = document.createElement('span');
+      label.id = 'stepLbl' + i;
+      label.textContent = s.label;
+      labelsDiv.appendChild(label);
+    });
+    progressBuilt = true;
+  }
+  steps.forEach((s, i) => {
+    const dot = document.getElementById('stepDot' + i);
+    const label = document.getElementById('stepLbl' + i);
+    dot.className = 'step-dot' + (i === state.currentStep ? ' active' : '') + (i < state.currentStep ? ' completed' : '');
+    dot.textContent = i < state.currentStep ? '✓' : i;
+    label.className = i === state.currentStep ? 'active' : '';
+  });
+}
+
+// ── NAVIGATION ──
+function goToStep(n) {
+  document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+  document.getElementById('step-' + n).classList.add('active');
+  state.currentStep = n;
+  renderProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Preload PDF.js when user reaches upload step
+  if (n === 1 && typeof loadPdfJs === 'function') loadPdfJs();
+}
+
+// ── OPTIONS ──
+function selectOption(field, value, el) {
+  state[field] = value;
+  el.parentElement.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+
+  if (field === 'filingStatus') {
+    document.getElementById('dependentsSection').style.display =
+      (value === 'mfj' || value === 'hoh') ? 'block' : 'none';
+  }
+  if (field === 'deductionType') {
+    document.getElementById('itemizedSection').style.display = value === 'itemized' ? 'block' : 'none';
+  }
+}
+
+// ── DEPENDENTS ──
+function addDependent() {
+  const idx = state.dependents.length;
+  state.dependents.push({});
+  const html = `
+    <div class="income-entry" id="dep-${idx}">
+      <h4>👶 Dependent #${idx+1} <button class="remove-btn" onclick="removeDependent(${idx})">✕</button></h4>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name <span class="ar">— الاسم الكامل</span></label>
+          <input type="text" class="dep-name" placeholder="Dependent's full name"></div>
+        <div class="form-group"><label>SSN <span class="ar">— رقم الضمان</span></label>
+          <input type="text" class="dep-ssn" placeholder="XXX-XX-XXXX"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Date of Birth <span class="ar">— تاريخ الميلاد</span></label>
+          <input type="date" class="dep-dob"></div>
+        <div class="form-group"><label>Relationship <span class="ar">— القرابة</span></label>
+          <select class="dep-rel"><option>Son — ابن</option><option>Daughter — بنت</option><option>Stepchild</option><option>Parent — والد/ة</option><option>Other</option></select></div>
+      </div>
+    </div>`;
+  document.getElementById('dependentsList').insertAdjacentHTML('beforeend', html);
+}
+function removeDependent(idx) {
+  document.getElementById('dep-' + idx).remove();
+}
+
+// ── W-2 ──
+function addW2() {
+  state.w2Count++;
+  const idx = state.w2Count;
+  const html = `
+    <div class="income-entry" data-index="${idx}">
+      <h4>📄 W-2 #${idx} <button class="remove-btn" onclick="removeW2(this)">✕</button></h4>
+      <div class="form-group"><label>Employer Name <span class="ar">— اسم جهة العمل</span></label>
+        <input type="text" class="w2-employer" placeholder="Employer name"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Box 1: Wages <span class="ar">— الراتب</span></label>
+          <input type="number" class="w2-wages" placeholder="$"></div>
+        <div class="form-group"><label>Box 2: Federal Tax Withheld <span class="ar">— الضريبة الفيدرالية</span></label>
+          <input type="number" class="w2-fed-tax" placeholder="$"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Box 3: SS Wages</label><input type="number" class="w2-ss-wages" placeholder="$"></div>
+        <div class="form-group"><label>Box 5: Medicare Wages</label><input type="number" class="w2-medicare" placeholder="$"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Box 17: State Tax</label><input type="number" class="w2-state-tax" placeholder="$"></div>
+        <div class="form-group"><label>Employer EIN</label><input type="text" class="w2-ein" placeholder="XX-XXXXXXX"></div>
+      </div>
+    </div>`;
+  document.getElementById('w2List').insertAdjacentHTML('beforeend', html);
+}
+function removeW2(btn) { btn.closest('.income-entry').remove(); }
+
+// ── 1099 ──
+function add1099() {
+  state.nec1099Count++;
+  const idx = state.nec1099Count;
+  const html = `
+    <div class="income-entry" data-index="${idx}">
+      <h4>📄 1099-NEC #${idx} <button class="remove-btn" onclick="remove1099(this)">✕</button></h4>
+      <div class="form-group"><label>Client/Payer Name <span class="ar">— اسم العميل</span></label>
+        <input type="text" class="nec-payer" placeholder="Client name"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Box 1: Amount <span class="ar">— المبلغ</span></label>
+          <input type="number" class="nec-amount" placeholder="$"></div>
+        <div class="form-group"><label>Payer's EIN</label><input type="text" class="nec-ein" placeholder="XX-XXXXXXX"></div>
+      </div>
+    </div>`;
+  document.getElementById('form1099List').insertAdjacentHTML('beforeend', html);
+}
+function remove1099(btn) { btn.closest('.income-entry').remove(); }
+
+// ── CREDITS ──
+function toggleCredit(el, key) {
+  el.classList.toggle('selected');
+  state.selectedCredits[key] = !state.selectedCredits[key];
+  renderCreditDetails();
+}
+
+function renderCreditDetails() {
+  const container = document.getElementById('creditDetails');
+  let html = '';
+  if (state.selectedCredits.childTax) {
+    html += `<div class="form-group"><label>Number of children under 17 <span class="ar">— عدد الأطفال تحت 17</span></label>
+      <input type="number" id="numChildren" placeholder="e.g. 2" value="0" min="0" max="10"></div>`;
+  }
+  if (state.selectedCredits.education) {
+    html += `<div class="form-group"><label>Education expenses paid (tuition) <span class="ar">— مصاريف التعليم</span></label>
+      <input type="number" id="eduExpenses" placeholder="$ Tuition & fees"></div>`;
+  }
+  if (state.selectedCredits.childCare) {
+    html += `<div class="form-group"><label>Child care expenses <span class="ar">— مصاريف رعاية الأطفال</span></label>
+      <input type="number" id="careExpenses" placeholder="$ Daycare, nanny, etc."></div>`;
+  }
+  if (state.selectedCredits.energyCredit) {
+    html += `<div class="form-group"><label>Energy improvement expenses <span class="ar">— مصاريف تحسين الطاقة</span></label>
+      <input type="number" id="energyExpenses" placeholder="$ Solar panels, EV, etc."></div>`;
+  }
+  container.innerHTML = html;
+}
+
+// ── CALCULATE ──
+function calculateAndReview() {
+  // Gather W-2 income
+  let totalW2Wages = 0, totalFedWithheld = 0, totalStateWithheld = 0;
+  document.querySelectorAll('#w2List .income-entry').forEach(entry => {
+    totalW2Wages += parseFloat(entry.querySelector('.w2-wages')?.value) || 0;
+    totalFedWithheld += parseFloat(entry.querySelector('.w2-fed-tax')?.value) || 0;
+    totalStateWithheld += parseFloat(entry.querySelector('.w2-state-tax')?.value) || 0;
+  });
+
+  // Gather 1099 income
+  let total1099 = 0;
+  document.querySelectorAll('#form1099List .income-entry').forEach(entry => {
+    total1099 += parseFloat(entry.querySelector('.nec-amount')?.value) || 0;
+  });
+
+  // Business expenses
+  const bizExpenses = (parseFloat(document.getElementById('expHomeOffice')?.value) || 0)
+    + (parseFloat(document.getElementById('expVehicle')?.value) || 0)
+    + (parseFloat(document.getElementById('expSupplies')?.value) || 0)
+    + (parseFloat(document.getElementById('expPhone')?.value) || 0)
+    + (parseFloat(document.getElementById('expProfessional')?.value) || 0)
+    + (parseFloat(document.getElementById('expOther')?.value) || 0);
+
+  const net1099 = Math.max(0, total1099 - bizExpenses);
+  const seTax = net1099 * 0.9235 * 0.153;
+  const seDeduction = seTax / 2;
+
+  // Above-the-line deductions
+  const aboveLine = (parseFloat(document.getElementById('dedIRA')?.value) || 0)
+    + Math.min(parseFloat(document.getElementById('dedStudentLoan')?.value) || 0, 2500)
+    + (parseFloat(document.getElementById('dedHSA')?.value) || 0)
+    + (parseFloat(document.getElementById('dedSEHealth')?.value) || 0)
+    + seDeduction;
+
+  // AGI
+  const grossIncome = totalW2Wages + net1099;
+  const agi = grossIncome - aboveLine;
+
+  // Standard or Itemized
+  let standardDed = 15000;
+  if (state.filingStatus === 'mfj') standardDed = 30000;
+  else if (state.filingStatus === 'hoh') standardDed = 22500;
+
+  let itemizedDed = 0;
+  if (state.deductionType === 'itemized') {
+    const medical = Math.max(0, (parseFloat(document.getElementById('dedMedical')?.value) || 0) - agi * 0.075);
+    const salt = Math.min(parseFloat(document.getElementById('dedSALT')?.value) || 0, 10000);
+    const mortgage = parseFloat(document.getElementById('dedMortgage')?.value) || 0;
+    const charity = parseFloat(document.getElementById('dedCharity')?.value) || 0;
+    itemizedDed = medical + salt + mortgage + charity;
+  }
+
+  const deduction = state.deductionType === 'itemized' ? Math.max(itemizedDed, standardDed) : standardDed;
+  const taxableIncome = Math.max(0, agi - deduction);
+
+  // Tax calculation (2025 brackets — single)
+  let tax = 0;
+  const brackets = state.filingStatus === 'mfj' ?
+    [[23850, 0.10],[96950, 0.12],[206700, 0.22],[394600, 0.24],[501050, 0.32],[751600, 0.35],[Infinity, 0.37]] :
+    state.filingStatus === 'hoh' ?
+    [[17000, 0.10],[63100, 0.12],[100500, 0.22],[191950, 0.24],[243725, 0.32],[609350, 0.35],[Infinity, 0.37]] :
+    [[11925, 0.10],[48475, 0.12],[103350, 0.22],[197300, 0.24],[250525, 0.32],[626350, 0.35],[Infinity, 0.37]];
+
+  let remaining = taxableIncome;
+  let prevLimit = 0;
+  for (const [limit, rate] of brackets) {
+    const bracketSize = limit - prevLimit;
+    const taxable = Math.min(remaining, bracketSize);
+    tax += taxable * rate;
+    remaining -= taxable;
+    prevLimit = limit;
+    if (remaining <= 0) break;
+  }
+
+  // Credits
+  let totalCredits = 0;
+  const numKids = parseInt(document.getElementById('numChildren')?.value) || 0;
+  if (state.selectedCredits.childTax) totalCredits += numKids * 2000;
+  if (state.selectedCredits.eitc) totalCredits += Math.min(7830, grossIncome < 66819 ? 2000 : 0);
+  if (state.selectedCredits.education) totalCredits += Math.min(2500, (parseFloat(document.getElementById('eduExpenses')?.value) || 0) * 0.5);
+  if (state.selectedCredits.childCare) totalCredits += Math.min(2100, (parseFloat(document.getElementById('careExpenses')?.value) || 0) * 0.35);
+  if (state.selectedCredits.saverCredit) totalCredits += 1000;
+  if (state.selectedCredits.energyCredit) totalCredits += Math.min(3200, (parseFloat(document.getElementById('energyExpenses')?.value) || 0) * 0.30);
+
+  const totalTax = Math.max(0, tax + seTax - totalCredits);
+  const totalPaid = totalFedWithheld;
+  const refundOrOwe = totalPaid - totalTax;
+
+  // Render result
+  const resultCard = document.getElementById('resultCard');
+  resultCard.innerHTML = `
+    <div class="result-highlight">
+      <div class="result-label">${refundOrOwe >= 0 ? 'Estimated Refund — الاسترجاع المتوقع' : 'Estimated Amount Owed — المبلغ المستحق'}</div>
+      <div class="result-amount ${refundOrOwe >= 0 ? 'refund' : 'owe'}">${refundOrOwe >= 0 ? '+' : '-'}$${Math.abs(refundOrOwe).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</div>
+    </div>`;
+
+  // Summary table
+  const fmt = n => '$' + Math.abs(n).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+  const body = document.getElementById('summaryBody');
+  body.innerHTML = `
+    <tr><td>W-2 Wages — دخل الوظيفة</td><td>${fmt(totalW2Wages)}</td></tr>
+    <tr><td>1099 Gross Income — دخل العمل الحر</td><td>${fmt(total1099)}</td></tr>
+    <tr><td>Business Expenses — مصاريف الشغل</td><td>-${fmt(bizExpenses)}</td></tr>
+    <tr><td>Net Self-Employment — صافي العمل الحر</td><td>${fmt(net1099)}</td></tr>
+    <tr><td><strong>Gross Income — إجمالي الدخل</strong></td><td><strong>${fmt(grossIncome)}</strong></td></tr>
+    <tr><td>Above-the-Line Deductions — خصومات فوق الخط</td><td>-${fmt(aboveLine)}</td></tr>
+    <tr><td><strong>AGI (Adjusted Gross Income)</strong></td><td><strong>${fmt(agi)}</strong></td></tr>
+    <tr><td>${state.deductionType === 'itemized' ? 'Itemized' : 'Standard'} Deduction — الخصم</td><td>-${fmt(deduction)}</td></tr>
+    <tr><td><strong>Taxable Income — الدخل الخاضع للضريبة</strong></td><td><strong>${fmt(taxableIncome)}</strong></td></tr>
+    <tr><td>Federal Income Tax — ضريبة الدخل الفيدرالية</td><td>${fmt(tax)}</td></tr>
+    <tr><td>Self-Employment Tax — ضريبة العمل الحر</td><td>${fmt(seTax)}</td></tr>
+    <tr><td>Tax Credits — الائتمانات الضريبية</td><td>-${fmt(totalCredits)}</td></tr>
+    <tr class="total-row"><td><strong>Total Tax — إجمالي الضريبة</strong></td><td><strong>${fmt(totalTax)}</strong></td></tr>
+    <tr><td>Total Federal Tax Withheld — الضريبة المحتجزة</td><td>${fmt(totalPaid)}</td></tr>
+    <tr class="refund-row"><td><strong>${refundOrOwe >= 0 ? 'Your Refund — استرجاعك' : 'You Owe — عليك'}</strong></td>
+      <td class="${refundOrOwe >= 0 ? 'positive' : 'negative'}"><strong>${refundOrOwe >= 0 ? '+' : '-'}${fmt(refundOrOwe)}</strong></td></tr>
+  `;
+
+  // Final advice
+  const adviceDiv = document.getElementById('finalAdvice');
+  let advice = '';
+  if (refundOrOwe >= 0) {
+    advice = `<strong>مبروك! Great news!</strong> You're getting a refund of <strong>${fmt(refundOrOwe)}</strong>! 🎉<br>
+    <span class="ar">نصيحة المحامي: اختار direct deposit عشان الفلوس توصل أسرع — عادةً خلال 21 يوم.</span><br>`;
+  } else {
+    advice = `<strong>انتبه! Heads up.</strong> You owe <strong>${fmt(refundOrOwe)}</strong> to the IRS.<br>
+    <span class="ar">نصيحة المحامي: لازم تدفع قبل April 15, 2026 عشان ما تاخذ penalty وفوائد. إذا ما تقدر تدفع كلشي مرة وحدة، قدّم على payment plan.</span><br>`;
+  }
+  if (net1099 > 0) {
+    advice += `<br><strong>1099 Tip:</strong> Since you have self-employment income, consider making quarterly estimated payments to avoid underpayment penalties next year.
+    <span class="ar">بما إنك عندك دخل من العمل الحر، فكّر تدفع ضرائب تقديرية كل 3 شهور عشان ما تاخذ غرامة السنة الجاية.</span>`;
+  }
+  adviceDiv.innerHTML = advice;
+
+  // Document checklist
+  const checklistDiv = document.getElementById('documentChecklist');
+  const docs = [
+    { en: 'W-2 forms from all employers', ar: 'فورمات W-2 من كل جهات العمل' },
+    { en: '1099-NEC forms from all clients', ar: 'فورمات 1099-NEC من كل العملاء' },
+    { en: 'Social Security cards for you and dependents', ar: 'كروت الضمان الاجتماعي لك وللمعالين' },
+    { en: 'Photo ID (driver license or passport)', ar: 'هوية بصورة — رخصة قيادة أو جواز سفر' },
+    { en: 'Bank account info for direct deposit', ar: 'معلومات الحساب البنكي للإيداع المباشر' },
+    { en: 'Last year\'s tax return (if available)', ar: 'إقرار السنة الماضية (إذا متوفر)' },
+    { en: 'Business expense receipts', ar: 'إيصالات مصاريف الشغل' },
+    { en: 'Form 1098 (mortgage interest)', ar: 'فورم 1098 (فوائد القرض العقاري)' },
+    { en: 'Charitable donation receipts', ar: 'إيصالات التبرعات الخيرية' },
+  ];
+  checklistDiv.innerHTML = docs.map((d, i) => `
+    <div class="checklist-item">
+      <div class="check-circle" id="check-${i}" onclick="toggleCheck(${i})">✓</div>
+      <div class="check-label">${d.en} <span class="ar">— ${d.ar}</span></div>
+    </div>`).join('');
+
+  goToStep(8);
+}
+
+function toggleCheck(i) {
+  document.getElementById('check-' + i).classList.toggle('checked');
+}
+
+function printSummary() {
+  window.print();
+}
+
+// ═══════════════════════════════════════════════
+// ══ DOCUMENT UPLOAD & AI AUTO-FILL ENGINE ══
+// ═══════════════════════════════════════════════
+
+const uploadedDocs = [];
+
+// ── DRAG & DROP ──
+const uploadZone = document.getElementById('uploadZone');
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+});
+
+function handleFileUpload(e) { handleFiles(e.target.files); }
+
+function handleFiles(files) {
+  Array.from(files).forEach(file => {
+    const id = 'doc-' + Date.now() + '-' + Math.random().toString(36).slice(2,6);
+    const doc = { id, file, name: file.name, size: file.size, type: file.type, status: 'ready', text: '' };
+    uploadedDocs.push(doc);
+    renderUploadedFiles();
+  });
+  document.getElementById('scanAndFillBtn').disabled = uploadedDocs.length === 0;
+}
+
+function removeDoc(id) {
+  const idx = uploadedDocs.findIndex(d => d.id === id);
+  if (idx >= 0) uploadedDocs.splice(idx, 1);
+  renderUploadedFiles();
+  document.getElementById('scanAndFillBtn').disabled = uploadedDocs.length === 0;
+}
+
+function renderUploadedFiles() {
+  const container = document.getElementById('uploadedFiles');
+  if (uploadedDocs.length === 0) { container.innerHTML = ''; return; }
+  container.innerHTML = uploadedDocs.map(d => {
+    const icon = d.type.includes('pdf') ? '📄' : '🖼️';
+    const size = (d.size / 1024).toFixed(0) + ' KB';
+    const statusClass = d.status === 'scanning' ? 'scanning' : d.status === 'done' ? 'done' : d.status === 'error' ? 'error' : 'scanning';
+    const statusText = d.status === 'ready' ? 'Ready — جاهز' :
+      d.status === 'scanning' ? '⏳ Scanning...' :
+      d.status === 'done' ? '✓ Scanned' : '✕ Error';
+    return `<div class="uploaded-file" id="${d.id}">
+      <span class="file-icon">${icon}</span>
+      <div class="file-info">
+        <div class="file-name">${d.name}</div>
+        <div class="file-meta">${size} · ${d.type.includes('pdf') ? 'PDF' : 'Image'}</div>
+      </div>
+      <span class="file-status ${statusClass}">${statusText}</span>
+      <button class="file-remove" onclick="removeDoc('${d.id}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+// ── FAST TEXT EXTRACTION (PDF.js only — images go to Claude Vision) ──
+async function extractTextFromPDF(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = async function() {
+      try {
+        if (typeof pdfjsLib === 'undefined') { resolve(''); return; }
+        const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(reader.result) }).promise;
+        let fullText = '';
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          fullText += content.items.map(item => item.str).join(' ') + '\n\n';
+        }
+        resolve(fullText);
+      } catch(e) { resolve(''); }
+    };
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+// Compress image to max 1200px and quality 0.7 — phone photos are 3-5MB, this makes them ~100-200KB
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 800;
+        let w = img.width, h = img.height;
+        if (w > MAX || h > MAX) {
+          if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+          else { w = Math.round(w * MAX / h); h = MAX; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        const compressed = canvas.toDataURL('image/jpeg', 0.5);
+        resolve(compressed.split(',')[1]);
+      };
+      img.onerror = () => resolve(reader.result.split(',')[1]); // fallback to raw
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// Fetch with timeout — never hang forever
+function fetchWithTimeout(url, options, timeoutMs = 180000) {
+  return Promise.race([
+    fetch(url, options),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Request timed out — الطلب أخذ وقت طويل. Try again.')), timeoutMs)
+    )
+  ]);
+}
+
+// Retry wrapper — retries once on failure with a short pause
+async function fetchWithRetry(url, options, timeoutMs = 180000) {
+  try {
+    return await fetchWithTimeout(url, options, timeoutMs);
+  } catch(err) {
+    addLog('⚠️ First attempt failed, retrying — نجرب مرة ثانية...', 'work');
+    await new Promise(r => setTimeout(r, 2000));
+    return await fetchWithTimeout(url, options, timeoutMs);
+  }
+}
+
+// ── PROCESS LOG ──
+function addLog(text, type = 'work') {
+  const log = document.getElementById('processLog');
+  const cls = type === 'ok' ? 'log-ok' : type === 'err' ? 'log-err' : 'log-work';
+  const icon = type === 'ok' ? '✓' : type === 'err' ? '✕' : '⟳';
+  log.innerHTML += `<div class="log-line"><span class="${cls}">${icon}</span> ${text}</div>`;
+  log.scrollTop = log.scrollHeight;
+}
+
+// Store last extraction for analytics
+let lastExtractedData = null;
+
+// ── MAIN: SCAN ALL & AUTO-FILL (FAST — no OCR, direct AI Vision) ──
+async function scanAllAndFill() {
+  if (uploadedDocs.length === 0) return;
+
+  const overlay = document.getElementById('processOverlay');
+  const log = document.getElementById('processLog');
+  log.innerHTML = '';
+  overlay.classList.add('visible');
+  document.getElementById('processSpinner').style.display = 'block';
+  document.getElementById('processCloseBtn').style.display = 'none';
+  document.getElementById('processTitle').textContent = 'Reading Documents — نقرأ المستندات';
+  document.getElementById('processSubtitle').textContent = 'Compressing & sending to AI — نضغط ونرسل للذكاء الاصطناعي';
+
+  // ── Progress bar setup ──
+  const progressContainer = document.getElementById('progressContainer');
+  const progressBarFill = document.getElementById('progressBarFill');
+  const progressPct = document.getElementById('progressPct');
+  const docProgressList = document.getElementById('docProgressList');
+  progressContainer.style.display = 'block';
+  progressBarFill.style.width = '0%';
+  progressPct.textContent = '0%';
+
+  const totalDocs = uploadedDocs.length;
+  // Reading docs = 70% of work, AI analysis = 20%, auto-fill = 10%
+  const DOC_WEIGHT = 70;
+  const AI_WEIGHT = 20;
+  const FILL_WEIGHT = 10;
+  let docsCompleted = 0;
+
+  // Build per-document status list
+  docProgressList.innerHTML = '';
+  uploadedDocs.forEach((doc, i) => {
+    const isImg = !doc.type.includes('pdf');
+    const icon = isImg ? '📷' : '📄';
+    docProgressList.innerHTML += `<div class="doc-progress-item" id="docProg${i}">
+      <span class="doc-icon">${icon}</span>
+      <span class="doc-name">${doc.name}</span>
+      <span class="doc-status pending" id="docStat${i}">⏳ Waiting — بالانتظار</span>
+    </div>`;
+  });
+
+  function updateProgress(pct, label) {
+    const clamped = Math.min(100, Math.round(pct));
+    progressBarFill.style.width = clamped + '%';
+    progressPct.textContent = clamped + '% — ' + label;
+  }
+
+  function setDocStatus(idx, status, text) {
+    const el = document.getElementById('docStat' + idx);
+    if (!el) return;
+    el.className = 'doc-status ' + status;
+    el.textContent = text;
+  }
+
+  // Lazy-load PDF.js if any PDFs are present
+  if (uploadedDocs.some(d => d.type.includes('pdf'))) {
+    addLog('Loading PDF engine...', 'work');
+    await loadPdfJs();
+  }
+
+  addLog(`Processing ${totalDocs} document(s) — نعالج ${totalDocs} مستند...`, 'work');
+  updateProgress(0, `0/${totalDocs} docs`);
+
+  // Build the Claude Vision content array — send everything in ONE fast API call
+  const content = [];
+  let pdfTexts = '';
+
+  for (let di = 0; di < uploadedDocs.length; di++) {
+    const doc = uploadedDocs[di];
+    setDocStatus(di, 'working', '⟳ Reading — نقرأ...');
+    doc.status = 'scanning';
+    renderUploadedFiles();
+
+    try {
+      const isImage = !doc.type.includes('pdf');
+
+      if (isImage) {
+        // Images → send directly to Claude Vision (no slow OCR!)
+        const origSize = (doc.file.size / 1024).toFixed(0);
+        addLog(`📷 ${doc.name} (${origSize}KB) → compressing...`, 'work');
+        const b64 = await fileToBase64(doc.file);
+        const compressedSize = (b64.length * 0.75 / 1024).toFixed(0);
+        addLog(`📷 ${doc.name}: ${origSize}KB → ${compressedSize}KB ✓`, 'ok');
+        content.push({
+          type: 'image',
+          source: { type: 'base64', media_type: 'image/jpeg', data: b64 }
+        });
+        content.push({ type: 'text', text: `[Image: ${doc.name}] — Read ALL numbers, names, amounts, and box values from this tax document.` });
+        doc.status = 'done';
+        docsCompleted++;
+        setDocStatus(di, 'done', '✓ Done — تم');
+        updateProgress((docsCompleted / totalDocs) * DOC_WEIGHT, `${docsCompleted}/${totalDocs} docs`);
+      } else {
+        // PDFs → extract text with PDF.js (fast), fallback to image conversion
+        addLog(`📄 ${doc.name} → extracting text...`, 'work');
+        const text = await extractTextFromPDF(doc.file);
+        if (text.trim().length > 50) {
+          pdfTexts += `\n--- DOCUMENT: ${doc.name} ---\n${text}\n`;
+          doc.status = 'done';
+          docsCompleted++;
+          setDocStatus(di, 'done', '✓ Done — تم');
+          updateProgress((docsCompleted / totalDocs) * DOC_WEIGHT, `${docsCompleted}/${totalDocs} docs`);
+          addLog(`📄 ${doc.name} text extracted (${text.length} chars) ✓`, 'ok');
+        } else {
+          // Scanned PDF with no text → convert first page to image
+          addLog(`📄 ${doc.name} is scanned — sending as image...`, 'work');
+          try {
+            const pdfData = await file2ArrayBuffer(doc.file);
+            const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+            const page = await pdf.getPage(1);
+            const viewport = page.getViewport({ scale: 1.5 });
+            const canvas = document.createElement('canvas');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            const ctx = canvas.getContext('2d');
+            await page.render({ canvasContext: ctx, viewport }).promise;
+            const imgData = canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
+            content.push({
+              type: 'image',
+              source: { type: 'base64', media_type: 'image/jpeg', data: imgData }
+            });
+            content.push({ type: 'text', text: `[Scanned PDF: ${doc.name}] — Read ALL data from this tax document image.` });
+            doc.status = 'done';
+            docsCompleted++;
+            setDocStatus(di, 'done', '✓ Done — تم');
+            updateProgress((docsCompleted / totalDocs) * DOC_WEIGHT, `${docsCompleted}/${totalDocs} docs`);
+            addLog(`📄 ${doc.name} converted to image ✓`, 'ok');
+          } catch(pdfImgErr) {
+            doc.status = 'error';
+            docsCompleted++;
+            setDocStatus(di, 'error', '✕ Error — خطأ');
+            updateProgress((docsCompleted / totalDocs) * DOC_WEIGHT, `${docsCompleted}/${totalDocs} docs`);
+            addLog(`📄 ${doc.name} couldn't process: ${pdfImgErr.message}`, 'err');
+          }
+        }
+      }
+    } catch(err) {
+      doc.status = 'error';
+      docsCompleted++;
+      setDocStatus(di, 'error', '✕ Error — خطأ');
+      updateProgress((docsCompleted / totalDocs) * DOC_WEIGHT, `${docsCompleted}/${totalDocs} docs`);
+      addLog(`Error: ${doc.name} — ${err.message}`, 'err');
+    }
+    renderUploadedFiles();
+  }
+
+  // Add PDF texts if any
+  if (pdfTexts.length > 0) {
+    content.push({ type: 'text', text: `Here is extracted text from PDF documents:\n${pdfTexts}` });
+  }
+
+  // Add the extraction prompt
+  content.push({ type: 'text', text: `Based on ALL the documents above (images and text), extract EVERY piece of tax information into this JSON format.
+Return ONLY valid JSON — no markdown backticks, no explanation, no commentary.
+
+{
+  "documents_found": [
+    { "type": "W-2|1099-NEC|1099-MISC|1098|1098-T|1095|receipt|medical|other", "from": "name of employer/payer/institution", "summary": "brief description" }
+  ],
+  "personal": { "firstName": "", "lastName": "", "ssn": "", "address": "", "city": "", "state": "", "zip": "" },
+  "filingStatus": "",
+  "w2s": [{ "employer": "", "wages": 0, "fedTaxWithheld": 0, "ssWages": 0, "medicareWages": 0, "stateTax": 0, "ein": "" }],
+  "nec1099s": [{ "payer": "", "amount": 0, "ein": "" }],
+  "deductions": { "mortgage": 0, "salt": 0, "charity": 0, "medical": 0, "ira": 0, "studentLoan": 0, "hsa": 0, "seHealth": 0 },
+  "expenses": { "homeOffice": 0, "vehicle": 0, "supplies": 0, "phone": 0, "professional": 0, "other": 0 },
+  "other": { "form1098_mortgage": 0, "form1098t_tuition": 0, "medical_total": 0 },
+  "advice": ["tip 1 in mixed English/Arabic", "tip 2", "tip 3"],
+  "missing_docs": ["document 1 that seems missing", "document 2"]
+}` });
+
+  // ONE fast API call with everything
+  updateProgress(DOC_WEIGHT, 'AI analyzing — الذكاء الاصطناعي يحلل...');
+  addLog('🤖 AI analyzing all documents together...', 'work');
+  document.getElementById('processTitle').textContent = 'AI Analyzing — الذكاء الاصطناعي يحلل';
+
+  try {
+    const data = await callServerClaude([{ role: 'user', content }], 4096);
+    let rawText = data.content[0].text.trim();
+    rawText = rawText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+
+    const extractedData = JSON.parse(rawText);
+    lastExtractedData = extractedData;
+    updateProgress(DOC_WEIGHT + AI_WEIGHT, 'Auto-filling forms — نعبي الفورمات...');
+    addLog('AI extraction complete! ✓', 'ok');
+
+    // Auto-fill forms
+    addLog('Auto-filling forms — نعبي الفورمات...', 'work');
+    autoFillForm(extractedData);
+    addLog('All fields filled! ✓', 'ok');
+    updateProgress(100, 'Complete! — تم! ✓');
+    saveProgress(); // Auto-save to server
+
+    // Show analytics
+    setTimeout(() => {
+      overlay.classList.remove('visible');
+      showAnalytics(extractedData);
+    }, 800);
+
+  } catch(err) {
+    const isTimeout = err.message.includes('timed out');
+    const isNetwork = err.message.includes('Failed to fetch') || err.message.includes('NetworkError');
+    addLog(`Error: ${err.message}`, 'err');
+    if (isTimeout) {
+      addLog('💡 Tip: The AI took too long. Try uploading just 1-2 documents — جرب ارفع 1-2 مستند بس', 'work');
+    } else if (isNetwork) {
+      addLog('💡 Check your internet connection — تأكد من الاتصال بالإنترنت', 'work');
+    } else {
+      addLog('Fill forms manually or try again — عبي يدوي أو جرب مرة ثانية', 'work');
+    }
+    updateProgress(0, 'Error — صار خطأ');
+    progressBarFill.style.background = 'var(--accent)';
+    document.getElementById('processSpinner').style.display = 'none';
+    document.getElementById('processCloseBtn').style.display = 'inline-block';
+    document.getElementById('processTitle').textContent = 'Error — صار خطأ';
+    document.getElementById('processSubtitle').innerHTML = `
+      <span style="display:block;margin-bottom:8px;">${err.message}</span>
+      <button onclick="scanAllAndFill()" style="padding:8px 20px;border-radius:20px;border:2px solid var(--primary);
+        background:var(--info-light);font-family:var(--font-body);font-weight:700;font-size:13px;
+        color:var(--primary);cursor:pointer;">🔄 Retry — جرب مرة ثانية</button>
+    `;
+  }
+}
+
+function file2ArrayBuffer(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(new Uint8Array(r.result));
+    r.onerror = reject;
+    r.readAsArrayBuffer(file);
+  });
+}
+
+// ══ ANALYTICS DASHBOARD ══
+function showAnalytics(data) {
+  const summary = document.getElementById('scanResultSummary');
+  summary.style.display = 'block';
+
+  // Count totals
+  const totalW2Wages = (data.w2s || []).reduce((s, w) => s + (w.wages || 0), 0);
+  const totalW2Tax = (data.w2s || []).reduce((s, w) => s + (w.fedTaxWithheld || 0), 0);
+  const total1099 = (data.nec1099s || []).reduce((s, n) => s + (n.amount || 0), 0);
+  const totalIncome = totalW2Wages + total1099;
+  const fmt = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+  let html = `
+  <div style="background: linear-gradient(135deg, var(--info-light), var(--success-light)); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px;">
+    <h3 style="font-weight: 800; font-size: 18px; margin-bottom: 16px; text-align: center;">
+      📊 Document Analytics — تحليل المستندات
+    </h3>
+
+    <!-- Documents Found -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px;">
+      <div style="background: var(--surface); border-radius: var(--radius-md); padding: 14px; text-align: center; border: 1px solid var(--border);">
+        <div style="font-size: 24px;">📄</div>
+        <div style="font-weight: 800; font-size: 22px; color: var(--primary);">${uploadedDocs.length}</div>
+        <div style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Documents<br>مستندات</div>
+      </div>
+      <div style="background: var(--surface); border-radius: var(--radius-md); padding: 14px; text-align: center; border: 1px solid var(--border);">
+        <div style="font-size: 24px;">🏢</div>
+        <div style="font-weight: 800; font-size: 22px; color: var(--primary);">${(data.w2s || []).length}</div>
+        <div style="font-size: 11px; font-weight: 700; color: var(--text-muted);">W-2 Forms<br>فورمات وظيفة</div>
+      </div>
+      <div style="background: var(--surface); border-radius: var(--radius-md); padding: 14px; text-align: center; border: 1px solid var(--border);">
+        <div style="font-size: 24px;">💼</div>
+        <div style="font-weight: 800; font-size: 22px; color: var(--primary);">${(data.nec1099s || []).length}</div>
+        <div style="font-size: 11px; font-weight: 700; color: var(--text-muted);">1099 Forms<br>فورمات حر</div>
+      </div>
+      <div style="background: var(--surface); border-radius: var(--radius-md); padding: 14px; text-align: center; border: 1px solid var(--border);">
+        <div style="font-size: 24px;">💰</div>
+        <div style="font-weight: 800; font-size: 22px; color: var(--success);">${fmt(totalIncome)}</div>
+        <div style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Total Income<br>إجمالي الدخل</div>
+      </div>
+    </div>
+
+    <!-- Income Breakdown -->
+    ${totalIncome > 0 ? `
+    <div style="background: var(--surface); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; border: 1px solid var(--border);">
+      <div style="font-weight: 800; font-size: 13px; margin-bottom: 10px; color: var(--primary);">INCOME BREAKDOWN — تفصيل الدخل</div>
+      ${totalW2Wages > 0 ? `<div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 600;">
+        <span>🏢 W-2 Wages — رواتب</span><span style="font-weight: 800;">${fmt(totalW2Wages)}</span>
+      </div>` : ''}
+      ${total1099 > 0 ? `<div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 600;">
+        <span>💼 1099 Income — عمل حر</span><span style="font-weight: 800;">${fmt(total1099)}</span>
+      </div>` : ''}
+      ${totalW2Tax > 0 ? `<div style="display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; font-weight: 600;">
+        <span>🏛️ Federal Tax Withheld — ضريبة محتجزة</span><span style="font-weight: 800; color: var(--success);">${fmt(totalW2Tax)}</span>
+      </div>` : ''}
+      ${totalW2Wages > 0 && total1099 > 0 ? `
+      <div style="margin-top: 10px; padding-top: 10px; border-top: 2px solid var(--primary);">
+        <div style="height: 8px; border-radius: 4px; background: var(--border); overflow: hidden; display: flex;">
+          <div style="width: ${(totalW2Wages/totalIncome*100).toFixed(0)}%; background: var(--primary); border-radius: 4px;"></div>
+          <div style="width: ${(total1099/totalIncome*100).toFixed(0)}%; background: var(--warning); border-radius: 4px;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 4px; font-size: 11px; font-weight: 700; color: var(--text-muted);">
+          <span>🟦 W-2: ${(totalW2Wages/totalIncome*100).toFixed(0)}%</span>
+          <span>🟨 1099: ${(total1099/totalIncome*100).toFixed(0)}%</span>
+        </div>
+      </div>` : ''}
+    </div>` : ''}
+
+    <!-- Documents Detail -->
+    ${data.documents_found && data.documents_found.length > 0 ? `
+    <div style="background: var(--surface); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; border: 1px solid var(--border);">
+      <div style="font-weight: 800; font-size: 13px; margin-bottom: 10px; color: var(--primary);">DOCUMENTS DETECTED — المستندات المكتشفة</div>
+      ${data.documents_found.map(d => `<div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 600;">
+        <span style="background: var(--info-light); color: var(--primary); padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 800;">${d.type}</span>
+        <span>${d.from}</span>
+        <span style="margin-left: auto; color: var(--text-muted); font-size: 11px;">${d.summary || ''}</span>
+      </div>`).join('')}
+    </div>` : ''}
+
+    <!-- Missing Documents Warning -->
+    ${data.missing_docs && data.missing_docs.length > 0 ? `
+    <div style="background: var(--warning-light); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; border: 1px solid var(--warning);">
+      <div style="font-weight: 800; font-size: 13px; margin-bottom: 8px; color: #92400e;">⚠️ POSSIBLY MISSING — ممكن ناقص</div>
+      ${data.missing_docs.map(d => `<div style="font-size: 13px; font-weight: 600; padding: 4px 0;">• ${d}</div>`).join('')}
+    </div>` : ''}
+
+    <!-- AI Advice -->
+    ${data.advice && data.advice.length > 0 ? `
+    <div style="background: var(--surface); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--success);">
+      <div style="font-weight: 800; font-size: 13px; margin-bottom: 8px; color: var(--success);">💡 AI ADVISOR TIPS — نصائح المستشار</div>
+      ${data.advice.map(a => `<div style="font-size: 13px; font-weight: 600; padding: 4px 0; line-height: 1.5;">• ${a}</div>`).join('')}
+    </div>` : ''}
+
+    <div style="text-align: center; margin-top: 16px; font-size: 12px; font-weight: 700; color: var(--text-muted);">
+      ✅ All data auto-filled — كل البيانات انعبت أوتوماتيك<br>
+      Review each step to verify — راجع كل خطوة وتأكد
+    </div>
+  </div>`;
+
+  document.getElementById('scanSummaryText').innerHTML = html;
+}
+
+// ── AUTO-FILL FORM FIELDS ──
+function autoFillForm(data) {
+  if (!data) return;
+
+  // Personal Info
+  if (data.personal) {
+    setVal('firstName', data.personal.firstName);
+    setVal('lastName', data.personal.lastName);
+    setVal('ssn', data.personal.ssn);
+    setVal('address', data.personal.address);
+    setVal('city', data.personal.city);
+    if (data.personal.state) {
+      const sel = document.getElementById('state');
+      if (sel) {
+        for (let opt of sel.options) {
+          if (opt.value && opt.value.toLowerCase().includes(data.personal.state.toLowerCase())) {
+            sel.value = opt.value; break;
+          }
+          if (opt.text && opt.text.toLowerCase().includes(data.personal.state.toLowerCase())) {
+            sel.value = opt.value; break;
+          }
+        }
+      }
+    }
+    setVal('zip', data.personal.zip);
+  }
+
+  // Filing status
+  if (data.filingStatus) {
+    const cards = document.querySelectorAll('#filingStatusCards .option-card');
+    const statusMap = { 'single': 0, 'mfj': 1, 'mfs': 2, 'hoh': 3 };
+    const idx = statusMap[data.filingStatus];
+    if (idx !== undefined && cards[idx]) {
+      cards[idx].click();
+    }
+  }
+
+  // W-2s
+  if (data.w2s && data.w2s.length > 0) {
+    const w2List = document.getElementById('w2List');
+    // Fill first W-2
+    const firstEntries = w2List.querySelectorAll('.income-entry');
+    if (firstEntries[0] && data.w2s[0]) {
+      fillW2Entry(firstEntries[0], data.w2s[0]);
+    }
+    // Add additional W-2s
+    for (let i = 1; i < data.w2s.length; i++) {
+      addW2();
+      const entries = w2List.querySelectorAll('.income-entry');
+      fillW2Entry(entries[entries.length - 1], data.w2s[i]);
+    }
+  }
+
+  // 1099s
+  if (data.nec1099s && data.nec1099s.length > 0) {
+    const necList = document.getElementById('form1099List');
+    const firstEntries = necList.querySelectorAll('.income-entry');
+    if (firstEntries[0] && data.nec1099s[0]) {
+      fill1099Entry(firstEntries[0], data.nec1099s[0]);
+    }
+    for (let i = 1; i < data.nec1099s.length; i++) {
+      add1099();
+      const entries = necList.querySelectorAll('.income-entry');
+      fill1099Entry(entries[entries.length - 1], data.nec1099s[i]);
+    }
+  }
+
+  // Business Expenses
+  if (data.expenses) {
+    setVal('expHomeOffice', data.expenses.homeOffice);
+    setVal('expVehicle', data.expenses.vehicle);
+    setVal('expSupplies', data.expenses.supplies);
+    setVal('expPhone', data.expenses.phone);
+    setVal('expProfessional', data.expenses.professional);
+    setVal('expOther', data.expenses.other);
+  }
+
+  // Deductions
+  if (data.deductions) {
+    if (data.deductions.mortgage > 0 || data.deductions.salt > 0 || data.deductions.charity > 0 || data.deductions.medical > 0) {
+      // Select itemized if there are significant deductions
+      const cards = document.querySelectorAll('#deductionTypeCards .option-card');
+      if (cards[1]) cards[1].click();
+      setVal('dedMortgage', data.deductions.mortgage);
+      setVal('dedSALT', data.deductions.salt);
+      setVal('dedCharity', data.deductions.charity);
+      setVal('dedMedical', data.deductions.medical);
+    }
+    setVal('dedIRA', data.deductions.ira);
+    setVal('dedStudentLoan', data.deductions.studentLoan);
+    setVal('dedHSA', data.deductions.hsa);
+    setVal('dedSEHealth', data.deductions.seHealth);
+  }
+
+  // Other (1098, 1098-T)
+  if (data.other) {
+    if (data.other.form1098_mortgage > 0) setVal('dedMortgage', data.other.form1098_mortgage);
+    if (data.other.form1098t_tuition > 0) {
+      // Enable education credit and fill
+      const creditItems = document.querySelectorAll('#creditsGrid .deduction-item');
+      if (creditItems[2]) { creditItems[2].click(); } // Education credit
+      setTimeout(() => { setVal('eduExpenses', data.other.form1098t_tuition); }, 100);
+    }
+  }
+
+  // Highlight auto-filled fields
+  document.querySelectorAll('input, select').forEach(el => {
+    if (el.value && el.value !== '' && el.value !== '0') {
+      el.style.borderColor = 'var(--success)';
+      el.style.background = 'var(--success-light)';
+    }
+  });
+}
+
+function fillW2Entry(entry, w2) {
+  const q = s => entry.querySelector(s);
+  if (q('.w2-employer')) q('.w2-employer').value = w2.employer || '';
+  if (q('.w2-wages')) q('.w2-wages').value = w2.wages || '';
+  if (q('.w2-fed-tax')) q('.w2-fed-tax').value = w2.fedTaxWithheld || '';
+  if (q('.w2-ss-wages')) q('.w2-ss-wages').value = w2.ssWages || '';
+  if (q('.w2-medicare')) q('.w2-medicare').value = w2.medicareWages || '';
+  if (q('.w2-state-tax')) q('.w2-state-tax').value = w2.stateTax || '';
+  if (q('.w2-ein')) q('.w2-ein').value = w2.ein || '';
+}
+
+function fill1099Entry(entry, nec) {
+  const q = s => entry.querySelector(s);
+  if (q('.nec-payer')) q('.nec-payer').value = nec.payer || '';
+  if (q('.nec-amount')) q('.nec-amount').value = nec.amount || '';
+  if (q('.nec-ein')) q('.nec-ein').value = nec.ein || '';
+}
+
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  if (el && val !== undefined && val !== null && val !== '' && val !== 0) {
+    el.value = val;
+  }
+}
+
+// ── INIT ──
+renderProgress();
+// Auto-load saved progress from server
+loadProgress().then(restored => {
+  if (restored) console.log('Session restored from server');
+});
+// Auto-save every 60 seconds while filling forms
+setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
+</script>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- ══ FLOATING CHATBOT — مستشار الضرائب الذكي ══ -->
+<!-- ═══════════════════════════════════════════════ -->
+<style>
+/* ── CHAT TOGGLE BUTTON ── */
+.chat-toggle {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(53,94,190,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  z-index: 9999;
+  transition: background 0.15s ease;
+}
+.chat-toggle:hover {
+  background: var(--primary-light);
+}
+.chat-toggle .badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+/* ── CHAT PANEL ── */
+.chat-panel {
+  position: fixed;
+  bottom: 100px;
+  right: 28px;
+  width: 420px;
+  max-height: 600px;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.18), 0 0 0 1px var(--border);
+  z-index: 9998;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+.chat-panel.open {
+  display: flex;
+}
+
+/* ── CHAT HEADER ── */
+.chat-header {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.chat-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.chat-header-info h3 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+.chat-header-info span {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+.chat-close {
+  margin-left: auto;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+.chat-close:hover { background: rgba(255,255,255,0.3); }
+
+/* ── CHAT MESSAGES ── */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 380px;
+  min-height: 250px;
+  background: var(--bg);
+}
+.chat-messages::-webkit-scrollbar { width: 5px; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.chat-msg.bot {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  box-shadow: var(--shadow-xs);
+}
+.chat-msg.user {
+  background: var(--primary);
+  color: white;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+.chat-msg .ar-text {
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+.chat-msg.user .ar-text {
+  color: rgba(255,255,255,0.9);
+}
+.chat-msg.bot .msg-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+/* ── TYPING INDICATOR ── */
+.typing-indicator {
+  display: none;
+  align-self: flex-start;
+  padding: 12px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  gap: 4px;
+  align-items: center;
+}
+.typing-indicator.visible { display: flex; }
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.4;
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ── QUICK ACTIONS ── */
+.chat-quick-actions {
+  padding: 8px 16px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+.quick-btn {
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+.quick-btn:hover {
+  border-color: var(--primary);
+  background: var(--info-light);
+}
+
+/* ── CHAT INPUT ── */
+.chat-input-row {
+  padding: 12px 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.chat-input-row input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 10px 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--bg);
+  transition: border-color 0.15s ease;
+}
+.chat-input-row input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(53,94,190,0.12);
+}
+.chat-input-row input::placeholder { color: #b0b5c3; font-weight: 500; }
+.chat-send {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+.chat-send:hover {
+  background: var(--primary-light);
+}
+.chat-send:disabled {
+  background: var(--border);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── MOBILE CHAT ── */
+@media (max-width: 768px) {
+  .chat-panel {
+    width: calc(100vw - 24px);
+    right: 12px;
+    bottom: 88px;
+    max-height: 70vh;
+  }
+  .chat-toggle { bottom: 18px; right: 18px; width: 56px; height: 56px; }
+}
+</style>
+
+<!-- CHAT TOGGLE BUTTON -->
+<button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
+  💬
+  <span class="badge" id="chatBadge">!</span>
+</button>
+
+<!-- CHAT PANEL -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-avatar">⚖️</div>
+    <div class="chat-header-info">
+      <h3>Tax Advisor AI — مستشارك الذكي</h3>
+      <span id="chatHeaderStatus">Attorney + Accountant — محامي ومحاسب</span>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot">
+      <div class="msg-label">Tax Advisor — مستشار الضرائب</div>
+      أهلاً وسهلاً! I'm your personal tax advisor — محامي ومحاسب بخدمتك. 🏛️<br><br>
+      <strong>Choose how you want to start — اختار كيف تبدأ:</strong><br><br>
+      🎙️ <strong>Tax Interview</strong> — I'll ask you everything step by step, like sitting with a real accountant. Just answer my questions and I'll fill all your forms.<br>
+      <span style="color: var(--primary-dark);">مقابلة ضريبية — أسألك كل شي خطوة بخطوة زي المحاسب الحقيقي</span><br><br>
+      💬 <strong>Free Chat</strong> — Ask me anything about taxes anytime.<br>
+      <span style="color: var(--primary-dark);">شات حر — اسألني أي سؤال عن الضرائب</span>
+    </div>
+  </div>
+
+  <div class="typing-indicator" id="typingIndicator">
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+  </div>
+
+  <!-- ACTION BAR: Interview + Quick Questions + Fill Forms -->
+  <div class="chat-quick-actions" id="quickActions">
+    <button class="quick-btn" onclick="startInterview()" style="background: var(--primary); color: white; border-color: var(--primary); font-size: 13px; padding: 8px 14px;">🎙️ Start Tax Interview — ابدأ المقابلة</button>
+    <button class="quick-btn" onclick="sendQuick('What deductions can I claim?')">Deductions</button>
+    <button class="quick-btn" onclick="sendQuick('Am I eligible for EITC?')">EITC</button>
+    <button class="quick-btn" onclick="sendQuick('ممكن تشرحلي W-2 و 1099؟')">W-2 vs 1099</button>
+  </div>
+
+  <!-- FILL FORMS BUTTON (hidden until interview complete) -->
+  <div id="fillFormsBar" style="display: none; padding: 8px 16px; background: var(--success-light); border-top: 2px solid var(--success);">
+    <button class="quick-btn" onclick="fillFormsFromChat()" style="background: var(--success); color: white; border-color: var(--success); font-size: 13px; padding: 10px 16px; width: 100%; justify-content: center; display: flex; align-items: center; gap: 6px;">
+      ✨ Fill All My Forms — عبّي كل الفورمات
+    </button>
+  </div>
+
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask anything... اسأل أي شي..."
+           onkeydown="if(event.key==='Enter' && !event.shiftKey) sendMessage()">
+    <button class="chat-send" id="chatSendBtn" onclick="sendMessage()">➤</button>
+  </div>
+</div>
+
+<script>
+// ── CHATBOT ENGINE ── (uses server-side API proxy)
+
+// Regular chat system prompt
+const SYSTEM_PROMPT = `You are "Tax Advisor AI" — a highly knowledgeable U.S. tax advisor who combines the expertise of both a licensed CPA (Certified Public Accountant) and a tax attorney. You provide guidance for the 2025 tax year (filing in 2026).
+
+YOUR PERSONA & STYLE:
+- You speak in a natural mix of English and Arabic (Arabizi style) — the way bilingual Arabic/English speakers actually talk
+- Use Arabic phrases naturally: يعني، عشان، هاي، بس، كمان، إذا، لازم، ممكن
+- Be warm, approachable, but authoritative — like a trusted advisor sitting with the user
+- Use "you/أنت" directly — make it personal
+
+YOUR EXPERTISE COVERS:
+- Federal income tax (Form 1040) and all schedules
+- Self-employment tax (Schedule SE) and business deductions (Schedule C)
+- W-2 wage income and 1099-NEC/MISC income
+- Standard vs itemized deductions
+- Tax credits: Child Tax Credit, EITC, education credits, energy credits
+- Filing statuses and their implications
+- IRS deadlines, extensions, penalties, and payment plans
+- Quarterly estimated taxes for self-employed
+- State tax considerations
+- Tax planning strategies and legal ways to minimize tax liability
+
+RULES:
+- Always clarify that you provide educational guidance, not formal legal/tax advice
+- When discussing dollar amounts or thresholds, use 2025 tax year figures
+- Keep responses concise but thorough — usually 2-4 paragraphs max
+- Use bold for key terms and numbers when helpful
+- Always give practical, actionable advice — not just theory`;
+
+// Tax Interview system prompt — the real magic
+const INTERVIEW_PROMPT = `You are "Tax Advisor AI" — a warm, expert bilingual (English + Arabic mix, Arabizi style) tax advisor conducting a live tax interview for the 2025 tax year (filing in 2026). You act as both a CPA and a tax attorney sitting face-to-face with the client.
+
+YOUR INTERVIEW APPROACH:
+You must conduct this like a REAL in-person tax meeting. Go through these phases IN ORDER:
+
+**PHASE 1 — PERSONAL GREETING & INFO (first 2-3 messages)**
+- Greet them warmly. Ask their full name, مرحبا وأهلاً!
+- Ask for: filing status (single, married, head of household), address, state
+- Ask: do you have any dependents? كم عندك أولاد أو معالين?
+
+**PHASE 2 — INCOME DISCOVERY (next 3-5 messages)**
+- Ask: where does your income come from? شغل وظيفي (W-2)؟ شغل حر (1099)؟ Both?
+- For EACH W-2: ask employer name, total wages (Box 1), federal tax withheld (Box 2), state tax withheld (Box 17)
+- For EACH 1099: ask payer/client name, total amount received
+- Ask: any OTHER income? Interest (1099-INT)? Investments? Rental? يعني أي دخل ثاني؟
+
+**PHASE 3 — BUSINESS EXPENSES (if they have 1099 income)**
+- Ask about: home office, vehicle/mileage, supplies, phone/internet, professional services
+- Explain each one briefly so they don't miss anything
+- مصاريف الشغل تنقص من الضرائب — لا تنسى شي!
+
+**PHASE 4 — DEDUCTIONS DEEP DIVE (2-3 messages)**
+- Ask: do you own a home? (mortgage interest = Form 1098)
+- Ask: medical expenses? عندك مصاريف طبية كبيرة?
+- Ask: charitable donations? تبرعات خيرية؟
+- Ask: student loan interest? IRA/HSA contributions?
+- Explain standard vs itemized — and recommend which is better based on what they said
+
+**PHASE 5 — CREDITS CHECK (2-3 messages)**
+- Based on their situation, proactively ask about:
+  - Child Tax Credit (if they mentioned kids)
+  - Earned Income Credit (if income is moderate)
+  - Education credits (if they or kids are in school)
+  - Energy credits (solar, EV?)
+- Give them a rough idea of how much each credit could save
+
+**PHASE 6 — MISSING DOCUMENTS CHECK**
+- Review everything they told you
+- List EXACTLY which documents they need to gather: W-2s, 1099s, 1098s, receipts, etc.
+- Ask: do you have all these documents ready? عندك كل هاي الأوراق جاهزة؟
+- Flag anything that seems missing or inconsistent
+
+**PHASE 7 — ADVICE & SUMMARY**
+- Give them a rough estimate: refund or owe? كم تقريباً بترجعلك أو بتدفع؟
+- Give 2-3 personalized tax-saving tips based on THEIR specific situation
+- Remind them of the April 15, 2026 deadline
+- Tell them: "Now click the '✨ Fill All My Forms' button below and I'll automatically fill everything from what you told me!"
+
+CRITICAL RULES:
+- Ask ONE topic at a time — don't overwhelm with 10 questions at once
+- After each answer, acknowledge what they said, then ask the NEXT question
+- Be conversational, not like a form. React to their answers: "Oh nice, ممتاز!" / "That's good, هاي تساعدك"
+- Remember EVERYTHING they tell you — refer back to it later
+- If they give vague answers, follow up with specific questions
+- Mix English and Arabic naturally throughout
+- When you reach Phase 7, end with: "Ready? Click ✨ Fill All My Forms below! — جاهز؟ اضغط عبّي الفورمات!"
+- NEVER output JSON or technical text during the interview — be 100% human and conversational`;
+
+let chatHistory = [];
+let chatOpen = false;
+let interviewMode = false;
+let activeSystemPrompt = SYSTEM_PROMPT;
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chatPanel').classList.toggle('open', chatOpen);
+  document.getElementById('chatBadge').style.display = chatOpen ? 'none' : 'flex';
+  if (chatOpen) {
+    document.getElementById('chatInput').focus();
+    scrollChat();
+  }
+}
+
+function startInterview() {
+  interviewMode = true;
+  activeSystemPrompt = INTERVIEW_PROMPT;
+  chatHistory = [];
+  document.getElementById('quickActions').style.display = 'none';
+  document.getElementById('chatHeaderStatus').textContent = '🎙️ Tax Interview Mode — وضع المقابلة';
+  document.getElementById('chatInput').placeholder = 'Answer here... جاوب هنا...';
+
+  // Clear messages and start interview
+  const msgContainer = document.getElementById('chatMessages');
+  msgContainer.innerHTML = '';
+
+  // Send initial interview kick-off
+  addMessage('system-info',
+    '🎙️ <strong>Tax Interview Started — بدأت المقابلة الضريبية</strong><br>' +
+    '<span style="font-size:12px;color:var(--text-muted);">Answer the questions and I\'ll fill all your forms at the end.<br>جاوب على الأسئلة وأنا بعبيلك كل الفورمات بالآخر.</span>'
+  );
+
+  // Trigger first AI message
+  showTyping(true);
+  callChatAPI([{ role: 'user', content: 'Start the tax interview. Greet me warmly and ask for my personal information to begin.' }])
+    .then(reply => {
+      chatHistory = []; // Reset — don't include the kick-off in real history
+      chatHistory.push({ role: 'assistant', content: reply });
+      showTyping(false);
+      addMessage('assistant', reply);
+    })
+    .catch(err => {
+      showTyping(false);
+      addMessage('assistant', `⚠️ Connection error — في مشكلة بالاتصال. ${err.message}`);
+    });
+}
+
+function addMessage(role, text) {
+  const msgDiv = document.createElement('div');
+
+  if (role === 'system-info') {
+    msgDiv.className = 'chat-msg bot';
+    msgDiv.style.background = 'linear-gradient(135deg, var(--info-light), var(--success-light))';
+    msgDiv.style.border = '2px solid var(--primary)';
+    msgDiv.style.textAlign = 'center';
+    msgDiv.innerHTML = text;
+  } else if (role === 'assistant') {
+    msgDiv.className = 'chat-msg bot';
+    let formatted = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n\n/g, '<br><br>')
+      .replace(/\n/g, '<br>');
+    msgDiv.innerHTML = '<div class="msg-label">Tax Advisor — مستشار الضرائب</div>' + formatted;
+
+    // Check if interview is wrapping up (Phase 7) — show Fill Forms button
+    const lowerText = text.toLowerCase();
+    if (interviewMode && (lowerText.includes('fill all my forms') || lowerText.includes('عبّي') || lowerText.includes('fill your forms') || lowerText.includes('ready to fill') || chatHistory.length >= 14)) {
+      setTimeout(() => {
+        document.getElementById('fillFormsBar').style.display = 'block';
+      }, 500);
+    }
+  } else {
+    msgDiv.className = 'chat-msg user';
+    msgDiv.textContent = text;
+  }
+
+  document.getElementById('chatMessages').appendChild(msgDiv);
+  scrollChat();
+}
+
+function scrollChat() {
+  const container = document.getElementById('chatMessages');
+  setTimeout(() => container.scrollTop = container.scrollHeight, 50);
+}
+
+function showTyping(show) {
+  document.getElementById('typingIndicator').classList.toggle('visible', show);
+  document.getElementById('chatSendBtn').disabled = show;
+  scrollChat();
+}
+
+async function callChatAPI(messages) {
+  // Prepend system prompt as first user message (server proxy doesn't support system param)
+  const fullMessages = [
+    { role: 'user', content: '[SYSTEM] ' + activeSystemPrompt },
+    { role: 'assistant', content: 'Understood. I will follow these instructions.' },
+    ...messages.slice(-20)
+  ];
+  const data = await callServerClaude(fullMessages, 1024);
+  return data.content[0].text;
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  addMessage('user', text);
+  chatHistory.push({ role: 'user', content: text });
+
+  // Hide quick actions after first message
+  document.getElementById('quickActions').style.display = 'none';
+
+  showTyping(true);
+
+  try {
+    const reply = await callChatAPI(chatHistory);
+    chatHistory.push({ role: 'assistant', content: reply });
+    showTyping(false);
+    addMessage('assistant', reply);
+  } catch (err) {
+    showTyping(false);
+    console.error('Chat error:', err);
+    addMessage('assistant',
+      `⚠️ Sorry, connection issue — في مشكلة بالاتصال.\n\n**Error:** ${err.message}\n\nTry again — جرب مرة ثانية.`
+    );
+  }
+}
+
+function sendQuick(text) {
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+}
+
+// ── FILL FORMS FROM CONVERSATION ──
+async function fillFormsFromChat() {
+  if (chatHistory.length < 4) {
+    addMessage('assistant', 'We need more information first — لسا نحتاج معلومات أكثر! Keep answering my questions. 😊');
+    return;
+  }
+
+  // Show processing overlay
+  const overlay = document.getElementById('processOverlay');
+  const log = document.getElementById('processLog');
+  log.innerHTML = '';
+  overlay.classList.add('visible');
+  document.getElementById('processTitle').textContent = 'Extracting Your Data — نستخرج بياناتك';
+  document.getElementById('processSubtitle').textContent = 'Reading our conversation and filling your forms — نقرأ المحادثة ونعبي الفورمات';
+
+  addLog('Reading conversation history — نقرأ المحادثة...', 'work');
+  addLog(`Found ${chatHistory.length} messages to analyze`, 'ok');
+
+  try {
+    addLog('AI extracting tax data from conversation — الذكاء الاصطناعي يستخرج البيانات...', 'work');
+
+    // Send entire conversation to Claude for structured extraction
+    const extractionMessages = [
+      ...chatHistory,
+      {
+        role: 'user',
+        content: `Based on our ENTIRE conversation above, extract ALL tax information the user provided into this JSON format. Return ONLY valid JSON — no markdown, no backticks, no explanation:
+{
+  "personal": { "firstName": "", "lastName": "", "ssn": "", "address": "", "city": "", "state": "", "zip": "" },
+  "filingStatus": "single|mfj|mfs|hoh",
+  "w2s": [{ "employer": "", "wages": 0, "fedTaxWithheld": 0, "ssWages": 0, "medicareWages": 0, "stateTax": 0, "ein": "" }],
+  "nec1099s": [{ "payer": "", "amount": 0, "ein": "" }],
+  "deductions": { "mortgage": 0, "salt": 0, "charity": 0, "medical": 0, "ira": 0, "studentLoan": 0, "hsa": 0, "seHealth": 0 },
+  "expenses": { "homeOffice": 0, "vehicle": 0, "supplies": 0, "phone": 0, "professional": 0, "other": 0 },
+  "dependents": [{ "name": "", "relationship": "" }],
+  "credits": { "childTax": false, "eitc": false, "education": false, "childCare": false, "energy": false, "numChildren": 0, "eduExpenses": 0, "careExpenses": 0, "energyExpenses": 0 },
+  "other": { "form1098_mortgage": 0, "form1098t_tuition": 0, "medical_total": 0 }
+}
+Use 0 for numbers not mentioned. Use "" for strings not mentioned. Set booleans to true only if the user confirmed eligibility.`
+      }
+    ];
+
+    const sysMsg = [
+      { role: 'user', content: '[SYSTEM] You are a data extraction assistant. Extract tax information from conversation into JSON. Return ONLY valid JSON.' },
+      { role: 'assistant', content: 'Understood. I will extract data and return only valid JSON.' },
+      ...extractionMessages.slice(-24)
+    ];
+    const data = await callServerClaude(sysMsg, 4096);
+    let rawText = data.content[0].text.trim();
+    rawText = rawText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+
+    addLog('Data extracted successfully — تم استخراج البيانات!', 'ok');
+
+    const extractedData = JSON.parse(rawText);
+
+    // Auto-fill the wizard forms
+    addLog('Filling your tax forms — نعبي الفورمات...', 'work');
+    autoFillForm(extractedData);
+
+    // Handle credits from interview
+    if (extractedData.credits) {
+      const creditsGrid = document.querySelectorAll('#creditsGrid .deduction-item');
+      const creditMap = ['childTax', 'eitc', 'education', 'childCare', 'saverCredit', 'energyCredit'];
+      const dataMap = ['childTax', 'eitc', 'education', 'childCare', 'saver', 'energy'];
+      dataMap.forEach((key, i) => {
+        if (extractedData.credits[key] && creditsGrid[i]) {
+          creditsGrid[i].click();
+        }
+      });
+      if (extractedData.credits.numChildren > 0) {
+        setTimeout(() => setVal('numChildren', extractedData.credits.numChildren), 200);
+      }
+      if (extractedData.credits.eduExpenses > 0) {
+        setTimeout(() => setVal('eduExpenses', extractedData.credits.eduExpenses), 200);
+      }
+      if (extractedData.credits.careExpenses > 0) {
+        setTimeout(() => setVal('careExpenses', extractedData.credits.careExpenses), 200);
+      }
+      if (extractedData.credits.energyExpenses > 0) {
+        setTimeout(() => setVal('energyExpenses', extractedData.credits.energyExpenses), 200);
+      }
+    }
+
+    // Handle dependents from interview
+    if (extractedData.dependents && extractedData.dependents.length > 0) {
+      extractedData.dependents.forEach(dep => {
+        if (dep.name) {
+          addDependent();
+          const depEntries = document.querySelectorAll('#dependentsList .income-entry');
+          const lastDep = depEntries[depEntries.length - 1];
+          if (lastDep) {
+            const nameInput = lastDep.querySelector('.dep-name');
+            if (nameInput) nameInput.value = dep.name;
+          }
+        }
+      });
+    }
+
+    addLog('All forms filled! — تم تعبئة كل الفورمات!', 'ok');
+
+    // Count what was filled
+    let summary = [];
+    if (extractedData.personal?.firstName) summary.push('Personal info ✓');
+    if (extractedData.w2s?.length > 0) summary.push(extractedData.w2s.length + ' W-2(s) ✓');
+    if (extractedData.nec1099s?.length > 0) summary.push(extractedData.nec1099s.length + ' 1099(s) ✓');
+    if (extractedData.deductions) summary.push('Deductions ✓');
+    addLog('Summary: ' + summary.join(', '), 'ok');
+    saveProgress(); // Auto-save to server
+
+    setTimeout(() => {
+      overlay.classList.remove('visible');
+      // Notify in chat
+      addMessage('system-info',
+        '✅ <strong>All forms filled! — تم تعبئة كل الفورمات!</strong><br>' +
+        '<span style="font-size:12px;color:var(--text-muted);">' + summary.join(' · ') + '<br>' +
+        'Go through each step to review — راجع كل خطوة وتأكد الأرقام صح!</span>'
+      );
+    }, 1000);
+
+  } catch(err) {
+    addLog('Error: ' + err.message, 'err');
+    setTimeout(() => overlay.classList.remove('visible'), 2000);
+    addMessage('assistant', `⚠️ Error filling forms — صار خطأ: ${err.message}\n\nTry again or fill manually — جرب مرة ثانية أو عبي يدوي.`);
+  }
+}
+</script>
+
+</body>
+</html>
