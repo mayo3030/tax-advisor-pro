@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year-Round Tax Planning Calculator | Tax Advisor Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d3b66;
+  --navy-light: #1a5276;
+  --navy-dark: #071e38;
+  --navy-deep: #050e1a;
+  --gold: #c9a84c;
+  --gold-light: #dab95e;
+  --gold-dark: #b08f3a;
+  --gold-pale: #f5ecd4;
+  --gold-glow: rgba(201,168,76,0.25);
+  --cream: #faf8f2;
+  --cream-dark: #f0ebe0;
+  --white: #ffffff;
+  --text: #1a1f36;
+  --text-light: #5e6a82;
+  --text-faint: #8b92a5;
+  --border: #e2ddd2;
+  --success: #0f5132;
+  --success-bg: #e8f5ef;
+  --danger: #b03a2e;
+  --danger-bg: #fde8e5;
+  --warning-bg: #fff4e6;
+  --info-bg: #e8eff8;
+
+  --font-display: 'Playfair Display', 'Noto Sans Arabic', serif;
+  --font-body: 'Lato', 'Noto Sans Arabic', sans-serif;
+
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 20px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 40px rgba(13,59,102,0.10);
+  --shadow-gold: 0 0 30px rgba(201,168,76,0.2);
+
+  --radius: 6px;
+  --radius-lg: 14px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Topbar Navigation */
+.topbar {
+  background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
+  padding: 1rem 2rem;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.topbar-logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.topbar-nav {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.topbar-nav a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.topbar-nav a:hover {
+  color: var(--gold-light);
+}
+
+/* Main Container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Calculator Cards */
+.calculator-section {
+  margin-bottom: 2rem;
+}
+
+.calculator-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.calculator-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--gold);
+}
+
+.calculator-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  padding: 1.5rem 2rem;
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.calculator-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.calculator-toggle {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.calculator-card.open .calculator-toggle {
+  transform: rotate(180deg);
+}
+
+.calculator-content {
+  display: none;
+  padding: 2rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.calculator-card.open .calculator-content {
+  display: block;
+  max-height: 2000px;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+label .label-en {
+  display: inline;
+}
+
+label .label-ar {
+  display: none;
+  margin-left: 1rem;
+}
+
+html[dir="rtl"] label .label-en {
+  display: none;
+}
+
+html[dir="rtl"] label .label-ar {
+  display: inline;
+}
+
+input[type="number"],
+input[type="text"],
+select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--gold);
+}
+
+/* Results Section */
+.results-section {
+  background: var(--gold-pale);
+  border-left: 4px solid var(--gold);
+  padding: 2rem;
+  border-radius: var(--radius);
+  margin-top: 2rem;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.result-box {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.result-label {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.result-value {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--navy);
+  font-family: 'Courier New', monospace;
+}
+
+.result-subtext {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 0.5rem;
+}
+
+/* Alert Boxes */
+.alert {
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+  border-left: 4px solid;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.alert.success {
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.alert.danger {
+  background: var(--danger-bg);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.alert.warning {
+  background: var(--warning-bg);
+  border-color: #d4941e;
+  color: #8b5a00;
+}
+
+.alert.info {
+  background: var(--info-bg);
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.alert-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.alert-text {
+  flex: 1;
+}
+
+.alert-text strong {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+  background: var(--cream-dark);
+  border-radius: 100px;
+  height: 8px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 100%);
+  border-radius: 100px;
+  transition: width 0.3s ease;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.timeline-item {
+  padding-left: 40px;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  background: var(--gold);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+  box-shadow: 0 0 0 2px var(--gold);
+}
+
+.timeline-item.completed::before {
+  background: var(--success);
+  box-shadow: 0 0 0 2px var(--success);
+}
+
+.timeline-item h4 {
+  color: var(--navy);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.timeline-item p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* Table Styles */
+.table-responsive {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+thead {
+  background: var(--navy-light);
+  color: var(--white);
+}
+
+th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 700;
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody tr:hover {
+  background: var(--gold-pale);
+}
+
+/* Button Styles */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 1rem;
+  font-family: var(--font-body);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 2rem;
+  }
+
+  .topbar-inner {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .topbar-nav {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .calculator-content {
+    padding: 1.5rem;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .result-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* Hidden by default for loading */
+.calculator-card {
+  opacity: 1;
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lang-toggle {
+  background: transparent;
+  border: 1px solid var(--white);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.lang-toggle:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
+}
+</style>
+</head>
+<body>
+
+<!-- Topbar Navigation -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="topbar-logo">TAX ADVISOR PRO</a>
+    <ul class="topbar-nav">
+      <li><a href="index.html"><span class="en">Dashboard</span><span class="ar" style="display:none;">لوحة التحكم</span></a></li>
+      <li><a href="guide.html"><span class="en">Guides</span><span class="ar" style="display:none;">الأدلة</span></a></li>
+      <li><a href="tax-planner.html"><span class="en">Tax Planner</span><span class="ar" style="display:none;">مخطط الضرائب</span></a></li>
+    </ul>
+    <button class="lang-toggle" onclick="toggleLanguage()" id="langBtn">عربي</button>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1><span class="en">Year-Round Tax Planning</span><span class="ar" style="display:none;">التخطيط الضريبي على مدار السنة</span></h1>
+    <p><span class="en">Interactive calculators to optimize your tax situation throughout the year</span><span class="ar" style="display:none;">حاسبات تفاعلية لتحسين وضعك الضريبي طوال السنة</span></p>
+  </div>
+
+  <!-- 1. ESTIMATED TAX CALCULATOR -->
+  <div class="calculator-section">
+    <div class="calculator-card open">
+      <div class="calculator-header" onclick="toggleCalculator(this)">
+        <h2><span class="en">Estimated Tax Calculator</span><span class="ar" style="display:none;">حاسبة الضريبة المقدرة</span></h2>
+        <span class="calculator-toggle">▼</span>
+      </div>
+      <div class="calculator-content">
+        <p style="color: var(--text-light); margin-bottom: 1.5rem;"><span class="en">Calculate your estimated quarterly tax payments for 2025</span><span class="ar" style="display:none;">احسب دفعات الضريبة الفصلية المقدرة لعام 2025</span></p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="label-en">Expected Annual Income</span><span class="label-ar">الدخل السنوي المتوقع</span></label>
+            <input type="number" id="est-income" placeholder="100000" oninput="calculateEstimatedTax()">
+          </div>
+          <div class="form-group">
+            <label><span class="label-en">Filing Status</span><span class="label-ar">حالة الملف</span></label>
+            <select id="est-status" onchange="calculateEstimatedTax()">
+              <option value="single">Single / أعزب</option>
+              <option value="married">Married Filing Jointly / متزوج</option>
+              <option value="head">Head of Household / رب أسرة</option>
+              <option value="widow">Qualifying Widow(er) / أرملة</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="label-en">Standard Deduction</span><span class="label-ar">الخصم القياسي</span></label>
+            <input type="number" id="est-deduction" placeholder="13850" oninput="calculateEstimatedTax()">
+          </div>
+          <div class="form-group">
+            <label><span class="label-en">Other Tax Credits (if any)</span><span class="label-ar">ائتمانات ضريبية أخرى</span></label>
+            <input type="number" id="est-credits" placeholder="0" oninput="calculateEstimatedTax()">
+          </div>
+        </div>
+
+        <div id="est-results" class="results-section" style="display:none;">
+          <h3 style="color: var(--navy); margin-bottom: 1rem;"><span class="en">Your Estimated Tax</span><span class="ar" style="display:none;">ضريبتك المقدرة</span></h3>
+
+          <div class="results-grid">
+            <div class="result-box">
+              <div class="result-label"><span class="en">Federal Income Tax</span><span class="ar" style="display:none;">الضريبة الفيدرالية</span></div>
+              <div class="result-value" id="est-tax">$0</div>
+              <div class="result-subtext"><span class="en">Annual</span><span class="ar" style="display:none;">سنوي</span></div>
+            </div>
+            <div class="result-box">
+              <div class="result-label"><span class="en">Effective Tax Rate</span><span class="label-ar" style="display:none;">معدل الضريبة الفعلي</span></div>
+              <div class="result-value" id="est-rate">0%</div>
+              <div class="result-subtext"><span class="en">of gross income</span><span class="ar" style="display:none;">من الدخل الإجمالي</span></div>
+            </div>
+            <div class="result-box">
+              <div class="result-label"><span class="en">Marginal Bracket</span><span class="ar" style="display:none;">فئة الهامش</span></div>
+              <div class="result-value" id="est-bracket">0%</div>
+              <div class="result-subtext"><span class="en">your top rate</span><span class="ar" style="display:none;">معدلك الأعلى</span></div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2rem;">
+            <h3 style="color: var(--navy); margin-bottom: 1rem;"><span class="en">Quarterly Payment Schedule (2025)</span><span class="ar" style="display:none;">جدول الدفع الفصلي (2025)</span></h3>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th><span class="en">Quarter</span><span class="ar" style="display:none;">الربع</span></th>
+                    <th><span class="en">Due Date</span><span class="ar" style="display:none;">تاريخ الاستحقاق</span></th>
+                    <th><span class="en">Payment Amount</span><span class="ar" style="display:none;">مبلغ الدفع</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Q1</td>
+                    <td>April 15, 2025</td>
+                    <td id="est-q1">$0</td>
+                  </tr>
+                  <tr>
+                    <td>Q2</td>
+                    <td>June 16, 2025</td>
+                    <td id="est-q2">$0</td>
+                  </tr>
+                  <tr>
+                    <td>Q3</td>
+                    <td>September 15, 2025</td>
+                    <td id="est-q3">$0</td>
+                  </tr>
+                  <tr>
+                    <td>Q4</td>
+                    <td>January 15, 2026</td>
+                    <td id="est-q4">$0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="est-warning" class="alert warning" style="display:none; margin-top: 1.5rem;">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-text">
+              <strong><span class="en">Underpayment Risk</span><span class="ar" style="display:none;">مخاطر الدفع الناقص</span></strong>
+              <span class="en">You may face an underpayment penalty if withholding is too low. Consider increasing quarterly payments.</span><span class="ar" style="display:none;">قد تواجه عقوبة عدم السداد إذا كان الخصم منخفضًا جدًا. فكر في زيادة الدفعات الفصلية.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. W-4 WITHHOLDING CALCULATOR -->
+  <div class="calculator-section">
+    <div class="calculator-card">
+      <div class="calculator-header" onclick="toggleCalculator(this)">
+        <h2><span class="en">W-4 Withholding Calculator</span><span class="ar" style="display:none;">حاسبة خصم W-4</span></h2>
+        <span class="calculator-toggle">▼</span>
+      </div>
+      <div class="calculator-content">
+        <p style="color: var(--text-light); margin-bottom: 1.5rem;"><span class="en">Determine optimal W-4 settings to avoid owing or overpaying at tax time</span><span class="ar" style="display:none;">حدد إعدادات W-4 المثلى لتجنب الدين أو الدفع الزائد وقت الضريبة</span></p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="label-en">Gross Pay Per Period</span><span class="label-ar">إجمالي الراتب لكل فترة</span></label>
+            <input type="number" id="w4-pay" placeholder="5000" oninput="calculateW4()">
+          </div>
+          <div class="form-group">
+            <label><span class="label-en">Pay Frequency</span><span class="label-ar">تكرار الدفع</span></label>
+            <select id="w4-freq" onchange="calculateW4()">
+              <option value="26">Biweekly (26x/year) / نصف شهري</option>
+              <option value="24">Semi-Monthly (24x/year) / نصف شهري</option>
+              <option value="12">Monthly (12x/year) / شهري</option>
+              <option value="52">Weekly (52x/year) / أسبوعي</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="label-en">Filing Status</span><span class="label-ar">حالة الملف</span></label>
+            <select id="w4-status" onchange="calculateW4()">
+              <option value="single">Single / أعزب</option>
+              <option value="married">Married Filing Jointly / متزوج</option>
+              <option value="head">Head of Household / رب أسرة</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><span class="label-en">Number of Dependents</span><span class="label-ar">عدد الأشخاص المعالين</span></label>
+            <input type="number" id="w4-dependents" placeholder="0" min="0" oninput="calculateW4()">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="label-en">Other Income (Spouse, Side Gigs)</span><span class="label-ar">دخل آخر</span></label>
+            <input type="number" id="w4-other" placeholder="0" oninput="calculateW4()">
+          </div>
+          <div class="form-group">
+            <label><span class="label-en">Total Deductions (if itemizing)</span><span class="label-ar">إجمالي الخصومات</span></label>
+            <input type="number" id="w4-ded" placeholder="0" oninput="calculateW4()">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="w4-extra" onchange="calculateW4()">
+            <label for="w4-extra" style="margin: 0;"><span class="label-en">I want extra withholding (safety cushion)</span><span class="label-ar">أريد خصمًا إضافيًا</span></label>
+          </div>
+        </div>
+
+        <div id="w4-results" class="results-section" style="display:none;">
+          <h3 style="color: var(--navy); margin-bottom: 1rem;"><span class="en">Recommended W-4 Settings</span><span class="ar" style="display:none;">إعدادات W-4 الموصى بها</span></h3>
+
+          <div class="results-grid">
+            <div class="result-box">
+              <div class="result-label"><span class="en">Annual Gross Income</span><span class="ar" style="display:none;">الدخل الإجمالي السنوي</span></div>
+              <div class="result-value" id="w4-annual">$0</div>
+            </div>
+            <div class="result-box">
+              <div class="result-label"><span class="en">Projected Tax Liability</span><span class="ar" style="display:none;">الالتزام الضريبي المتوقع</span></div>
+              <div class="result-value" id="w4-liability">$0</div>
+            </div>
+            <div class="result-box">
+              <div class="result-label"><span class="en">Annual Withholding</span><span class="ar" style="display:none;">الخصم السنوي</span></div>
+              <div class="result-value" id="w4-withhold">$0</div>
+            </div>
+            <div class="result-box">
+              <div class="result-label"><span class="en">Monthly Withholding</span><span class="ar" style="display:none;">الخصم الشهري</span></div>
+              <div class="result-value" id="w4-monthly">$0</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem; padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
+            <h4 style="color: var(--navy); margin-bottom: 0.75rem;"><span class="en">Withholding Analysis</span><span class="ar" style="display:none;">تحليل الخصم</span></h4>
+            <div style="height: 6px; background: var(--cream-dark); border-radius: 100px; margin-bottom: 0.75rem;">
+              <div class="progress-bar" id="w4-progress" style="width: 50%; background: var(--gold);"></div>
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-light);">
+              <span class="en"><strong>Status:</strong> <span id="w4-status-text">Balanced</span></span><span class="ar" style="display:none;"><strong>الحالة:</strong> <span id="w4-status-text-ar">متوازن</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SELF-EMPLOYMENT TAX CALCULATOR -->
+  <div class="calculator-section">
+    <div class="calculator-card">
+      <div class="calculator-header" onclick="toggleCalculator(this)">
+        <h2><span class="en">Self-Employment Tax Calculator</span><span class="ar" style="display:none;">حاسبة ضريبة العمل الحر</span></h2>
+        <span class="calculator-toggle">▼</span>
+      </div>
+      <div class="calculator-content">
+        <p style="color: var(--text-light); margin-bottom: 1.5rem;"><span class="en">Calculate SE tax for freelancers and business owners</span><span class="ar" style="display:none;">احسب ضريبة العمل الحر للعاملين بحرية</span></p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="label-en">Self-Employment Income (from Schedule C)</span><span class="label-ar">دخل العمل الحر</span></label>
+            <input type="number" id="se-income" placeholder="80000" oninput="calculateSETax()">
+          </div>
+          <div class="form-group">
+            <label><span class="label-en">Business Expenses</span><span class="label-ar">نفقات العمل</span></label>
+            <input type="number" id="se-expenses" placeholder="15000" oninput="calculateSETax()">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><span class="label-en">W-2 Wages (if any)</span><span class="label-ar">رواتب W-2</span></label>
+            <input type="number" id="se-w2" placeholder="0" oninput="calculateSETax()">
+          </div>
+        </div>
+
+        <div id="se-results" class="results-section" style="display:none;">
+          <h3 style="color: var(--navy); margin-bottom: 1rem;"><span class="en">Self-Employment Tax Breakdown</span><span class="ar" style="display:none;">تفصيل ضريبة العمل الحر</span></h3>
+
+          <div class="results-grid">
+            <div class="result-box">
+              <div class="result-label"><span class="en">Net Earnings</span><span class="ar" style="display:none;">الأرباح الصافية</span></div>
+              <div class="result-value" id="se-net">$0</div>
+            </div>
+            <div class="result-box">
+              <div class="result-label"><span class="en">SE Tax (15.3%)</span><span class="ar" style="display:none;">ضريبة SE</span></div>
+              <div class="result-value" id="se-tax">$0</div>
+            </div>
+            <div class="result-box">
+              <div class="result-label"><span class="en">Deductible Half</span><span class="ar" style="display:none;">النصف المخصوم</span></div>
+              <div class="result-value" id="se-deduct">$0</div>
+              <div class="result-subtext"><span class="en">reduces income tax</span><span class="ar" style="display:none;">يقلل ضريبة الدخل</span></div>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem; padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
+            <h4 style="color: var(--navy); margin-bottom: 1rem;"><span class="en">Quarterly Estimated Payments</span><span class="ar" style="display:none;">الدفعات الفصلية المقدرة</span></h4>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th><span class="en">Quarter</span><span class="ar" style="display:none;">الربع</span></th>
+                    <th><span class="en">SE Tax Only</span><span class="ar" style="display:none;">ضريبة SE فقط</span></th>
+                    <th><span class="en">Plus Est. Income Tax</span><span class="ar" style="display:none;">بالإضافة إلى ضريبة الدخل</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Q1 (Apr 15)</td>
+                    <td id="se-q1">$0</td>
+                    <td id="se-q1-total">$0</td>
+                  </tr>
+                  <tr>
+                    <td>Q2 (Jun 16)</td>
+                    <td id="se-q2">$0</td>
+                    <td id="se-q2-total">$0</td>
+                  </tr>
+                  <tr>
+                    <td>Q3 (Sep 15)</td>
+                    <td id="se-q3">$0</td>
+                    <td id="se-q3-total">$0</td>
+                  </tr>
+                  <tr>
+                    <td>Q4 (Jan 15)</td>
+                    <td id="se-q4">$0</td>
+                    <td id="se-q4-total">$0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. TAX SAVINGS ESTIMATOR -->
+  <div class="calculator-section">
+    <div class="calculator-card">
+      <div class="calculator-header" onclick="toggleCalculator(this)">
+        <h2><span class="en">Tax Savings Estimator</span><span class="ar" style="display:none;">مقدر توفير الضرائب</span></h2>
+        <span class="calculator-toggle">▼</span>
+      </div>
+      <div class="calculator-content">
+        <p style="color: var(--text-light); margin-bottom: 1.5rem;"><span class="en">Estimate tax savings from strategic contributions</span><span class="ar" style="display:none;">قدّر توفير الضرائب من المساهمات الاستراتيجية</span></p>
+
+        <div class="form-group">
+          <label><span class="label-en">Your Effective Tax Rate</span><span class="label-ar">معدل الضريبة الفعلي لديك</span></label>
+          <input type="number" id="savings-rate" placeholder="22" min="0" max="100" oninput="calculateSavings()" style="width: 100px;">
+          <span style="color: var(--text-light); margin-left: 0.5rem;">%</span>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1.5rem; background: var(--info-bg); border-radius: var(--radius); border: 1px solid var(--navy);">
+          <h4 style="color: var(--navy); margin-bottom: 1rem;"><span class="en">Tax Reduction Strategies</span><span class="ar" style="display:none;">استراتيجيات تقليل الضرائب</span></h4>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+            <!-- IRA Contribution -->
+            <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
+              <h5 style="color: var(--navy); margin-bottom: 0.5rem;">Traditional IRA Contribution</h5>
+              <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">Max: $7,000/year ($8,000 if 50+)</p>
+              <input type="number" id="ira-contrib" placeholder="6500" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
+                <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
+                <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="ira-save">$0</div>
+              </div>
+            </div>
+
+            <!-- HSA Contribution -->
+            <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
+              <h5 style="color: var(--navy); margin-bottom: 0.5rem;">Health Savings Account (HSA)</h5>
+              <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">Individual: $4,150 / Family: $8,300</p>
+              <input type="number" id="hsa-contrib" placeholder="4150" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
+                <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
+                <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="hsa-save">$0</div>
+              </div>
+            </div>
+
+            <!-- 529 Plan -->
+            <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
+              <h5 style="color: var(--navy); margin-bottom: 0.5rem;">529 College Savings Plan</h5>
+              <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">State-dependent max; varies by plan</p>
+              <input type="number" id="plan529-contrib" placeholder="5000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
+                <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
+                <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="plan529-save">$0</div>
+              </div>
+            </div>
+
+            <!-- Charitable Giving -->
+            <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
+              <h5 style="color: var(--navy); margin-bottom: 0.5rem;">Charitable Giving</h5>
+              <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">If itemizing deductions</p>
+              <input type="number" id="charity-contrib" placeholder="3000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
+                <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
+                <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="charity-save">$0</div>
+              </div>
+            </div>
+
+            <!-- SEP-IRA (Self-Employed) -->
+            <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
+              <h5 style="color: var(--navy); margin-bottom: 0.5rem;">SEP-IRA (Self-Employed)</h5>
+              <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">Max: 25% of net SE income</p>
+              <input type="number" id="sepia-contrib" placeholder="10000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
+                <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
+                <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="sepia-save">$0</div>
+              </div>
+            </div>
+
+            <!-- Student Loan Interest -->
+            <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
+              <h5 style="color: var(--navy); margin-bottom: 0.5rem;">Student Loan Interest Deduction</h5>
+              <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">Max: $2,500/year</p>
+              <input type="number" id="loan-interest" placeholder="2500" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
+                <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
+                <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="loan-save">$0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="savings-total" class="alert success" style="display:none; margin-top: 2rem;">
+          <span class="alert-icon">✓</span>
+          <div class="alert-text">
+            <strong><span class="en">Total Potential Tax Savings</span><span class="ar" style="display:none;">إجمالي توفير الضرائب المحتمل</span></strong>
+            <div style="font-size: 1.75rem; font-weight: 900; color: var(--success); margin-top: 0.5rem;" id="savings-amount">$0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. TAX DEADLINES & CALENDAR -->
+  <div class="calculator-section">
+    <div class="calculator-card">
+      <div class="calculator-header" onclick="toggleCalculator(this)">
+        <h2><span class="en">2025 Tax Calendar & Deadlines</span><span class="ar" style="display:none;">تقويم الضرائب 2025 والمواعيد النهائية</span></h2>
+        <span class="calculator-toggle">▼</span>
+      </div>
+      <div class="calculator-content">
+        <div class="timeline">
+          <!-- Q1 -->
+          <div class="timeline-item">
+            <h4>Q1 2025 Estimated Tax Payment</h4>
+            <p><strong>Due Date:</strong> April 15, 2025</p>
+            <p><span class="en">Form 1040-ES: For taxpayers not having enough tax withheld from wages or salary</span><span class="ar" style="display:none;">النموذج 1040-ES: للمدفوعين الذين لم يتم خصم ضريبة كافية من رواتبهم</span></p>
+          </div>
+
+          <!-- Tax Return Filing -->
+          <div class="timeline-item">
+            <h4>2024 Tax Return Filing Deadline</h4>
+            <p><strong>Due Date:</strong> April 15, 2025</p>
+            <p><span class="en">File your 2024 federal income tax return (Form 1040). Extension available (Form 4868)</span><span class="ar" style="display:none;">قدم إقرار ضريبة الدخل الفيدرالي لعام 2024. إذا احتجت إلى وقت إضافي.</span></p>
+          </div>
+
+          <!-- Q2 -->
+          <div class="timeline-item">
+            <h4>Q2 2025 Estimated Tax Payment</h4>
+            <p><strong>Due Date:</strong> June 16, 2025</p>
+            <p><span class="en">Second quarterly estimated tax payment for 2025</span><span class="ar" style="display:none;">دفع الضريبة المقدرة الفصلية الثانية لعام 2025</span></p>
+          </div>
+
+          <!-- IRA Contribution Deadline -->
+          <div class="timeline-item">
+            <h4>IRA Contribution Deadline (2024 Year)</h4>
+            <p><strong>Due Date:</strong> April 15, 2025</p>
+            <p><span class="en">Final deadline to contribute to a Traditional or Roth IRA for the 2024 tax year</span><span class="ar" style="display:none;">آخر موعد لتقديم مساهمة في حساب IRA التقليدي أو Roth لسنة الضريبة 2024</span></p>
+          </div>
+
+          <!-- Q3 -->
+          <div class="timeline-item">
+            <h4>Q3 2025 Estimated Tax Payment</h4>
+            <p><strong>Due Date:</strong> September 15, 2025</p>
+            <p><span class="en">Third quarterly estimated tax payment for 2025</span><span class="ar" style="display:none;">دفع الضريبة المقدرة الفصلية الثالثة لعام 2025</span></p>
+          </div>
+
+          <!-- Tax Deadline Extension -->
+          <div class="timeline-item">
+            <h4>Extended Tax Return Deadline (If you filed for extension)</h4>
+            <p><strong>Due Date:</strong> October 15, 2025</p>
+            <p><span class="en">Final deadline if you filed Form 4868 for an extension on April 15, 2025</span><span class="ar" style="display:none;">آخر موعد إذا قدمت النموذج 4868 لتمديد المهلة في 15 أبريل 2025</span></p>
+          </div>
+
+          <!-- Q4 -->
+          <div class="timeline-item">
+            <h4>Q4 2025 Estimated Tax Payment</h4>
+            <p><strong>Due Date:</strong> January 15, 2026</p>
+            <p><span class="en">Fourth and final quarterly estimated tax payment for 2025</span><span class="ar" style="display:none;">دفع الضريبة المقدرة الفصلية الرابع والأخير لعام 2025</span></p>
+          </div>
+
+          <!-- 2025 Tax Return -->
+          <div class="timeline-item">
+            <h4>2025 Tax Return Filing Deadline</h4>
+            <p><strong>Due Date:</strong> April 15, 2026</p>
+            <p><span class="en">File your 2025 federal income tax return. Plan ahead by April 2026!</span><span class="ar" style="display:none;">قدم إقرار ضريبة الدخل الفيدرالي لعام 2025. خطط مقدمًا بحلول أبريل 2026!</span></p>
+          </div>
+        </div>
+
+        <!-- Key Milestones -->
+        <div style="margin-top: 2rem; padding: 1.5rem; background: var(--info-bg); border-radius: var(--radius); border: 1px solid var(--navy);">
+          <h4 style="color: var(--navy); margin-bottom: 1rem;"><span class="en">Key Planning Milestones</span><span class="ar" style="display:none;">معالم التخطيط الرئيسية</span></h4>
+          <ul style="list-style: none; padding: 0;">
+            <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+              <strong><span class="en">January:</span><span class="ar" style="display:none;">يناير:</span></strong> <span class="en">Review tax situation, set withholding goals</span><span class="ar" style="display:none;">راجع الوضع الضريبي، ضع أهداف الخصم</span>
+            </li>
+            <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+              <strong><span class="en">April:</span><span class="ar" style="display:none;">أبريل:</span></strong> <span class="en">File prior year return, make Q1 est. payment, adjust W-4 if needed</span><span class="ar" style="display:none;">قدم الإقرار للسنة السابقة، ادفع Q1، اضبط W-4 إذا لزم الأمر</span>
+            </li>
+            <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+              <strong><span class="en">July:</span><span class="ar" style="display:none;">يوليو:</span></strong> <span class="en">Mid-year review: compare withholding to projected tax liability</span><span class="ar" style="display:none;">مراجعة منتصف السنة: قارن الخصم بالالتزام الضريبي المتوقع</span>
+            </li>
+            <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+              <strong><span class="en">October:</span><span class="ar" style="display:none;">أكتوبر:</span></strong> <span class="en">Plan charitable contributions, year-end retirement account contributions</span><span class="ar" style="display:none;">خطط المساهمات الخيرية، مساهمات حساب التقاعد في نهاية السنة</span>
+            </li>
+            <li style="padding: 0.75rem 0;">
+              <strong><span class="en">December:</span><span class="ar" style="display:none;">ديسمبر:</span></strong> <span class="en">Harvest tax losses, max out retirement accounts, adjust W-4 for next year</span><span class="ar" style="display:none;">جني خسائر الضرائب، زيادة حسابات التقاعد، اضبط W-4 للسنة القادمة</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; color: var(--text-faint);">
+    <p><span class="en">This calculator is for planning purposes only. Always consult with a qualified tax professional for your specific situation.</span><span class="ar" style="display:none;">هذه الحاسبة لأغراض التخطيط فقط. استشر دائمًا متخصص ضرائب مؤهلًا لوضعك المحدد.</span></p>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script>
+// 2025 Tax Brackets (Standard Deduction included)
+const TAX_BRACKETS_2025 = {
+  single: [
+    { min: 0, max: 11600, rate: 0.10 },
+    { min: 11600, max: 47150, rate: 0.12 },
+    { min: 47150, max: 100525, rate: 0.22 },
+    { min: 100525, max: 191950, rate: 0.24 },
+    { min: 191950, max: 243725, rate: 0.32 },
+    { min: 243725, max: 609350, rate: 0.35 },
+    { min: 609350, max: Infinity, rate: 0.37 }
+  ],
+  married: [
+    { min: 0, max: 23200, rate: 0.10 },
+    { min: 23200, max: 94300, rate: 0.12 },
+    { min: 94300, max: 201050, rate: 0.22 },
+    { min: 201050, max: 383900, rate: 0.24 },
+    { min: 383900, max: 487450, rate: 0.32 },
+    { min: 487450, max: 731200, rate: 0.35 },
+    { min: 731200, max: Infinity, rate: 0.37 }
+  ],
+  head: [
+    { min: 0, max: 15400, rate: 0.10 },
+    { min: 15400, max: 58550, rate: 0.12 },
+    { min: 58550, max: 117350, rate: 0.22 },
+    { min: 117350, max: 188350, rate: 0.24 },
+    { min: 188350, max: 228850, rate: 0.32 },
+    { min: 228850, max: 687350, rate: 0.35 },
+    { min: 687350, max: Infinity, rate: 0.37 }
+  ],
+  widow: [
+    { min: 0, max: 23200, rate: 0.10 },
+    { min: 23200, max: 94300, rate: 0.12 },
+    { min: 94300, max: 201050, rate: 0.22 },
+    { min: 201050, max: 383900, rate: 0.24 },
+    { min: 383900, max: 487450, rate: 0.32 },
+    { min: 487450, max: 731200, rate: 0.35 },
+    { min: 731200, max: Infinity, rate: 0.37 }
+  ]
+};
+
+const STANDARD_DEDUCTIONS = {
+  single: 14600,
+  married: 29200,
+  head: 21900,
+  widow: 29200
+};
+
+// Helper: Format currency
+function formatCurrency(amount) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(amount);
+}
+
+// Helper: Calculate federal income tax
+function calculateFederalTax(taxableIncome, status) {
+  const brackets = TAX_BRACKETS_2025[status];
+  let tax = 0;
+
+  for (let bracket of brackets) {
+    if (taxableIncome <= bracket.min) break;
+    const income_in_bracket = Math.min(taxableIncome, bracket.max) - bracket.min;
+    tax += income_in_bracket * bracket.rate;
+  }
+
+  return Math.max(0, tax);
+}
+
+// 1. ESTIMATED TAX CALCULATOR
+function calculateEstimatedTax() {
+  const income = parseFloat(document.getElementById('est-income').value) || 0;
+  const status = document.getElementById('est-status').value;
+  const deduction = parseFloat(document.getElementById('est-deduction').value) || STANDARD_DEDUCTIONS[status];
+  const credits = parseFloat(document.getElementById('est-credits').value) || 0;
+
+  if (income === 0) {
+    document.getElementById('est-results').style.display = 'none';
+    return;
+  }
+
+  const taxableIncome = Math.max(0, income - deduction);
+  let federalTax = calculateFederalTax(taxableIncome, status);
+  federalTax = Math.max(0, federalTax - credits);
+
+  const effectiveRate = (federalTax / income * 100).toFixed(1);
+  const marginalBracket = TAX_BRACKETS_2025[status].find(b => taxableIncome <= b.max)?.rate * 100 || 37;
+
+  const quarterlyPayment = federalTax / 4;
+
+  // Check for underpayment (simplified)
+  const hasUnderpaymentRisk = federalTax > 1000;
+
+  document.getElementById('est-tax').textContent = formatCurrency(federalTax);
+  document.getElementById('est-rate').textContent = effectiveRate + '%';
+  document.getElementById('est-bracket').textContent = marginalBracket.toFixed(0) + '%';
+
+  document.getElementById('est-q1').textContent = formatCurrency(quarterlyPayment);
+  document.getElementById('est-q2').textContent = formatCurrency(quarterlyPayment);
+  document.getElementById('est-q3').textContent = formatCurrency(quarterlyPayment);
+  document.getElementById('est-q4').textContent = formatCurrency(quarterlyPayment);
+
+  document.getElementById('est-warning').style.display = hasUnderpaymentRisk ? 'flex' : 'none';
+  document.getElementById('est-results').style.display = 'block';
+}
+
+// 2. W-4 WITHHOLDING CALCULATOR
+function calculateW4() {
+  const payPerPeriod = parseFloat(document.getElementById('w4-pay').value) || 0;
+  const frequency = parseInt(document.getElementById('w4-freq').value) || 26;
+  const status = document.getElementById('w4-status').value;
+  const dependents = parseInt(document.getElementById('w4-dependents').value) || 0;
+  const otherIncome = parseFloat(document.getElementById('w4-other').value) || 0;
+  const deductions = parseFloat(document.getElementById('w4-ded').value) || 0;
+  const extraWithholding = document.getElementById('w4-extra').checked;
+
+  if (payPerPeriod === 0) {
+    document.getElementById('w4-results').style.display = 'none';
+    return;
+  }
+
+  const annualGross = payPerPeriod * frequency + otherIncome;
+  const standardDed = STANDARD_DEDUCTIONS[status];
+  const effectiveDeduction = Math.max(standardDed, deductions);
+
+  const taxableIncome = Math.max(0, annualGross - effectiveDeduction);
+  let projectedTax = calculateFederalTax(taxableIncome, status);
+
+  // Child tax credit: $2,000 per dependent
+  projectedTax = Math.max(0, projectedTax - (dependents * 2000));
+
+  // Current withholding (rough estimate)
+  let currentWithholding = (payPerPeriod * frequency) * 0.12; // Approximate 12% for middle income
+
+  if (extraWithholding) {
+    currentWithholding += 50 * frequency; // Add $50/period extra
+  }
+
+  const monthlyWithholding = currentWithholding / 12;
+  const percentageOfLiability = (currentWithholding / projectedTax * 100).toFixed(0);
+
+  let statusText = 'Balanced';
+  let statusColor = 'var(--gold)';
+
+  if (currentWithholding < projectedTax * 0.9) {
+    statusText = 'Under-withheld';
+    statusColor = 'var(--danger)';
+  } else if (currentWithholding > projectedTax * 1.1) {
+    statusText = 'Over-withheld';
+    statusColor = 'var(--success)';
+  }
+
+  document.getElementById('w4-annual').textContent = formatCurrency(annualGross);
+  document.getElementById('w4-liability').textContent = formatCurrency(projectedTax);
+  document.getElementById('w4-withhold').textContent = formatCurrency(currentWithholding);
+  document.getElementById('w4-monthly').textContent = formatCurrency(monthlyWithholding);
+  document.getElementById('w4-status-text').textContent = statusText;
+  document.getElementById('w4-status-text-ar').textContent = statusText;
+
+  const progressWidth = Math.min(100, (currentWithholding / projectedTax * 100));
+  document.getElementById('w4-progress').style.width = progressWidth + '%';
+  document.getElementById('w4-progress').style.background = statusColor;
+
+  document.getElementById('w4-results').style.display = 'block';
+}
+
+// 3. SELF-EMPLOYMENT TAX CALCULATOR
+function calculateSETax() {
+  const income = parseFloat(document.getElementById('se-income').value) || 0;
+  const expenses = parseFloat(document.getElementById('se-expenses').value) || 0;
+  const w2wages = parseFloat(document.getElementById('se-w2').value) || 0;
+
+  if (income === 0) {
+    document.getElementById('se-results').style.display = 'none';
+    return;
+  }
+
+  const netEarnings = income - expenses;
+  const seIncome = netEarnings * 0.9235; // Adjusted net earnings
+  const seTax = seIncome * 0.153; // 15.3% (12.4% SS + 2.9% Medicare)
+  const deductibleHalf = seTax / 2;
+
+  const quarterlyPayment = seTax / 4;
+
+  document.getElementById('se-net').textContent = formatCurrency(netEarnings);
+  document.getElementById('se-tax').textContent = formatCurrency(seTax);
+  document.getElementById('se-deduct').textContent = formatCurrency(deductibleHalf);
+
+  document.getElementById('se-q1').textContent = formatCurrency(quarterlyPayment);
+  document.getElementById('se-q2').textContent = formatCurrency(quarterlyPayment);
+  document.getElementById('se-q3').textContent = formatCurrency(quarterlyPayment);
+  document.getElementById('se-q4').textContent = formatCurrency(quarterlyPayment);
+
+  // Assume 24% income tax rate for total estimate
+  const incomePortionTax = netEarnings * 0.24;
+  document.getElementById('se-q1-total').textContent = formatCurrency((quarterlyPayment + incomePortionTax / 4));
+  document.getElementById('se-q2-total').textContent = formatCurrency((quarterlyPayment + incomePortionTax / 4));
+  document.getElementById('se-q3-total').textContent = formatCurrency((quarterlyPayment + incomePortionTax / 4));
+  document.getElementById('se-q4-total').textContent = formatCurrency((quarterlyPayment + incomePortionTax / 4));
+
+  document.getElementById('se-results').style.display = 'block';
+}
+
+// 4. TAX SAVINGS ESTIMATOR
+function calculateSavings() {
+  const rate = (parseFloat(document.getElementById('savings-rate').value) || 0) / 100;
+
+  const iraContrib = parseFloat(document.getElementById('ira-contrib').value) || 0;
+  const hsaContrib = parseFloat(document.getElementById('hsa-contrib').value) || 0;
+  const plan529Contrib = parseFloat(document.getElementById('plan529-contrib').value) || 0;
+  const charityContrib = parseFloat(document.getElementById('charity-contrib').value) || 0;
+  const sepialeContrib = parseFloat(document.getElementById('sepia-contrib').value) || 0;
+  const loanInterest = parseFloat(document.getElementById('loan-interest').value) || 0;
+
+  const iraSave = iraContrib * rate;
+  const hsaSave = hsaContrib * rate;
+  const plan529Save = plan529Contrib * rate;
+  const charitySave = charityContrib * rate;
+  const sepiaSave = sepialeContrib * rate;
+  const loanSave = loanInterest * rate;
+
+  const totalSavings = iraSave + hsaSave + plan529Save + charitySave + sepiaSave + loanSave;
+
+  document.getElementById('ira-save').textContent = formatCurrency(iraSave);
+  document.getElementById('hsa-save').textContent = formatCurrency(hsaSave);
+  document.getElementById('plan529-save').textContent = formatCurrency(plan529Save);
+  document.getElementById('charity-save').textContent = formatCurrency(charitySave);
+  document.getElementById('sepia-save').textContent = formatCurrency(sepiaSave);
+  document.getElementById('loan-save').textContent = formatCurrency(loanSave);
+
+  if (totalSavings > 0) {
+    document.getElementById('savings-total').style.display = 'flex';
+    document.getElementById('savings-amount').textContent = formatCurrency(totalSavings);
+  } else {
+    document.getElementById('savings-total').style.display = 'none';
+  }
+}
+
+// Toggle Calculator Collapse/Expand
+function toggleCalculator(element) {
+  const card = element.closest('.calculator-card');
+  card.classList.toggle('open');
+}
+
+// Language Toggle
+function toggleLanguage() {
+  const html = document.documentElement;
+  const btn = document.getElementById('langBtn');
+
+  if (html.lang === 'en') {
+    html.lang = 'ar';
+    html.dir = 'rtl';
+    btn.textContent = 'English';
+  } else {
+    html.lang = 'en';
+    html.dir = 'ltr';
+    btn.textContent = 'عربي';
+  }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  calculateEstimatedTax();
+});
+</script>
+
+<!-- Guide Chat Widget -->
+<script src="guide-chat.js"></script>
+
+</body>
+</html>

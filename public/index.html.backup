@@ -1420,6 +1420,8 @@ body {
   }
 </script>
 
+<!-- Tax Document Auto-Import Module — استيراد المستندات الضريبية -->
+<script src="./doc-import.js"></script>
 </head>
 <body>
 
@@ -1453,12 +1455,6 @@ body {
   </div>
   <div class="nav-right">
     <span class="tax-year">Tax Year 2025</span>
-    <div class="nav-menu" style="display: flex; align-items: center; gap: 16px; margin-left: 24px; padding-left: 24px; border-left: 1px solid rgba(255,255,255,0.2);">
-      <a href="tax-planner.html" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 13px; transition: opacity 0.18s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">📊 Tax Planner</a>
-      <a href="itin-guide.html" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 13px; transition: opacity 0.18s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">🗽 ITIN Guide</a>
-      <a href="efile.html" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 13px; transition: opacity 0.18s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">📮 E-File</a>
-      <a href="auth.html" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 13px; transition: opacity 0.18s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">👤 My Account</a>
-    </div>
   </div>
 </nav>
 
@@ -1512,21 +1508,6 @@ body {
           <a href="guides.html" class="btn" style="font-size: 15px; padding: 14px 32px; background: var(--surface); color: var(--primary); border: 2px solid var(--border); border-radius: var(--radius-full); text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: all 0.18s ease;" onmouseover="this.style.background='var(--info-light)';this.style.borderColor='var(--primary)'" onmouseout="this.style.background='var(--surface)';this.style.borderColor='var(--border)'">
             🗺️ 13 State Guides — أدلة الولايات
           </a>
-        </div>
-
-        <div style="margin-top: 32px; padding-top: 32px; border-top: 2px solid var(--border);">
-          <h3 style="text-align: center; font-weight: 800; margin-bottom: 16px; font-size: 16px;">📚 Learn More — اعرف أكثر</h3>
-          <div class="btn-row" style="justify-content: center; gap: 12px; flex-wrap: wrap;">
-            <a href="tax-planner.html" class="btn" style="font-size: 13px; padding: 10px 20px; background: var(--info-light); color: var(--primary); border: 1px solid var(--primary); border-radius: 20px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: all 0.18s ease;" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='var(--info-light)';this.style.color='var(--primary)'">
-              📊 Tax Planner
-            </a>
-            <a href="itin-guide.html" class="btn" style="font-size: 13px; padding: 10px 20px; background: var(--info-light); color: var(--primary); border: 1px solid var(--primary); border-radius: 20px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: all 0.18s ease;" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='var(--info-light)';this.style.color='var(--primary)'">
-              🗽 ITIN Guide
-            </a>
-            <a href="efile.html" class="btn" style="font-size: 13px; padding: 10px 20px; background: var(--info-light); color: var(--primary); border: 1px solid var(--primary); border-radius: 20px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: all 0.18s ease;" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='var(--info-light)';this.style.color='var(--primary)'">
-              📮 E-File Center
-            </a>
-          </div>
         </div>
       </div>
     </div>
@@ -3253,6 +3234,9 @@ loadProgress().then(restored => {
 setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
 </script>
 
+<!-- Tax Document Auto-Import Module — استيراد المستندات الضريبية -->
+<script src="./doc-import.js"></script>
+
 <!-- ═══════════════════════════════════════════════ -->
 <!-- ══ FLOATING CHATBOT — مستشار الضرائب الذكي ══ -->
 <!-- ═══════════════════════════════════════════════ -->
@@ -3530,6 +3514,7 @@ setInterval(() => { if (state.currentStep > 1) saveProgress(); }, 60000);
   cursor: not-allowed;
   transform: none;
 }
+
 
 /* ── CHAT FILE UPLOAD ── */
 .chat-attach-btn {
@@ -4817,12 +4802,6 @@ Use 0 for numbers not mentioned. Use "" for strings not mentioned. Set booleans 
 
 <!-- Tax Document Auto-Import Module — استيراد المستندات الضريبية -->
 <script src="./doc-import.js"></script>
-
-<!-- Review Engine Module — محرك المراجعة -->
-<script src="review-engine.js"></script>
-
-<!-- Prior Year Data Import Module — استيراد بيانات السنة الماضية -->
-<script src="prior-year.js"></script>
 
 </body>
 </html>

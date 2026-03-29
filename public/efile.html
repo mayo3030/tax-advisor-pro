@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRS E-Filing Integration - Tax Advisor Pro</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        :root {
+            --navy: #0f1b3c;
+            --gold: #d4af37;
+            --light-navy: #1a2e5c;
+            --pale-gold: #f5f1e8;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --success: #2e7d32;
+            --warning: #f57c00;
+            --error: #c62828;
+            --border: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--pale-gold) 0%, #f9f8f5 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Topbar */
+        .topbar {
+            background: linear-gradient(90deg, var(--navy) 0%, var(--light-navy) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .topbar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.5px;
+        }
+
+        .topbar-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .lang-toggle {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle:hover {
+            background: rgba(212, 175, 55, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .user-info {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .icon-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold) 0%, #e5a82e 100%);
+            border-radius: 50%;
+            color: var(--navy);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Section Styling */
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--gold);
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-icon {
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        /* Filing Status Dashboard */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .status-card {
+            background: linear-gradient(135deg, var(--pale-gold) 0%, #f9f8f5 100%);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .status-card-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-card-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .status-card.refund .status-card-value {
+            color: var(--success);
+        }
+
+        .status-card.owed .status-card-value {
+            color: var(--error);
+        }
+
+        /* Readiness Checklist */
+        .readiness-checklist {
+            background: linear-gradient(135deg, var(--pale-gold) 0%, #f9f8f5 100%);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .readiness-title {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-status {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .checklist-status.pass {
+            background: var(--success);
+            color: white;
+        }
+
+        .checklist-status.fail {
+            background: var(--error);
+            color: white;
+        }
+
+        .checklist-status.pending {
+            background: var(--warning);
+            color: white;
+        }
+
+        .checklist-text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .checklist-text.fail {
+            color: var(--error);
+        }
+
+        .checklist-text.pending {
+            color: var(--warning);
+        }
+
+        /* E-Filing Options */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .option-card {
+            background: linear-gradient(135deg, var(--pale-gold) 0%, #f9f8f5 100%);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .option-card.recommended {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, var(--pale-gold) 100%);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.1);
+        }
+
+        .option-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--gold);
+            color: var(--navy);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .option-card h3 {
+            font-size: 1.5rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .option-card .cost {
+            font-size: 1.2rem;
+            color: var(--success);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .option-card .description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .option-features {
+            list-style: none;
+            margin: 1rem 0;
+            padding: 0;
+        }
+
+        .option-features li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .option-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .option-features li.warning {
+            color: var(--warning);
+        }
+
+        .option-features li.warning:before {
+            content: "⚠";
+            color: var(--warning);
+        }
+
+        .option-card .btn {
+            margin-top: auto;
+        }
+
+        .supported-states {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid var(--gold);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.8rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            min-height: 44px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--light-navy) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 12px rgba(15, 27, 60, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--navy);
+            color: var(--navy);
+        }
+
+        .btn-outline:hover {
+            background: var(--navy);
+            color: white;
+        }
+
+        .btn-block {
+            width: 100%;
+            display: flex;
+        }
+
+        /* Instructions & Steps */
+        .instructions-section {
+            margin-top: 2rem;
+        }
+
+        .instructions-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .instructions-tab {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s ease;
+        }
+
+        .instructions-tab.active {
+            color: var(--navy);
+            border-bottom-color: var(--gold);
+        }
+
+        .instructions-tab:hover {
+            color: var(--navy);
+        }
+
+        .instructions-content {
+            display: none;
+        }
+
+        .instructions-content.active {
+            display: block;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--pale-gold);
+            border-radius: 6px;
+        }
+
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            color: var(--navy);
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .step-content ul {
+            margin: 0.5rem 0 0 0;
+            padding-left: 1.5rem;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.4rem;
+        }
+
+        /* Export Section */
+        .export-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .btn-export {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--pale-gold) 0%, #f9f8f5 100%);
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-export:hover {
+            border-color: var(--gold);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-export-icon {
+            font-size: 1.5rem;
+        }
+
+        .btn-export-label {
+            font-weight: 600;
+            color: var(--navy);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .btn-export-desc {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-indicator.ready {
+            background: rgba(46, 125, 50, 0.1);
+            color: var(--success);
+        }
+
+        .status-indicator.caution {
+            background: rgba(245, 124, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .status-indicator.issue {
+            background: rgba(198, 40, 40, 0.1);
+            color: var(--error);
+        }
+
+        /* Modal/Toast Styling */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--navy);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .topbar {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .export-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .instructions-tabs {
+                width: 100%;
+            }
+        }
+
+        /* Arabic RTL Support */
+        [data-lang="ar"] {
+            direction: rtl;
+            text-align: right;
+        }
+
+        [data-lang="ar"] .topbar-right {
+            flex-direction: row-reverse;
+        }
+
+        [data-lang="ar"] .checklist-item,
+        [data-lang="ar"] .step {
+            flex-direction: row-reverse;
+        }
+
+        [data-lang="ar"] .step-number {
+            margin-left: auto;
+        }
+
+        [data-lang="ar"] .option-features li {
+            padding-left: 0;
+            padding-right: 1.5rem;
+        }
+
+        [data-lang="ar"] .option-features li:before {
+            left: auto;
+            right: 0;
+        }
+
+        /* Print Styles */
+        @media print {
+            .topbar,
+            .instructions-tabs,
+            .btn,
+            .lang-toggle {
+                display: none;
+            }
+
+            .section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="topbar-logo">📊 Tax Advisor Pro</div>
+        <div class="topbar-right">
+            <div class="user-info" id="userInfo">Loading...</div>
+            <button class="lang-toggle" id="langToggle">العربية</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>
+                <span class="icon-badge">📄</span>
+                <span id="heading">IRS E-Filing Integration</span>
+            </h1>
+            <p id="subheading">Real-world filing options for your 2025 tax return</p>
+        </div>
+
+        <!-- Section 1: Filing Status Dashboard -->
+        <div class="section">
+            <h2>
+                <span class="section-icon">📊</span>
+                <span id="dashboardTitle">Filing Status & Summary</span>
+            </h2>
+
+            <div class="status-grid">
+                <div class="status-card">
+                    <div class="status-card-label" id="filingStatusLabel">Filing Status</div>
+                    <div class="status-card-value" id="filingStatus">—</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-card-label" id="totalIncomeLabel">Total Income (2025)</div>
+                    <div class="status-card-value" id="totalIncome">—</div>
+                </div>
+                <div class="status-card refund" id="refundCard">
+                    <div class="status-card-label" id="refundLabel">Expected Refund</div>
+                    <div class="status-card-value" id="refundAmount">—</div>
+                </div>
+                <div class="status-card owed" id="owedCard">
+                    <div class="status-card-label" id="owedLabel">Tax Owed</div>
+                    <div class="status-card-value" id="owedAmount">—</div>
+                </div>
+            </div>
+
+            <!-- Readiness Checklist -->
+            <div class="readiness-checklist">
+                <div class="readiness-title">
+                    <span id="readinessTitle">✓ Filing Readiness Checklist</span>
+                </div>
+                <div id="readinessChecklist">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+
+            <!-- Filing Status Indicator -->
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <span class="status-indicator ready" id="readinessIndicator">
+                    <span>✓</span>
+                    <span id="readinessText">Ready to File</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Section 2: E-Filing Options -->
+        <div class="section">
+            <h2>
+                <span class="section-icon">🚀</span>
+                <span id="optionsTitle">E-Filing Options</span>
+            </h2>
+
+            <div class="options-grid">
+                <!-- Option A: IRS Direct File -->
+                <div class="option-card recommended">
+                    <div class="option-badge">
+                        <span>⭐</span>
+                        <span id="recommendedLabel">Recommended</span>
+                    </div>
+                    <h3 id="optionATitle">IRS Direct File</h3>
+                    <div class="cost" id="optionACost">FREE</div>
+                    <p class="description" id="optionADesc">
+                        File directly with the IRS using their official free e-filing tool. No third-party software required.
+                    </p>
+                    <ul class="option-features" id="optionAFeatures">
+                        <li id="featureA1">File directly with the IRS</li>
+                        <li id="featureA2">No software fees</li>
+                        <li id="featureA3">Faster processing (8-14 days for refunds)</li>
+                        <li class="warning" id="featureA4">⚠ Limited to ~25 states</li>
+                    </ul>
+                    <div class="supported-states" id="supportedStatesNote">
+                        Check if your state is supported at directfile.irs.gov
+                    </div>
+                    <button class="btn btn-secondary btn-block" id="btnDirectFile">
+                        <span>🔗</span>
+                        <span id="btnDirectFileText">Launch IRS Direct File</span>
+                    </button>
+                </div>
+
+                <!-- Option B: IRS Free File -->
+                <div class="option-card">
+                    <h3 id="optionBTitle">IRS Free File</h3>
+                    <div class="cost" id="optionBCost">FREE</div>
+                    <p class="description" id="optionBDesc">
+                        Use partner software providers on irs.gov/freefile. Best if Direct File doesn't support your state.
+                    </p>
+                    <ul class="option-features" id="optionBFeatures">
+                        <li id="featureB1">Multiple partner software options</li>
+                        <li id="featureB2">Covers all states</li>
+                        <li id="featureB3">AGI under $84,000</li>
+                        <li id="featureB4">User-friendly interfaces</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" id="btnFreeFile">
+                        <span>🌐</span>
+                        <span id="btnFreeFileText">Launch IRS Free File</span>
+                    </button>
+                </div>
+
+                <!-- Option C: Download & Mail -->
+                <div class="option-card">
+                    <h3 id="optionCTitle">Download & Mail</h3>
+                    <div class="cost" id="optionCCost">FREE</div>
+                    <p class="description" id="optionCDesc">
+                        Generate a completed IRS Form 1040 PDF. Print and mail it to the IRS.
+                    </p>
+                    <ul class="option-features" id="optionCFeatures">
+                        <li id="featureC1">Complete form generation</li>
+                        <li id="featureC2">Works everywhere</li>
+                        <li id="featureC3">Keep physical records</li>
+                        <li class="warning" id="featureC4">⚠ Slower processing (4-6 weeks)</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" id="btnDownloadPDF">
+                        <span>📥</span>
+                        <span id="btnDownloadPDFText">Generate Form 1040 PDF</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Filing Instructions -->
+        <div class="section instructions-section">
+            <h2>
+                <span class="section-icon">📋</span>
+                <span id="instructionsTitle">Step-by-Step Filing Guide</span>
+            </h2>
+
+            <!-- Tabs -->
+            <div class="instructions-tabs">
+                <button class="instructions-tab active" data-tab="directfile" id="tabDirectFile">
+                    <span id="tabDirectFileText">IRS Direct File</span>
+                </button>
+                <button class="instructions-tab" data-tab="freefile" id="tabFreeFile">
+                    <span id="tabFreeFileText">IRS Free File</span>
+                </button>
+                <button class="instructions-tab" data-tab="mail" id="tabMail">
+                    <span id="tabMailText">Print & Mail</span>
+                </button>
+            </div>
+
+            <!-- IRS Direct File Instructions -->
+            <div class="instructions-content active" data-content="directfile">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4 id="df1Title">Check Your Eligibility</h4>
+                        <p id="df1Desc">
+                            Visit <strong>directfile.irs.gov</strong> and verify your state is supported. Currently available in approximately 25 states. Check back throughout the season as more states are added.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4 id="df2Title">Gather Required Documents</h4>
+                        <ul id="df2Items">
+                            <li>Prior year tax return (for AGI verification)</li>
+                            <li>Your Social Security card</li>
+                            <li>IP PIN (if you have one)</li>
+                            <li>W-2 forms from all employers</li>
+                            <li>1099 forms (interest, dividends, 1099-NEC, etc.)</li>
+                            <li>Supporting documentation (receipts, statements)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4 id="df3Title">Transfer Your Data</h4>
+                        <p id="df3Desc">
+                            Copy your tax summary (see Export section below) or manually enter your information into IRS Direct File. The platform guides you through each section of Form 1040.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4 id="df4Title">Review & Sign</h4>
+                        <p id="df4Desc">
+                            Carefully review all entries. Use your ID to authenticate with IRS systems. Sign and submit electronically.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4 id="df5Title">Confirmation & Status</h4>
+                        <p id="df5Desc">
+                            You'll receive a confirmation number. Save this for your records. Track your refund or payment at IRS.gov using your SSN and filing status.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IRS Free File Instructions -->
+            <div class="instructions-content" data-content="freefile">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4 id="ff1Title">Visit IRS Free File</h4>
+                        <p id="ff1Desc">
+                            Go to <strong>irs.gov/freefile</strong> and enter your income to verify eligibility (typically AGI under $84,000).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4 id="ff2Title">Choose a Partner Software</h4>
+                        <p id="ff2Desc">
+                            Review the list of participating software providers. All offer free filing for qualifying taxpayers. Choose based on your needs and complexity.
+                        </p>
+                        <ul id="ff2Items">
+                            <li>Intuit TurboTax Free</li>
+                            <li>H&R Block Free</li>
+                            <li>TaxAct Free</li>
+                            <li>And 10+ other partners</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4 id="ff3Title">Prepare Your Information</h4>
+                        <p id="ff3Desc">
+                            Gather the same documents as Direct File: W-2s, 1099s, prior year AGI, and any deduction documentation.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4 id="ff4Title">Enter & Review</h4>
+                        <p id="ff4Desc">
+                            The software guides you through each form. Use the exported tax summary from Tax Advisor Pro to speed up data entry. Verify all amounts carefully.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4 id="ff5Title">E-File & Track</h4>
+                        <p id="ff5Desc">
+                            Submit your return electronically. You'll receive an acceptance confirmation. Refunds typically process within 8-14 days with e-filing.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Print & Mail Instructions -->
+            <div class="instructions-content" data-content="mail">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4 id="pm1Title">Generate Completed Form 1040</h4>
+                        <p id="pm1Desc">
+                            Use the "Download as PDF" button in the Export section below to generate your completed IRS Form 1040.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4 id="pm2Title">Print in Color</h4>
+                        <p id="pm2Desc">
+                            Print the PDF on plain white 8.5" x 11" paper in color (if possible). Use high-quality settings for best OCR readability at the IRS.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4 id="pm3Title">Sign & Date</h4>
+                        <p id="pm3Desc">
+                            Sign and date the form in blue or black ink. Both spouses must sign if filing jointly. Print your name and SSN clearly.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4 id="pm4Title">Attach Supporting Documents</h4>
+                        <ul id="pm4Items">
+                            <li>Copy of W-2 forms (all)</li>
+                            <li>Copy of 1099 forms (all)</li>
+                            <li>Schedule C (if self-employed)</li>
+                            <li>Schedule A (if itemizing)</li>
+                            <li>Any other required schedules</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4 id="pm5Title">Mail to the IRS</h4>
+                        <p id="pm5Desc">
+                            Mail your complete return to the IRS address for your state. Include a check if you owe tax (made payable to "United States Treasury"). Keep a copy for your records.
+                        </p>
+                        <p style="margin-top: 0.5rem; font-style: italic;" id="pm5Note">
+                            Processing typically takes 4-6 weeks for paper returns.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Export Your Data -->
+        <div class="section">
+            <h2>
+                <span class="section-icon">💾</span>
+                <span id="exportTitle">Export Your Tax Data</span>
+            </h2>
+
+            <p id="exportDesc" style="margin-bottom: 1.5rem; color: var(--text-light);">
+                Export your tax information in various formats for filing, record-keeping, or transfer to other software.
+            </p>
+
+            <div class="export-buttons">
+                <button class="btn-export" id="btnCopySummary">
+                    <div class="btn-export-icon">📋</div>
+                    <div class="btn-export-label" id="btnCopySummaryLabel">Copy Tax Summary</div>
+                    <div class="btn-export-desc" id="btnCopySummaryDesc">To clipboard</div>
+                </button>
+
+                <button class="btn-export" id="btnDownloadPDFExport">
+                    <div class="btn-export-icon">📄</div>
+                    <div class="btn-export-label" id="btnDownloadPDFLabel">Download PDF</div>
+                    <div class="btn-export-desc" id="btnDownloadPDFDesc">Completed Form 1040</div>
+                </button>
+
+                <button class="btn-export" id="btnExportJSON">
+                    <div class="btn-export-icon">📦</div>
+                    <div class="btn-export-label" id="btnExportJSONLabel">Export as JSON</div>
+                    <div class="btn-export-desc" id="btnExportJSONDesc">For records</div>
+                </button>
+
+                <button class="btn-export" id="btnExportXML">
+                    <div class="btn-export-icon">🔗</div>
+                    <div class="btn-export-label" id="btnExportXMLLabel">Export as XML</div>
+                    <div class="btn-export-desc" id="btnExportXMLDesc">IRS MeF format</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script>
+        // i18n Translations
+        const translations = {
+            en: {
+                heading: "IRS E-Filing Integration",
+                subheading: "Real-world filing options for your 2025 tax return",
+                dashboardTitle: "Filing Status & Summary",
+                filingStatusLabel: "Filing Status",
+                totalIncomeLabel: "Total Income (2025)",
+                refundLabel: "Expected Refund",
+                owedLabel: "Tax Owed",
+                readinessTitle: "✓ Filing Readiness Checklist",
+                readinessText: "Ready to File",
+                optionsTitle: "E-Filing Options",
+                recommendedLabel: "Recommended",
+                optionATitle: "IRS Direct File",
+                optionACost: "FREE",
+                optionADesc: "File directly with the IRS using their official free e-filing tool. No third-party software required.",
+                featureA1: "File directly with the IRS",
+                featureA2: "No software fees",
+                featureA3: "Faster processing (8-14 days for refunds)",
+                featureA4: "⚠ Limited to ~25 states",
+                supportedStatesNote: "Check if your state is supported at directfile.irs.gov",
+                btnDirectFileText: "Launch IRS Direct File",
+                optionBTitle: "IRS Free File",
+                optionBCost: "FREE",
+                optionBDesc: "Use partner software providers on irs.gov/freefile. Best if Direct File doesn't support your state.",
+                featureB1: "Multiple partner software options",
+                featureB2: "Covers all states",
+                featureB3: "AGI under $84,000",
+                featureB4: "User-friendly interfaces",
+                btnFreeFileText: "Launch IRS Free File",
+                optionCTitle: "Download & Mail",
+                optionCCost: "FREE",
+                optionCDesc: "Generate a completed IRS Form 1040 PDF. Print and mail it to the IRS.",
+                featureC1: "Complete form generation",
+                featureC2: "Works everywhere",
+                featureC3: "Keep physical records",
+                featureC4: "⚠ Slower processing (4-6 weeks)",
+                btnDownloadPDFText: "Generate Form 1040 PDF",
+                instructionsTitle: "Step-by-Step Filing Guide",
+                tabDirectFileText: "IRS Direct File",
+                tabFreeFileText: "IRS Free File",
+                tabMailText: "Print & Mail",
+                df1Title: "Check Your Eligibility",
+                df1Desc: "Visit directfile.irs.gov and verify your state is supported. Currently available in approximately 25 states. Check back throughout the season as more states are added.",
+                df2Title: "Gather Required Documents",
+                df2Items: ["Prior year tax return (for AGI verification)", "Your Social Security card", "IP PIN (if you have one)", "W-2 forms from all employers", "1099 forms (interest, dividends, 1099-NEC, etc.)", "Supporting documentation (receipts, statements)"],
+                df3Title: "Transfer Your Data",
+                df3Desc: "Copy your tax summary (see Export section below) or manually enter your information into IRS Direct File. The platform guides you through each section of Form 1040.",
+                df4Title: "Review & Sign",
+                df4Desc: "Carefully review all entries. Use your ID to authenticate with IRS systems. Sign and submit electronically.",
+                df5Title: "Confirmation & Status",
+                df5Desc: "You'll receive a confirmation number. Save this for your records. Track your refund or payment at IRS.gov using your SSN and filing status.",
+                ff1Title: "Visit IRS Free File",
+                ff1Desc: "Go to irs.gov/freefile and enter your income to verify eligibility (typically AGI under $84,000).",
+                ff2Title: "Choose a Partner Software",
+                ff2Desc: "Review the list of participating software providers. All offer free filing for qualifying taxpayers. Choose based on your needs and complexity.",
+                ff2Items: ["Intuit TurboTax Free", "H&R Block Free", "TaxAct Free", "And 10+ other partners"],
+                ff3Title: "Prepare Your Information",
+                ff3Desc: "Gather the same documents as Direct File: W-2s, 1099s, prior year AGI, and any deduction documentation.",
+                ff4Title: "Enter & Review",
+                ff4Desc: "The software guides you through each form. Use the exported tax summary from Tax Advisor Pro to speed up data entry. Verify all amounts carefully.",
+                ff5Title: "E-File & Track",
+                ff5Desc: "Submit your return electronically. You'll receive an acceptance confirmation. Refunds typically process within 8-14 days with e-filing.",
+                pm1Title: "Generate Completed Form 1040",
+                pm1Desc: "Use the \"Download as PDF\" button in the Export section below to generate your completed IRS Form 1040.",
+                pm2Title: "Print in Color",
+                pm2Desc: "Print the PDF on plain white 8.5\" x 11\" paper in color (if possible). Use high-quality settings for best OCR readability at the IRS.",
+                pm3Title: "Sign & Date",
+                pm3Desc: "Sign and date the form in blue or black ink. Both spouses must sign if filing jointly. Print your name and SSN clearly.",
+                pm4Title: "Attach Supporting Documents",
+                pm4Items: ["Copy of W-2 forms (all)", "Copy of 1099 forms (all)", "Schedule C (if self-employed)", "Schedule A (if itemizing)", "Any other required schedules"],
+                pm5Title: "Mail to the IRS",
+                pm5Desc: "Mail your complete return to the IRS address for your state. Include a check if you owe tax (made payable to \"United States Treasury\"). Keep a copy for your records.",
+                pm5Note: "Processing typically takes 4-6 weeks for paper returns.",
+                exportTitle: "Export Your Tax Data",
+                exportDesc: "Export your tax information in various formats for filing, record-keeping, or transfer to other software.",
+                btnCopySummaryLabel: "Copy Tax Summary",
+                btnCopySummaryDesc: "To clipboard",
+                btnDownloadPDFLabel: "Download PDF",
+                btnDownloadPDFDesc: "Completed Form 1040",
+                btnExportJSONLabel: "Export as JSON",
+                btnExportJSONDesc: "For records",
+                btnExportXMLLabel: "Export as XML",
+                btnExportXMLDesc: "IRS MeF format",
+                copyToastSuccess: "Tax summary copied to clipboard!",
+                copyToastError: "Failed to copy to clipboard",
+                pdfGenerating: "Generating PDF...",
+                jsonExporting: "Exporting JSON...",
+                xmlExporting: "Exporting XML...",
+            },
+            ar: {
+                heading: "تكامل الملفات الإلكترونية لـ IRS",
+                subheading: "خيارات الملفات الحقيقية لإقرارك الضريبي 2025",
+                dashboardTitle: "حالة الملف والملخص",
+                filingStatusLabel: "حالة الملف",
+                totalIncomeLabel: "إجمالي الدخل (2025)",
+                refundLabel: "استرجاع متوقع",
+                owedLabel: "الضريبة المستحقة",
+                readinessTitle: "✓ قائمة التحقق من الاستعداد للملف",
+                readinessText: "جاهز للملف",
+                optionsTitle: "خيارات الملفات الإلكترونية",
+                recommendedLabel: "موصى به",
+                optionATitle: "ملف IRS المباشر",
+                optionACost: "مجاني",
+                optionADesc: "قدم مباشرة إلى IRS باستخدام أداة الملفات الإلكترونية الرسمية المجانية. لا توجد برامج طرف ثالث مطلوبة.",
+                featureA1: "ملف مباشر مع IRS",
+                featureA2: "لا توجد رسوم برامج",
+                featureA3: "معالجة أسرع (8-14 يوم للاسترجاعات)",
+                featureA4: "⚠ محدود لحوالي 25 ولاية",
+                supportedStatesNote: "تحقق مما إذا كانت ولايتك مدعومة على directfile.irs.gov",
+                btnDirectFileText: "إطلاق ملف IRS المباشر",
+                optionBTitle: "ملف IRS المجاني",
+                optionBCost: "مجاني",
+                optionBDesc: "استخدم برامج الشركاء المتعاونين على irs.gov/freefile. الأفضل إذا لم يكن Direct File يدعم ولايتك.",
+                featureB1: "خيارات برامج الشركاء المتعددة",
+                featureB2: "يغطي جميع الولايات",
+                featureB3: "AGI أقل من 84000 دولار",
+                featureB4: "واجهات سهلة الاستخدام",
+                btnFreeFileText: "إطلاق ملف IRS المجاني",
+                optionCTitle: "التنزيل والبريد",
+                optionCCost: "مجاني",
+                optionCDesc: "قم بإنشاء نموذج IRS 1040 مكتمل بصيغة PDF. اطبعه وأرسله بالبريد إلى IRS.",
+                featureC1: "تكوين النموذج الكامل",
+                featureC2: "يعمل في كل مكان",
+                featureC3: "الاحتفاظ بالسجلات المادية",
+                featureC4: "⚠ معالجة أبطأ (4-6 أسابيع)",
+                btnDownloadPDFText: "إنشاء نموذج 1040 PDF",
+                instructionsTitle: "دليل الملفات خطوة بخطوة",
+                tabDirectFileText: "ملف IRS المباشر",
+                tabFreeFileText: "ملف IRS المجاني",
+                tabMailText: "طباعة وبريد",
+                df1Title: "تحقق من أهليتك",
+                df1Desc: "قم بزيارة directfile.irs.gov والتحقق من أن ولايتك مدعومة. متاح حالياً في حوالي 25 ولاية. تحقق مرة أخرى طوال الموسم مع إضافة المزيد من الولايات.",
+                df2Title: "جمع المستندات المطلوبة",
+                df2Items: ["الإقرار الضريبي من السنة السابقة (للتحقق من AGI)", "بطاقة الضمان الاجتماعي الخاصة بك", "IP PIN (إن وجدت)", "نماذج W-2 من جميع أصحاب العمل", "نماذج 1099 (الفائدة والأرباح والدخل و 1099-NEC وما إلى ذلك)", "المستندات الداعمة (الإيصالات والكشوفات)"],
+                df3Title: "نقل بيانات الملفات الخاصة بك",
+                df3Desc: "انسخ ملخص الضريبة الخاص بك (انظر قسم التصدير أدناه) أو أدخل معلوماتك يدويياً في ملف IRS المباشر. تقدم المنصة لك إرشادات لكل قسم من أقسام نموذج 1040.",
+                df4Title: "المراجعة والتوقيع",
+                df4Desc: "راجع بعناية جميع الإدخالات. استخدم معرفك للمصادقة من خلال أنظمة IRS. وقع وقدم إلكترونياً.",
+                df5Title: "التأكيد والحالة",
+                df5Desc: "ستتلقى رقم تأكيد. احفظ هذا لسجلاتك. تتبع استرجاعك أو دفعك على IRS.gov باستخدام SSN وحالة الملف الخاصة بك.",
+                ff1Title: "زيارة ملف IRS المجاني",
+                ff1Desc: "انتقل إلى irs.gov/freefile وأدخل دخلك للتحقق من الأهلية (عادة AGI أقل من 84000 دولار).",
+                ff2Title: "اختر برنامج الشركاء",
+                ff2Desc: "راجع قائمة مزودي البرامج المشاركين. جميع العروض التقديمية المجانية للمكلفين المؤهلين. اختر بناءً على احتياجاتك والتعقيد.",
+                ff2Items: ["Intuit TurboTax مجاني", "H&R Block مجاني", "TaxAct مجاني", "و 10 أو أكثر من الشركاء الآخرين"],
+                ff3Title: "تحضير المعلومات الخاصة بك",
+                ff3Desc: "اجمع نفس المستندات مثل Direct File: W-2s و 1099s والسنة السابقة AGI وأي توثيق للخصومات.",
+                ff4Title: "أدخل ومراجعة",
+                ff4Desc: "يرشدك البرنامج من خلال كل نموذج. استخدم ملخص الضريبة المُصدَّر من Tax Advisor Pro لتسريع إدخال البيانات. تحقق من جميع المبالغ بعناية.",
+                ff5Title: "ملف إلكتروني وتتبع",
+                ff5Desc: "قدم الإقرار الخاص بك إلكترونياً. ستتلقى تأكيد القبول. عادة ما يتم معالجة الاسترجاعات خلال 8-14 يوم مع الملفات الإلكترونية.",
+                pm1Title: "إنشاء نموذج 1040 مكتمل",
+                pm1Desc: "استخدم زر \"تنزيل بصيغة PDF\" في قسم التصدير أدناه لإنشاء نموذج IRS 1040 المكتمل.",
+                pm2Title: "طباعة بألوان",
+                pm2Desc: "اطبع ملف PDF على ورق أبيض عادي بحجم 8.5 بوصة × 11 بوصة بألوان (إن أمكن). استخدم إعدادات عالية الجودة لأفضل قراءة OCR على IRS.",
+                pm3Title: "التوقيع والتاريخ",
+                pm3Desc: "وقع وأرّخ النموذج بحبر أزرق أو أسود. يجب على كلا الزوجين التوقيع إذا كانوا يقدمون معاً. اطبع اسمك و SSN بوضوح.",
+                pm4Title: "إرفاق المستندات الداعمة",
+                pm4Items: ["نسخة من نماذج W-2 (الكل)", "نسخة من نماذج 1099 (الكل)", "الجدول C (إذا كنت عاملاً حراً)", "الجدول A (إذا كنت تفصّل)", "أي جداول أخرى مطلوبة"],
+                pm5Title: "بريد إلى IRS",
+                pm5Desc: "أرسل الإقرار الكامل بالبريد إلى عنوان IRS لولايتك. أرفق شيك إذا كان عليك ضريبة (مكتوب لـ \"خزانة الولايات المتحدة\"). احتفظ بنسخة لسجلاتك.",
+                pm5Note: "تستغرق معالجة الإقرارات الورقية عادة 4-6 أسابيع.",
+                exportTitle: "تصدير بيانات الضريبة الخاصة بك",
+                exportDesc: "صدّر معلومات الضريبة الخاصة بك بتنسيقات مختلفة للملفات أو حفظ السجلات أو النقل إلى برامج أخرى.",
+                btnCopySummaryLabel: "نسخ ملخص الضريبة",
+                btnCopySummaryDesc: "إلى لوحة المفاتيح",
+                btnDownloadPDFLabel: "تنزيل PDF",
+                btnDownloadPDFDesc: "نموذج 1040 مكتمل",
+                btnExportJSONLabel: "تصدير كـ JSON",
+                btnExportJSONDesc: "للسجلات",
+                btnExportXMLLabel: "تصدير كـ XML",
+                btnExportXMLDesc: "تنسيق IRS MeF",
+                copyToastSuccess: "تم نسخ ملخص الضريبة إلى الحافظة!",
+                copyToastError: "فشل النسخ إلى الحافظة",
+                pdfGenerating: "إنشاء PDF...",
+                jsonExporting: "تصدير JSON...",
+                xmlExporting: "تصدير XML...",
+            }
+        };
+
+        let currentLang = 'en';
+
+        // Load tax data
+        async function loadTaxData() {
+            try {
+                const response = await fetch('/api/tax-data');
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error loading tax data:', error);
+                return getDefaultData();
+            }
+        }
+
+        function getDefaultData() {
+            return {
+                filingStatus: 'Single',
+                totalIncome: 95000,
+                taxable_income: 82500,
+                total_tax: 12500,
+                total_withholding: 13200,
+                refund: 700,
+                dependents: 1,
+                has_w2: true,
+                has_1099: true,
+                ssn_valid: true,
+                address_complete: true,
+                deductions_complete: true,
+                credits_complete: true,
+                year: 2025,
+                firstName: 'John',
+                lastName: 'Doe',
+                state: 'CA',
+            };
+        }
+
+        // Format currency
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+            }).format(value);
+        }
+
+        // Update filing dashboard
+        async function updateDashboard() {
+            const data = await loadTaxData();
+
+            // Update status cards
+            document.getElementById('filingStatus').textContent = data.filingStatus;
+            document.getElementById('totalIncome').textContent = formatCurrency(data.totalIncome);
+
+            const refundCard = document.getElementById('refundCard');
+            const owedCard = document.getElementById('owedCard');
+
+            if (data.refund && data.refund > 0) {
+                document.getElementById('refundAmount').textContent = formatCurrency(data.refund);
+                refundCard.style.display = 'block';
+                owedCard.style.display = 'none';
+            } else if (data.total_tax > data.total_withholding) {
+                document.getElementById('owedAmount').textContent = formatCurrency(data.total_tax - data.total_withholding);
+                owedCard.style.display = 'block';
+                refundCard.style.display = 'none';
+            }
+
+            // Update user info
+            document.getElementById('userInfo').textContent = `${data.firstName} ${data.lastName} | ${data.year} Tax Year`;
+
+            // Generate readiness checklist
+            updateReadinessChecklist(data);
+
+            // Store for later use
+            window.currentTaxData = data;
+        }
+
+        function updateReadinessChecklist(data) {
+            const checks = [
+                {
+                    label: 'Social Security Number validated',
+                    status: data.ssn_valid ? 'pass' : 'fail',
+                },
+                {
+                    label: 'Address information complete',
+                    status: data.address_complete ? 'pass' : 'fail',
+                },
+                {
+                    label: 'W-2 forms attached',
+                    status: data.has_w2 ? 'pass' : 'pending',
+                },
+                {
+                    label: '1099 forms attached (if applicable)',
+                    status: data.has_1099 ? 'pass' : 'pending',
+                },
+                {
+                    label: 'Income deductions complete',
+                    status: data.deductions_complete ? 'pass' : 'fail',
+                },
+                {
+                    label: 'Tax credits calculated',
+                    status: data.credits_complete ? 'pass' : 'fail',
+                },
+            ];
+
+            const checklistHTML = checks.map(check => `
+                <div class="checklist-item">
+                    <div class="checklist-status ${check.status}">
+                        ${check.status === 'pass' ? '✓' : check.status === 'fail' ? '✕' : '!'}
+                    </div>
+                    <div class="checklist-text ${check.status === 'fail' ? 'fail' : check.status === 'pending' ? 'pending' : ''}">
+                        ${check.label}
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('readinessChecklist').innerHTML = checklistHTML;
+
+            const allPass = checks.every(c => c.status === 'pass' || c.status === 'pending');
+            const readinessIndicator = document.getElementById('readinessIndicator');
+            if (allPass) {
+                readinessIndicator.className = 'status-indicator ready';
+                updateText('readinessText', 'Ready to File');
+            } else {
+                readinessIndicator.className = 'status-indicator caution';
+                updateText('readinessText', 'Review Required Items');
+            }
+        }
+
+        // Tab switching
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.instructions-tab');
+            const contents = document.querySelectorAll('.instructions-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.getAttribute('data-tab');
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+
+                    tab.classList.add('active');
+                    document.querySelector(`[data-content="${tabName}"]`).classList.add('active');
+                });
+            });
+        }
+
+        // External link handlers
+        function setupExternalLinks() {
+            document.getElementById('btnDirectFile').addEventListener('click', () => {
+                window.open('https://directfile.irs.gov', '_blank', 'noopener,noreferrer');
+            });
+
+            document.getElementById('btnFreeFile').addEventListener('click', () => {
+                window.open('https://www.irs.gov/freefile', '_blank', 'noopener,noreferrer');
+            });
+
+            document.getElementById('btnDownloadPDF').addEventListener('click', () => {
+                generateAndDownloadPDF();
+            });
+        }
+
+        // PDF Generation
+        async function generateAndDownloadPDF() {
+            showToast(t('pdfGenerating'), 'info');
+            try {
+                const response = await fetch('/api/generate-pdf', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(window.currentTaxData || getDefaultData()),
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `Form_1040_${window.currentTaxData?.year || 2025}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    showToast('PDF downloaded successfully!', 'success');
+                } else {
+                    showToast('Failed to generate PDF', 'error');
+                }
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                showToast('Error generating PDF', 'error');
+            }
+        }
+
+        // Export handlers
+        document.getElementById('btnCopySummary')?.addEventListener('click', () => {
+            const data = window.currentTaxData || getDefaultData();
+            const summary = `
+TAX ADVISOR PRO - TAX SUMMARY
+============================
+
+Filing Year: ${data.year}
+Filing Status: ${data.filingStatus}
+Taxpayer: ${data.firstName} ${data.lastName}
+State: ${data.state}
+
+INCOME
+------
+Total Income: ${formatCurrency(data.totalIncome)}
+Taxable Income: ${formatCurrency(data.taxable_income)}
+
+TAX CALCULATION
+---------------
+Total Tax: ${formatCurrency(data.total_tax)}
+Federal Withholding: ${formatCurrency(data.total_withholding)}
+
+REFUND/OWED
+-----------
+${data.refund > 0 ? `Expected Refund: ${formatCurrency(data.refund)}` : `Tax Owed: ${formatCurrency(data.total_tax - data.total_withholding)}`}
+
+Dependents: ${data.dependents}
+
+Generated: ${new Date().toLocaleDateString()}
+            `.trim();
+
+            navigator.clipboard.writeText(summary).then(() => {
+                showToast(t('copyToastSuccess'), 'success');
+            }).catch(() => {
+                showToast(t('copyToastError'), 'error');
+            });
+        });
+
+        document.getElementById('btnDownloadPDFExport')?.addEventListener('click', generateAndDownloadPDF);
+
+        document.getElementById('btnExportJSON')?.addEventListener('click', () => {
+            const data = window.currentTaxData || getDefaultData();
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `tax_data_${data.year}.json`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            showToast('JSON exported successfully!', 'success');
+        });
+
+        document.getElementById('btnExportXML')?.addEventListener('click', () => {
+            const data = window.currentTaxData || getDefaultData();
+            const xml = generateMeFXML(data);
+            const blob = new Blob([xml], { type: 'application/xml' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `form_1040_${data.year}.xml`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            showToast('XML exported successfully!', 'success');
+        });
+
+        // Generate IRS MeF-compliant XML
+        function generateMeFXML(data) {
+            const filing_status_code = {
+                'Single': '1',
+                'Married Filing Jointly': '2',
+                'Married Filing Separately': '3',
+                'Head of Household': '4',
+                'Qualifying Widow(er)': '5',
+            }[data.filingStatus] || '1';
+
+            const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<Return xmlns="http://www.irs.gov/efile" returnVersion="2025v1.0">
+  <ReturnHeader>
+    <ReturnId>${generateUUID()}</ReturnId>
+    <ReturnVersion>2025</ReturnVersion>
+    <FileTimestamp>${new Date().toISOString()}</FileTimestamp>
+    <TaxYear>${data.year}</TaxYear>
+    <TransmissionType>Original</TransmissionType>
+  </ReturnHeader>
+  <ReturnData>
+    <IRS1040>
+      <!-- Filer Information -->
+      <FilerName>
+        <FirstName>${escapeXml(data.firstName)}</FirstName>
+        <LastName>${escapeXml(data.lastName)}</LastName>
+      </FilerName>
+      <FilerSSN>${escapeXml(data.ssn || 'XXX-XX-XXXX')}</FilerSSN>
+
+      <!-- Filing Status -->
+      <IndividualReturnFilingStatusCd>${filing_status_code}</IndividualReturnFilingStatusCd>
+      <TaxYr>${data.year}</TaxYr>
+
+      <!-- Address Information -->
+      <USAddress>
+        <AddressLine1Txt>${escapeXml(data.address || '')}</AddressLine1Txt>
+        <CityNm>${escapeXml(data.city || '')}</CityNm>
+        <StateAbbreviationCd>${escapeXml(data.state || 'CA')}</StateAbbreviationCd>
+        <ZIPCd>${escapeXml(data.zipcode || '')}</ZIPCd>
+      </USAddress>
+
+      <!-- Income Information -->
+      <IncomeInformation>
+        <TotalWagesAmt>${data.totalIncome}</TotalWagesAmt>
+        <QualifiedDividendsAmt>0</QualifiedDividendsAmt>
+        <TaxableInterestAmt>0</TaxableInterestAmt>
+        <SelfEmploymentIncomeLossAmt>0</SelfEmploymentIncomeLossAmt>
+        <CapitalGainLossAmt>0</CapitalGainLossAmt>
+      </IncomeInformation>
+
+      <!-- Tax Calculation -->
+      <TaxCalculation>
+        <TaxableIncomeLossAmt>${data.taxable_income}</TaxableIncomeLossAmt>
+        <TaxBeforeCreditAmt>${data.total_tax}</TaxBeforeCreditAmt>
+        <TotalFederalIncomeTaxWithheldAmt>${data.total_withholding}</TotalFederalIncomeTaxWithheldAmt>
+        <TotalPaymentsAmt>${data.total_withholding}</TotalPaymentsAmt>
+      </TaxCalculation>
+
+      <!-- Refund or Amount Owed -->
+      <RefundOrAmountOwedAmt>${data.refund || (data.total_tax - data.total_withholding)}</RefundOrAmountOwedAmt>
+      <RefundChoiceElectionCd>${data.refund > 0 ? '1' : '0'}</RefundChoiceElectionCd>
+
+      <!-- Dependent Information -->
+      <DependentCnt>${data.dependents || 0}</DependentCnt>
+
+      <!-- Verification -->
+      <AuthorizedSignaturePIN>XXXXX</AuthorizedSignaturePIN>
+      <FormSignatureDateTxt>${new Date().toISOString().split('T')[0]}</FormSignatureDateTxt>
+
+      <!-- Metadata -->
+      <SoftwareId>TAX-ADVISOR-PRO-2025</SoftwareId>
+      <SoftwareVersion>1.0.0</SoftwareVersion>
+      <Preparer>
+        <PreparerName>Tax Advisor Pro</PreparerName>
+        <PreparerEIN>XX-XXXXXXX</PreparerEIN>
+      </Preparer>
+    </IRS1040>
+  </ReturnData>
+</Return>`;
+
+            return xmlContent;
+        }
+
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function escapeXml(str) {
+            if (!str) return '';
+            return str.replace(/[<>&'"]/g, function(c) {
+                switch (c) {
+                    case '<': return '&lt;';
+                    case '>': return '&gt;';
+                    case '&': return '&amp;';
+                    case '\'': return '&apos;';
+                    case '"': return '&quot;';
+                }
+            });
+        }
+
+        // Toast notifications
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideDown 0.3s ease';
+                setTimeout(() => container.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        // Internationalization
+        function t(key) {
+            return translations[currentLang][key] || translations['en'][key] || key;
+        }
+
+        function updateText(elementId, translationKey) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = t(translationKey);
+            }
+        }
+
+        function updateAllText() {
+            const elementMap = {
+                'heading': 'heading',
+                'subheading': 'subheading',
+                'dashboardTitle': 'dashboardTitle',
+                'filingStatusLabel': 'filingStatusLabel',
+                'totalIncomeLabel': 'totalIncomeLabel',
+                'refundLabel': 'refundLabel',
+                'owedLabel': 'owedLabel',
+                'readinessTitle': 'readinessTitle',
+                'readinessText': 'readinessText',
+                'optionsTitle': 'optionsTitle',
+                'recommendedLabel': 'recommendedLabel',
+                'optionATitle': 'optionATitle',
+                'optionACost': 'optionACost',
+                'optionADesc': 'optionADesc',
+                'featureA1': 'featureA1',
+                'featureA2': 'featureA2',
+                'featureA3': 'featureA3',
+                'featureA4': 'featureA4',
+                'supportedStatesNote': 'supportedStatesNote',
+                'btnDirectFileText': 'btnDirectFileText',
+                'optionBTitle': 'optionBTitle',
+                'optionBCost': 'optionBCost',
+                'optionBDesc': 'optionBDesc',
+                'featureB1': 'featureB1',
+                'featureB2': 'featureB2',
+                'featureB3': 'featureB3',
+                'featureB4': 'featureB4',
+                'btnFreeFileText': 'btnFreeFileText',
+                'optionCTitle': 'optionCTitle',
+                'optionCCost': 'optionCCost',
+                'optionCDesc': 'optionCDesc',
+                'featureC1': 'featureC1',
+                'featureC2': 'featureC2',
+                'featureC3': 'featureC3',
+                'featureC4': 'featureC4',
+                'btnDownloadPDFText': 'btnDownloadPDFText',
+                'instructionsTitle': 'instructionsTitle',
+                'tabDirectFileText': 'tabDirectFileText',
+                'tabFreeFileText': 'tabFreeFileText',
+                'tabMailText': 'tabMailText',
+                'exportTitle': 'exportTitle',
+                'exportDesc': 'exportDesc',
+                'btnCopySummaryLabel': 'btnCopySummaryLabel',
+                'btnCopySummaryDesc': 'btnCopySummaryDesc',
+                'btnDownloadPDFLabel': 'btnDownloadPDFLabel',
+                'btnDownloadPDFDesc': 'btnDownloadPDFDesc',
+                'btnExportJSONLabel': 'btnExportJSONLabel',
+                'btnExportJSONDesc': 'btnExportJSONDesc',
+                'btnExportXMLLabel': 'btnExportXMLLabel',
+                'btnExportXMLDesc': 'btnExportXMLDesc',
+            };
+
+            Object.entries(elementMap).forEach(([elementId, translationKey]) => {
+                updateText(elementId, translationKey);
+            });
+
+            // Update lang attribute for RTL
+            document.documentElement.setAttribute('data-lang', currentLang);
+        }
+
+        // Language toggle
+        document.getElementById('langToggle').addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            updateAllText();
+            document.getElementById('langToggle').textContent = currentLang === 'en' ? 'العربية' : 'English';
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDashboard();
+            setupTabs();
+            setupExternalLinks();
+            updateAllText();
+        });
+    </script>
+</body>
+</html>

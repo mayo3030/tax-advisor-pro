@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITIN & Immigrant Tax Guide | دليل الضرائب للمهاجرين</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d3b66;
+  --navy-light: #1a5276;
+  --navy-dark: #071e38;
+  --navy-deep: #050e1a;
+  --gold: #c9a84c;
+  --gold-light: #dab95e;
+  --gold-dark: #b08f3a;
+  --gold-pale: #f5ecd4;
+  --gold-glow: rgba(201,168,76,0.25);
+  --cream: #faf8f2;
+  --cream-dark: #f0ebe0;
+  --white: #ffffff;
+  --text: #1a1f36;
+  --text-light: #5e6a82;
+  --text-faint: #8b92a5;
+  --border: #e2ddd2;
+  --success: #0f5132;
+  --success-bg: #e8f5ef;
+  --danger: #b03a2e;
+  --danger-bg: #fde8e5;
+  --info-bg: #e8eff8;
+
+  --font-display: 'Playfair Display', 'Noto Sans Arabic', serif;
+  --font-body: 'Lato', 'Noto Sans Arabic', sans-serif;
+
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 20px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 40px rgba(13,59,102,0.10);
+  --shadow-gold: 0 0 30px rgba(201,168,76,0.2);
+
+  --radius: 6px;
+  --radius-lg: 14px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* ── SCROLL PROGRESS ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  z-index: 10000;
+  transition: width 0.1s linear;
+}
+
+/* ── SIDEBAR NAVIGATION ── */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--navy-deep);
+  color: white;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 0;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
+
+.sidebar-header {
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+}
+.sidebar-header .logo-icon {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 8px;
+}
+.sidebar-header h2 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+}
+.sidebar-header .subtitle {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.nav-section {
+  padding: 20px 16px 8px;
+}
+.nav-section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold-dark);
+  font-weight: 700;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+.nav-item:hover {
+  background: rgba(201,168,76,0.08);
+  color: white;
+}
+.nav-item.active {
+  background: rgba(201,168,76,0.12);
+  color: var(--gold);
+  font-weight: 700;
+}
+.nav-item .nav-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.nav-item.active .nav-num {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border-color: var(--gold);
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-light) 100%);
+  color: white;
+  padding: 100px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  max-width: 650px;
+}
+.hero h1 .gold { color: var(--gold); }
+.hero .hero-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+  direction: rtl;
+}
+.hero p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  max-width: 560px;
+  font-weight: 300;
+}
+
+/* ── CHAPTER ── */
+.chapter {
+  padding: 80px 60px;
+  max-width: 840px;
+  border-bottom: 1px solid var(--border);
+  animation: fadeUp 0.5s ease both;
+}
+.chapter:last-child { border-bottom: none; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  color: var(--gold-dark);
+  margin-bottom: 12px;
+}
+.chapter-label .line {
+  width: 30px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.chapter h2 {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.chapter .h2-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-light);
+  direction: rtl;
+  margin-bottom: 28px;
+}
+
+.chapter h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 36px 0 14px;
+  padding-left: 16px;
+  border-left: 3px solid var(--gold);
+}
+
+.chapter p {
+  margin-bottom: 16px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.chapter p .ar {
+  display: block;
+  direction: rtl;
+  text-align: right;
+  color: var(--text-light);
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* ── LUXURY CARDS ── */
+.info-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px;
+  margin: 24px 0;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.22s ease;
+  position: relative;
+}
+.info-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.info-card.gold-border {
+  border-left: 4px solid var(--gold);
+}
+.info-card.navy-border {
+  border-left: 4px solid var(--navy);
+}
+.info-card .card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-card p {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+/* ── TIP BOXES ── */
+.tip-box {
+  display: flex;
+  gap: 14px;
+  padding: 20px 22px;
+  border-radius: var(--radius-lg);
+  margin: 24px 0;
+}
+.tip-box.gold {
+  background: var(--gold-pale);
+  border: 1px solid rgba(201,168,76,0.3);
+}
+.tip-box.green {
+  background: var(--success-bg);
+  border: 1px solid rgba(15,81,50,0.15);
+}
+.tip-box.blue {
+  background: var(--info-bg);
+  border: 1px solid rgba(13,59,102,0.12);
+}
+.tip-box.red {
+  background: var(--danger-bg);
+  border: 1px solid rgba(176,58,46,0.15);
+}
+.tip-box .tip-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.tip-box .tip-content {
+  flex: 1;
+}
+.tip-box .tip-label {
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  color: var(--navy);
+}
+.tip-box p { font-size: 14px; margin-bottom: 4px; }
+
+/* ── STEP CARDS (for app guide) ── */
+.step-guide {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin: 28px 0;
+}
+.step-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(13,59,102,0.15);
+}
+.step-body {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+}
+.step-body h4 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.step-body p { font-size: 14px; line-height: 1.7; margin-bottom: 6px; }
+
+/* ── TABLE ── */
+.tax-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.tax-table thead {
+  background: var(--navy);
+  color: var(--gold);
+}
+.tax-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.tax-table td {
+  padding: 12px 18px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.tax-table tr:last-child td { border-bottom: none; }
+.tax-table tr:hover td { background: var(--cream); }
+
+/* ── KEYBOARD SHORTCUTS / BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.badge.gold { background: var(--gold-pale); color: var(--gold-dark); }
+.badge.navy { background: var(--info-bg); color: var(--navy); }
+
+/* ── COMPARISON TABLE ── */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.comparison-table thead {
+  background: var(--navy);
+  color: var(--gold);
+}
+.comparison-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.comparison-table td {
+  padding: 12px 18px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.comparison-table tr:last-child td { border-bottom: none; }
+.comparison-table tr:hover td { background: var(--cream); }
+.comparison-table td.yes { color: var(--success); font-weight: 700; }
+.comparison-table td.no { color: var(--danger); font-weight: 700; }
+
+/* ── FOOTER ── */
+.guide-footer {
+  background: var(--navy-deep);
+  color: rgba(255,255,255,0.5);
+  padding: 48px 60px;
+  text-align: center;
+  font-size: 13px;
+}
+.guide-footer .gold { color: var(--gold); }
+
+/* ── MOBILE MENU ── */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 2000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--gold);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .main { margin-left: 0; }
+  .hero { padding: 80px 24px 60px; }
+  .hero h1 { font-size: 32px; }
+  .hero .hero-ar { font-size: 20px; }
+  .chapter { padding: 50px 24px; }
+  .chapter h2 { font-size: 26px; }
+  .guide-footer { padding: 36px 24px; }
+}
+
+/* ── PRINT ── */
+@media print {
+  .sidebar, .mobile-menu-btn, .scroll-progress { display: none !important; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px; }
+  .chapter { page-break-inside: avoid; padding: 30px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Mobile Menu Button -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="logo-icon">✈️</span>
+    <h2>Tax Advisor Pro</h2>
+    <div class="subtitle">ITIN & Immigrant Guide</div>
+  </div>
+
+  <div style="padding:16px 16px 0;">
+    <a href="index.html" class="nav-item" style="background:var(--gold);color:var(--navy-deep);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;">
+      ← Back to App — الرجوع للتطبيق
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">ITIN Basics</div>
+    <a class="nav-item" href="#ch1" data-target="ch1" onclick="scrollToChapter(event,'ch1')"><span class="nav-num">1</span> What is ITIN</a>
+    <a class="nav-item" href="#ch2" data-target="ch2" onclick="scrollToChapter(event,'ch2')"><span class="nav-num">2</span> Who Needs ITIN</a>
+    <a class="nav-item" href="#ch3" data-target="ch3" onclick="scrollToChapter(event,'ch3')"><span class="nav-num">3</span> ITIN vs SSN</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Getting ITIN</div>
+    <a class="nav-item" href="#ch4" data-target="ch4" onclick="scrollToChapter(event,'ch4')"><span class="nav-num">4</span> Form W-7 Process</a>
+    <a class="nav-item" href="#ch5" data-target="ch5" onclick="scrollToChapter(event,'ch5')"><span class="nav-num">5</span> Required Documents</a>
+    <a class="nav-item" href="#ch6" data-target="ch6" onclick="scrollToChapter(event,'ch6')"><span class="nav-num">6</span> ITIN Renewal</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Filing Taxes</div>
+    <a class="nav-item" href="#ch7" data-target="ch7" onclick="scrollToChapter(event,'ch7')"><span class="nav-num">7</span> Resident vs Non-Resident</a>
+    <a class="nav-item" href="#ch8" data-target="ch8" onclick="scrollToChapter(event,'ch8')"><span class="nav-num">8</span> Tax Credits & Limits</a>
+    <a class="nav-item" href="#ch9" data-target="ch9" onclick="scrollToChapter(event,'ch9')"><span class="nav-num">9</span> Treaty Benefits</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Practical</div>
+    <a class="nav-item" href="#ch10" data-target="ch10" onclick="scrollToChapter(event,'ch10')"><span class="nav-num">10</span> Common Mistakes</a>
+    <a class="nav-item" href="#ch11" data-target="ch11" onclick="scrollToChapter(event,'ch11')"><span class="nav-num">11</span> State Taxes</a>
+    <a class="nav-item" href="#ch12" data-target="ch12" onclick="scrollToChapter(event,'ch12')"><span class="nav-num">12</span> How We Help</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-badge">✦ Complete Guide 2025</div>
+    <h1>ITIN & Immigrant<br><span class="gold">Tax Guide</span></h1>
+    <div class="hero-ar">دليل الضرائب الأمريكية للمهاجرين وحاملي ITIN</div>
+    <p>Your complete guide to understanding Individual Taxpayer Identification Numbers (ITIN), filing taxes as an immigrant, and navigating US tax requirements. Available in English and Arabic.</p>
+  </header>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PART I: ITIN BASICS                        -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- CHAPTER 1 -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="line"></span> Chapter 1</div>
+    <h2>What is an ITIN?</h2>
+    <div class="h2-ar">ما هي رقم التعريف الضريبي (ITIN)؟</div>
+
+    <p>An <strong>Individual Taxpayer Identification Number (ITIN)</strong> is a nine-digit tax identification number issued by the U.S. Internal Revenue Service (IRS). It's used by people who are not U.S. citizens or permanent residents (green card holders) but have a requirement to file a U.S. tax return or report other tax information to the IRS.
+    <span class="ar">رقم التعريف الضريبي هو رقم من ٩ أرقام تصدره دائرة الضرائب الأمريكية للأشخاص اللي ليس لهم رقم ضمان اجتماعي (SSN) لكنهم محتاجين يقدمو إقرار ضريبي أمريكي.</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🆔 ITIN Format</div>
+      <p>An ITIN looks like a Social Security Number (SSN) but starts with <strong>9</strong>. Example: <strong>9XX-XX-XXXX</strong>. You can use it in place of an SSN for federal tax purposes only. It does NOT provide work authorization or residency status.</p>
+      <p><span class="ar">رقم ITIN يبدأ بـ ٩. مثال: 9XX-XX-XXXX. تقدر تستخدمه بدل SSN للضرائب الفيدرالية بس. ما يعطيك تصريح شغل ولا حالة هجرة.</span></p>
+    </div>
+
+    <h3>Key Facts About ITIN</h3>
+    <div class="tip-box blue">
+      <div class="tip-icon">✓</div>
+      <div class="tip-content">
+        <p><strong>Valid for federal tax purposes only</strong> — Cannot be used for employment or Social Security benefits.</p>
+        <p><strong>Issued by IRS</strong> — Not by Social Security Administration.</p>
+        <p><strong>No work authorization</strong> — Does not grant legal status or permission to work.</p>
+        <p><strong>Required to file taxes</strong> — If you earn income and must file a return but have no SSN.</p>
+        <p><strong>Portable</strong> — Can be used immediately after approval (Form W-7).</p>
+        <p><span class="ar">صالح للضرائب الفيدرالية بس — ما تقدر تستخدمه بالشغل. الـ IRS هي اللي تصدره، ما تصريح شغل، بتحتاجه للضرائب، وتقدر تستخدمه فوراً بعد الموافقة.</span></p>
+      </div>
+    </div>
+
+    <h3>Who Issues ITIN?</h3>
+    <p>Only the <strong>Internal Revenue Service (IRS)</strong> issues ITINs. You cannot get an ITIN from your bank, employer, or state. You must apply directly to the IRS using <strong>Form W-7</strong> (Application for IRS Individual Taxpayer Identification Number).</p>
+    <p><span class="ar">الـ IRS وحدها تصدر ITIN. ما تقدر تحصل عليها من البنك أو الشغل. لازم تقدم طلب مباشرة للـ IRS بفورم W-7.</span></p>
+
+    <div class="tip-box green">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <div class="tip-label">Important Note</div>
+        <p>Having an ITIN does NOT make you a U.S. tax resident for immigration purposes. Your immigration status is separate from your tax status. An ITIN is purely for tax filing.</p>
+        <p><span class="ar">وجود ITIN ما يعني إنك مقيم ضريبي أمريكي. حالة الهجرة منفصلة عن الضرائب. ITIN للضرائب فقط.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 2 -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="line"></span> Chapter 2</div>
+    <h2>Who Needs an ITIN?</h2>
+    <div class="h2-ar">من يحتاج رقم ITIN؟</div>
+
+    <p>If you don't have a Social Security Number (SSN) and match any of the following situations, you likely need an ITIN to file your U.S. taxes:</p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">👤 Non-Resident Aliens with U.S. Income</div>
+      <p>If you're not a U.S. citizen, not a permanent resident (no green card), but earned income from a U.S. source (wages, self-employment, investments, rental property), you need an ITIN to report and pay taxes on that income.</p>
+      <p><span class="ar">لو ما عندك citizenship ولا green card بس دخلك من بزنس أو فايدة أمريكية، بتحتاج ITIN.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">💑 Spouse of a U.S. Citizen (Foreign Spouse)</div>
+      <p>A foreign national married to a U.S. citizen can elect to file jointly using an ITIN. This allows the couple to benefit from better tax brackets and credits.</p>
+      <p><span class="ar">الزوج/الزوجة الأجنبي/ة لمواطن أمريكي يقدر يقدم إقرار مشترك باستخدام ITIN ويستفيد من خصومات أفضل.</span></p>
+    </div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">👶 Dependent with No SSN</div>
+      <p>A child or dependent of a U.S. citizen or permanent resident who has no Social Security Number (often newly arrived or adopted from abroad) must use an ITIN for the parent to claim them as a dependent.</p>
+      <p><span class="ar">الطفل أو المعيل اللي ما عنده SSN (وصل حديث أو تم تبنيه) بيحتاج ITIN عشان الوالد يدعيه كمعيل.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">📄 Student with Work-Study or On-Campus Job</div>
+      <p>An international student working on-campus (allowed under F-1 visa) or in authorized work-study must file taxes and needs an ITIN if they don't have an SSN.</p>
+      <p><span class="ar">الطالب الدولي اللي يشتغل في الجامعة بتصريح بيحتاج ITIN لتقديم إقراره الضريبي.</span></p>
+    </div>
+
+    <h3>Who Does NOT Need an ITIN</h3>
+    <p><strong>U.S. Citizens:</strong> If you're a U.S. citizen, you have an SSN and don't need an ITIN. <strong>Permanent Residents (Green Card Holders):</strong> Green card holders have an SSN or can get one. <strong>People with No U.S. Income:</strong> If you earned no U.S. income and have no U.S. tax filing requirement, you don't need an ITIN.</p>
+    <p><span class="ar">المواطنين الأمريكيين عندهم SSN. الـ green card holders عندهم أو يقدرو يحصلو على SSN. اللي ما عندهم دخل أمريكي ما يحتاجون ITIN.</span></p>
+  </section>
+
+  <!-- CHAPTER 3 -->
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="line"></span> Chapter 3</div>
+    <h2>ITIN vs. Social Security Number (SSN)</h2>
+    <div class="h2-ar">الفرق بين ITIN و SSN</div>
+
+    <p>While both ITIN and SSN are nine-digit numbers used for tax identification, they serve different purposes and have significant legal differences.</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>ITIN (9XX-XX-XXXX)</th>
+          <th>SSN (Not 9)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Issued By</strong></td>
+          <td>Internal Revenue Service (IRS)</td>
+          <td>Social Security Administration (SSA)</td>
+        </tr>
+        <tr>
+          <td><strong>For Tax Filing Only</strong></td>
+          <td class="yes">✓ Yes, tax purposes only</td>
+          <td class="no">✗ No, multi-purpose</td>
+        </tr>
+        <tr>
+          <td><strong>Can Work in U.S.</strong></td>
+          <td class="no">✗ No, not without authorization</td>
+          <td class="yes">✓ Yes (with work permit)</td>
+        </tr>
+        <tr>
+          <td><strong>Social Security Benefits</strong></td>
+          <td class="no">✗ No eligibility</td>
+          <td class="yes">✓ Yes, after qualifying</td>
+        </tr>
+        <tr>
+          <td><strong>Medicare / Medicaid</strong></td>
+          <td class="no">✗ Limited eligibility</td>
+          <td class="yes">✓ Full eligibility</td>
+        </tr>
+        <tr>
+          <td><strong>File Joint Return</strong></td>
+          <td class="yes">✓ Yes, with citizen spouse</td>
+          <td class="yes">✓ Yes</td>
+        </tr>
+        <tr>
+          <td><strong>Claim Dependents</strong></td>
+          <td class="yes">✓ Yes, limited</td>
+          <td class="yes">✓ Yes</td>
+        </tr>
+        <tr>
+          <td><strong>Bank Account</strong></td>
+          <td class="no">✗ Not typically accepted</td>
+          <td class="yes">✓ Yes, required</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Critical Difference</div>
+        <p>Do NOT use an ITIN as an SSN. If you obtain a valid SSN later (through a green card, citizenship, or work visa), you must switch to your SSN immediately. Using both numbers on your taxes can trigger IRS audits.</p>
+        <p><span class="ar">لا تخلط بين ITIN و SSN. لو حصلت على SSN لاحقاً، بدّل إلى SSN فوراً. استخدام الاثنين معاً على الضرائب بيسبب تحقيق من الـ IRS.</span></p>
+      </div>
+    </div>
+
+    <h3>Can You Get Both ITIN and SSN?</h3>
+    <p>Yes, but you should not use both simultaneously for taxes. If you apply for an SSN (through employment or permanent residency) after already having an ITIN, you must report the new SSN to the IRS and use it going forward. Having both numbers on file is fine; using both on tax returns is problematic.</p>
+    <p><span class="ar">تقدر تحصل عليهما لكن ما تستخدم الاثنين معاً للضرائب. لو حصلت على SSN بعدما كان عندك ITIN، أخبر الـ IRS باستخدم SSN بعدها.</span></p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PART II: GETTING YOUR ITIN                 -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- CHAPTER 4 -->
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="line"></span> Chapter 4</div>
+    <h2>How to Apply for ITIN (Form W-7)</h2>
+    <div class="h2-ar">كيفية التقديم للحصول على ITIN (فورم W-7)</div>
+
+    <p>To apply for an ITIN, you must complete <strong>Form W-7 (Application for IRS Individual Taxpayer Identification Number)</strong> and submit it to the IRS with your supporting documents. The process takes 4–6 weeks.</p>
+
+    <div class="step-guide">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Gather Your Documents</h4>
+        <p>Collect your passport, foreign ID, visa, or travel documents that prove your identity and foreign status. You'll need original documents or certified copies.</p>
+        <p><span class="ar">اجمع جوازك، هويتك الأجنبية، أو تأشيرتك. بتحتاج أصلية أو صورة معتمدة.</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Complete Form W-7</h4>
+        <p>Fill out Form W-7 completely. Include your name (as shown on your passport), date of birth, current address, and date of arrival in the U.S. (if applicable).</p>
+        <p><span class="ar">عبّي فورم W-7 كاملاً. ضع اسمك كما يظهر في جوازك، تاريخ ميلادك، عنوانك الحالي.</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Choose Submission Method</h4>
+        <p><strong>Option A:</strong> Mail Form W-7 with documents and tax return to the IRS. <strong>Option B:</strong> Use an IRS Acceptance Agent (bank, credit union, tax professional) who can verify your documents in person. <strong>Option C:</strong> ITIN applicant whose principal reason is to file a U.S. tax return can attach Form W-7 to their tax return.</p>
+        <p><span class="ar">بتقدر تبعت بالبريد، تروح لوكيل معتمد (بنك أو محاسب)، أو ترفقها بإقرارك الضريبي.</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Mail or Submit In Person</h4>
+        <p>Send your application to your local IRS office or the IRS ITIN processing center. Processing typically takes 4–6 weeks. You can check the status online using Form W-7 tracking.</p>
+        <p><span class="ar">أرسل الفورم للـ IRS. المعالجة تأخذ ٤-٦ أسابيع. تقدر تتابع الحالة أونلاين.</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Receive Your ITIN</h4>
+        <p>The IRS will mail you a letter with your new ITIN (usually within 4–6 weeks). Your ITIN is valid for federal tax purposes immediately.</p>
+        <p><span class="ar">الـ IRS بترسل لك خطاب فيه ITIN جديد. ITIN فوري الاستخدام للضرائب.</span></p>
+      </div>
+    </div>
+
+    <h3>Processing Times & Status</h3>
+    <p>ITIN application processing typically takes <strong>4–6 weeks</strong>. During peak tax season (January–April), processing can take longer. You can track your application status using the IRS ITIN tracker on <strong>IRS.gov</strong>. You'll need your Social Security Number (or ITIN if already assigned), filing status, and expected refund amount.</p>
+    <p><span class="ar">المعالجة تأخذ ٤-٦ أسابيع عادة. في موسم الضرائب (يناير-أبريل) قد تأخذ أطول. تقدر تتابع أونلاين على IRS.gov.</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">💡 Pro Tip: Acceptance Agents</div>
+      <p>Using an IRS-authorized <strong>Acceptance Agent</strong> (bank, credit union, or tax firm) is often the fastest method. They verify your documents in person and submit immediately, reducing processing time.</p>
+      <p><span class="ar">استخدام وكيل معتمد (بنك أو محاسب) أسرع. هم يتحققون من وثائقك مباشرة ويرسلونها فوراً.</span></p>
+    </div>
+  </section>
+
+  <!-- CHAPTER 5 -->
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="line"></span> Chapter 5</div>
+    <h2>Required Documents for ITIN Application</h2>
+    <div class="h2-ar">المستندات المطلوبة لطلب ITIN</div>
+
+    <p>When submitting Form W-7, the IRS requires you to provide proof of your identity and foreign status. Here are all acceptable documents:</p>
+
+    <h3>Proof of Identity (Choose 1)</h3>
+    <div class="info-card gold-border">
+      <div class="card-title">🆔 Acceptable ID Documents</div>
+      <ul style="margin-left: 20px; margin-bottom: 0;">
+        <li><strong>Valid passport</strong> (most common and preferred)</li>
+        <li><strong>Foreign national ID card</strong> (government-issued)</li>
+        <li><strong>Driver's license</strong> (from your home country)</li>
+        <li><strong>Travel visa</strong> (showing your name and photo)</li>
+        <li><strong>Military ID</strong> (from your home country)</li>
+        <li><strong>National civil registration ID</strong></li>
+      </ul>
+      <p style="margin-top: 14px; color: var(--text-light);"><span class="ar">جواز السفر (الأفضل)، الهوية الحكومية، رخصة السيارة، التأشيرة، هوية عسكرية، أو بطاقة تسجيل مدني.</span></p>
+    </div>
+
+    <h3>Proof of Foreign Status (Choose 1)</h3>
+    <div class="info-card navy-border">
+      <div class="card-title">📋 Foreign Status Documents</div>
+      <ul style="margin-left: 20px; margin-bottom: 0;">
+        <li><strong>Valid passport</strong> (proves you're a foreign national)</li>
+        <li><strong>Foreign birth certificate</strong> (with certified English translation if not in English)</li>
+        <li><strong>Travel visa</strong> (U.S. visa or visa from another country)</li>
+        <li><strong>Immigration documents</strong> (arrival/departure records, I-94)</li>
+        <li><strong>Foreign government ID</strong> (civil ID, national ID card)</li>
+        <li><strong>Divorce decree or marriage certificate</strong> (from foreign country, with translation)</li>
+      </ul>
+      <p style="margin-top: 14px; color: var(--text-light);"><span class="ar">جواز السفر، شهادة الميلاد الأجنبية، تأشيرة، وثائق الهجرة، هوية حكومية أجنبية.</span></p>
+    </div>
+
+    <h3>For Self-Employment Income (Schedule C Filers)</h3>
+    <p>If you're applying for an ITIN because you have self-employment income, you must also include:</p>
+    <ul style="margin-left: 20px;">
+      <li><strong>EIN Letter</strong> (Employer Identification Number) — if you have a business</li>
+      <li><strong>Business license</strong> or registration documents</li>
+      <li><strong>Partnership agreement</strong> (if applicable)</li>
+      <li><strong>Evidence of business activity</strong> (invoices, contracts, bank statements)</li>
+    </ul>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Important Requirements</div>
+        <p><strong>Original or Certified Copies Only:</strong> The IRS requires original documents or copies certified by the issuing government agency. Photocopies alone are not acceptable. <strong>English Translation Required:</strong> Any foreign documents must include a certified English translation (prepared by a professional translator).</p>
+        <p><span class="ar">الـ IRS تطلب أصلية أو صورة معتمدة من الجهة الحكومية. الفوتو كوبي ما يكفي. أي مستند أجنبي بيحتاج ترجمة معتمدة.</span></p>
+      </div>
+    </div>
+
+    <h3>How to Submit Documents</h3>
+    <p><strong>By Mail:</strong> Send original documents or certified copies via registered mail to your local IRS office. Keep a copy for your records. <strong>In Person:</strong> Visit an IRS office or an IRS-authorized Acceptance Agent (bank, credit union, tax firm) to have your documents verified and scanned. <strong>With Your Tax Return:</strong> Attach copies to your Form 1040 when filing.</p>
+    <p><span class="ar">بتقدر تبعت بالبريد المسجل، تروح شخصياً للـ IRS أو وكيل معتمد، أو ترفقها بإقرارك.</span></p>
+  </section>
+
+  <!-- CHAPTER 6 -->
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="line"></span> Chapter 6</div>
+    <h2>ITIN Renewal Process</h2>
+    <div class="h2-ar">تجديد رقم ITIN</div>
+
+    <p>ITINs don't last forever. The IRS automatically suspends ITINs if there's been no tax return filed using that ITIN for three consecutive years. If your ITIN is about to expire or has expired, you must renew it to continue filing taxes.</p>
+
+    <h3>When Does Your ITIN Expire?</h3>
+    <p>Your ITIN is valid indefinitely as long as you file a U.S. tax return every year using that ITIN. However, the IRS <strong>suspends</strong> ITINs that haven't been used on a tax return for <strong>three consecutive years</strong>. If you haven't filed in that time, your ITIN may be deactivated.</p>
+    <p><span class="ar">ITIN صالح للأبد طالما تقدم إقرار ضريبي سنوي. لكن الـ IRS توقف ITIN لو ما قدمت إقرار لثلاث سنين متتالية.</span></p>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">📅</div>
+      <div class="tip-content">
+        <div class="tip-label">Suspension Rules</div>
+        <p><strong>No filing for 3 years?</strong> Your ITIN is suspended. <strong>Already suspended?</strong> You can renew it using Form W-7. Renewal is similar to initial application. <strong>After suspension:</strong> Once renewed, file your tax return within 6 months to keep it active.</p>
+        <p><span class="ar">ثلاث سنين بلا تقديم = توقف ITIN. التجديد مثل الطلب الأول. بعد التجديد، قدم إقرار خلال ٦ أشهر.</span></p>
+      </div>
+    </div>
+
+    <h3>How to Renew Your ITIN</h3>
+    <div class="step-guide">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Check Your ITIN Status</h4>
+        <p>Visit <strong>IRS.gov</strong> or call <strong>1-800-829-1040</strong> to verify if your ITIN is active, suspended, or expired.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Complete Form W-7 (Renewal)</h4>
+        <p>Fill out Form W-7 again with your current information. Check the box for "Renewal" instead of "Initial Request." Include your existing ITIN on the form.</p>
+        <p><span class="ar">عبّي فورم W-7 مرة ثانية وضع علامة بـ "Renewal" بدل "Initial Request".</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Provide Updated Documents</h4>
+        <p>You may need to provide renewed documentation of identity and foreign status. If your passport is about to expire, renew it first. Use current, valid documents.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Submit Renewal with Tax Return</h4>
+        <p>The easiest way is to file your tax return and attach Form W-7 (renewal) with your supporting documents. This counts as your renewed ITIN and your tax filing in one submission.</p>
+        <p><span class="ar">أسهل طريقة: قدم إقرار ضريبي وارفق فورم W-7 معاه وثائقك.</span></p>
+      </div>
+    </div>
+
+    <div class="tip-box green">
+      <div class="tip-icon">✓</div>
+      <div class="tip-content">
+        <div class="tip-label">Best Practice</div>
+        <p>File your tax return every year, even if you don't owe taxes or don't have much income. Filing annually keeps your ITIN active and prevents suspension. It also ensures you get any refundable credits you're entitled to.</p>
+        <p><span class="ar">قدم إقرار كل سنة حتى لو ما عليك ضرائب. هذا بيحافظ على ITIN نشط ويساعدك تحصل على أي ائتمانات ترجع كاش.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PART III: FILING TAXES WITH ITIN           -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- CHAPTER 7 -->
+  <section class="chapter" id="ch7">
+    <div class="chapter-label"><span class="line"></span> Chapter 7</div>
+    <h2>Resident vs. Non-Resident Alien Filing Status</h2>
+    <div class="h2-ar">حالة المقيم مقابل غير المقيم الأجنبي</div>
+
+    <p>The most critical decision for ITIN filers is determining whether you're a <strong>Resident Alien</strong> or a <strong>Non-Resident Alien</strong> for tax purposes. This status determines which tax form you file, what income is taxable, and which deductions and credits you can claim.</p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🏠 Resident Alien (RA)</div>
+      <p>A resident alien is a foreign national who meets the <strong>Green Card Test</strong> or the <strong>Substantial Presence Test</strong>.</p>
+      <p><strong>Green Card Test:</strong> You have a valid green card (permanent resident status). <strong>Substantial Presence Test:</strong> You've been in the U.S. for 183 days or more during a 3-year period (current year + 2 prior years), with a weighted calculation. Resident aliens are taxed like U.S. citizens on worldwide income.</p>
+      <p><span class="ar">المقيم الأجنبي عنده green card أو قضى ١٨٣ يوم أو أكثر بأمريكا. يتحسب دخله العالمي مثل المواطن الأمريكي.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">🌍 Non-Resident Alien (NRA)</div>
+      <p>A non-resident alien is a foreign national who fails both the Green Card Test and the Substantial Presence Test. Non-residents are only taxed on <strong>U.S.-source income</strong> (wages earned in the U.S., business income from a U.S. business, rental income from U.S. property, certain investment income).</p>
+      <p><span class="ar">غير المقيم الأجنبي فقط يدفع ضرائب على الدخل من مصادر أمريكية. الدخل من خارج أمريكا ما بيتحسب.</span></p>
+    </div>
+
+    <h3>Tax Forms: Which One Do I File?</h3>
+    <table class="tax-table">
+      <thead>
+        <tr><th>Status</th><th>Tax Form</th><th>Worldwide Income Taxed?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Resident Alien</strong></td><td><strong>Form 1040</strong></td><td>Yes, all worldwide income</td></tr>
+        <tr><td><strong>Non-Resident Alien</strong></td><td><strong>Form 1040-NR</strong></td><td>No, U.S.-source only</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Electing Resident Alien Status</h3>
+    <p>Some non-residents with a foreign spouse can make an <strong>election</strong> to be treated as a resident alien. This allows them to file a joint return with their U.S. spouse (or citizen spouse) and access better tax rates and credits. This election is made on Form 8288-B and applies for the entire tax year.</p>
+    <p><span class="ar">بعض غير المقيمين مع زوج/زوجة أجنبي يقدرو يختارو معاملتهم كمقيم ويقدمو إقرار مشترك بتصريح أفضل.</span></p>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Critical: Determine Your Status Correctly</div>
+        <p>Filing under the wrong status can trigger IRS audits and penalties. Use the <strong>IRS Publication 519 (Tax Guide for Aliens)</strong> to calculate your residency status. When in doubt, consult a tax professional familiar with ITIN filers.</p>
+        <p><span class="ar">اختيار الحالة الخاطئة بيسبب مشاكل. استخدم IRS Publication 519 أو استشر محاسب مختص بـ ITIN.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 8 -->
+  <section class="chapter" id="ch8">
+    <div class="chapter-label"><span class="line"></span> Chapter 8</div>
+    <h2>Tax Credits & Limitations for ITIN Holders</h2>
+    <div class="h2-ar">الائتمانات الضريبية والقيود على حاملي ITIN</div>
+
+    <p>ITIN holders have different eligibility for tax credits compared to SSN holders. Some credits are restricted, while others are fully available. Understanding these rules is crucial for maximizing your tax benefits.</p>
+
+    <h3>Fully Available Credits (No ITIN Restrictions)</h3>
+    <div class="info-card gold-border">
+      <div class="card-title">✓ Education Credits</div>
+      <p><strong>American Opportunity Credit:</strong> Up to $2,500/year (first 4 years of post-secondary education). <strong>Lifetime Learning Credit:</strong> Up to $2,000/year (any post-secondary education). ITIN holders can claim both if they have qualified education expenses.</p>
+      <p><span class="ar">ائتمان الفرصة الأمريكية لحد ٢,٥٠٠$ سنويا. ائتمان التعلم المستمر لحد ٢,٠٠٠$. حاملو ITIN يقدرو يدعوهم.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">✓ Mortgage Interest Deduction</div>
+      <p>If you own a home and have a mortgage, you can deduct your mortgage interest (up to $750,000 of mortgage debt). ITIN holders can claim this deduction if they meet residency requirements.</p>
+      <p><span class="ar">خصم فوائد الرهن العقاري متاح للجميع إذا كنت مالك منزل.</span></p>
+    </div>
+
+    <h3>RESTRICTED: Child Tax Credit (CTC)</h3>
+    <div class="tip-box red">
+      <div class="tip-icon">❌</div>
+      <div class="tip-content">
+        <div class="tip-label">Major Restriction</div>
+        <p><strong>ITIN holders cannot claim the regular Child Tax Credit.</strong> Instead, only dependents with SSN or ITIN can be included on your return. If your child has an ITIN, you <strong>cannot</strong> claim the $2,000 per child tax credit. However, you can claim the dependent as an exemption (no longer reduces taxable income directly, but may qualify for other benefits).</p>
+        <p><span class="ar">حاملو ITIN لا يقدرو يدعو CTC للأطفال. لكن يقدرو يدعوهم كمعيلين إذا كان عندهم SSN أو ITIN خاص.</span></p>
+      </div>
+    </div>
+
+    <h3>RESTRICTED: Earned Income Tax Credit (EITC)</h3>
+    <p>The EITC is one of the largest refundable credits available to low-income workers. However, <strong>ITIN holders are generally NOT eligible for EITC</strong> unless they are married filing jointly with a U.S. citizen or permanent resident spouse who has an SSN.</p>
+    <p><span class="ar">حاملو ITIN عادة ما يقدرو يدعو EITC إلا إذا كانوا متزوجين ويقدمون إقرار مشترك مع زوج مواطن أو green card holder.</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">💑 Exception: Married ITIN Holders</div>
+      <p>If you're married to a U.S. citizen or green card holder and both of you have Social Security Numbers (or one has SSN and the other has ITIN), you can file a joint return and claim EITC. However, both spouses must have valid ITINs or SSNs on the return.</p>
+      <p><span class="ar">إذا كنت متزوج من مواطن أمريكي أو green card holder، تقدرو تقدموا إقرار مشترك والدعي EITC.</span></p>
+    </div>
+
+    <h3>Available: Certain Tax Deductions</h3>
+    <p><strong>Standard Deduction:</strong> ITIN holders can claim the standard deduction ($15,000 single, $30,000 married filing jointly in 2025). <strong>Itemized Deductions:</strong> Mortgage interest, state and local taxes (up to $10,000), charitable donations, medical expenses (over 7.5% of AGI). <strong>Business Deductions:</strong> If you have self-employment income, you can deduct business expenses (home office, vehicle mileage, supplies, professional fees).</p>
+    <p><span class="ar">الخصم المعياري متاح، الخصومات المفصلة (فائدة الرهن، الضرائب المحلية، التبرعات)، خصومات البزنس — كلها متاحة لحاملي ITIN.</span></p>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">📋</div>
+      <div class="tip-content">
+        <div class="tip-label">Record Deductions Carefully</div>
+        <p>Keep detailed records of all deductible expenses: receipts for charity, mortgage statements, property tax bills, and business expense logs. The IRS audits ITIN filers at higher rates, so documentation is essential.</p>
+        <p><span class="ar">احفظ إيصالات التبرعات، فاتورات الرهن، ضرائب الممتلكات، سجلات مصاريف البزنس. الـ IRS تفتش حاملي ITIN أكثر.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 9 -->
+  <section class="chapter" id="ch9">
+    <div class="chapter-label"><span class="line"></span> Chapter 9</div>
+    <h2>Tax Treaty Benefits</h2>
+    <div class="h2-ar">فوائد معاهدات الضرائب</div>
+
+    <p>If your country has a <strong>tax treaty</strong> with the United States, you may qualify for reduced tax rates on certain types of income (interest, dividends, royalties, etc.). Treaty benefits can significantly reduce your U.S. tax liability.</p>
+
+    <h3>What Are Tax Treaties?</h3>
+    <p>Tax treaties are agreements between two countries to avoid double taxation. They allow residents of one country to pay tax only in their home country on certain types of income, rather than paying tax in both countries. The U.S. has treaties with over 60 countries.</p>
+    <p><span class="ar">معاهدات الضرائب اتفاقيات بين بلدين لتجنب الضريبة المزدوجة. تسمح لك تدفع ضريبة بدولة واحدة بدل اثنين.</span></p>
+
+    <h3>Common Treaty Benefits</h3>
+    <div class="info-card gold-border">
+      <div class="card-title">📊 Reduced Withholding Rates</div>
+      <p><strong>Interest Income (1099-INT):</strong> Usually reduced from 30% to 0-15% withholding. <strong>Dividend Income (1099-DIV):</strong> Usually reduced from 30% to 5-15% withholding. <strong>Royalty Income:</strong> Usually reduced from 30% to 0-10% withholding. <strong>Student Loan Interest:</strong> Often 0% withholding for students of certain countries.</p>
+      <p><span class="ar">الضريبة على الفائدة قد تنخفض من ٣٠٪ إلى ٠-١٥٪. الأرباح من ٣٠٪ إلى ٥-١٥٪. الرسوم من ٣٠٪ إلى ٠-١٠٪.</span></p>
+    </div>
+
+    <h3>How to Claim Treaty Benefits</h3>
+    <div class="step-guide">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Verify Your Country's Treaty</h4>
+        <p>Check the IRS website (<strong>IRS.gov/treaties</strong>) to see if your country has a tax treaty with the U.S. and which income types are covered.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>File Form W-8BEN (for non-residents)</h4>
+        <p>If you're a non-resident alien claiming treaty benefits, provide your employer or bank with <strong>Form W-8BEN (Certificate of Eligibility)</strong>. This tells them you're a treaty resident and entitled to reduced withholding.</p>
+        <p><span class="ar">أعطِ صاحب العمل أو البنك فورم W-8BEN عشان يقللوا الضريبة المخصومة.</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Claim Benefits on Your Tax Return</h4>
+        <p>When filing your Form 1040 or 1040-NR, you can claim treaty benefits on Schedule 3. Attach a copy of your treaty eligibility certificate (country of origin letter or passport).</p>
+      </div>
+    </div>
+
+    <div class="tip-box green">
+      <div class="tip-icon">💰</div>
+      <div class="tip-content">
+        <div class="tip-label">Potential Refund</div>
+        <p>If excessive taxes were withheld and you claim treaty benefits, you can file an amended return (Form 1040-X) to reclaim the overpaid taxes. Many ITIN holders recover hundreds or thousands in overpaid taxes through treaty claims.</p>
+        <p><span class="ar">لو انخصمت ضرائب زيادة وأنت مستحق فوائد معاهدة، تقدر تقدم إقرار معدل وترجع الضرائب الزائدة.</span></p>
+      </div>
+    </div>
+
+    <h3>List of U.S. Tax Treaties (Sample)</h3>
+    <p>The U.S. has comprehensive tax treaties with countries including: <strong>Canada, Mexico, United Kingdom, Germany, France, Australia, Japan, India, China, Brazil, Egypt, United Arab Emirates, Saudi Arabia, Israel, South Korea</strong>, and many others. Check IRS.gov for a complete, current list of all 60+ treaty countries.</p>
+    <p><span class="ar">الـ US معاها معاهدات ضرائب مع أكثر من ٦٠ دولة. شوف IRS.gov للقائمة الكاملة والحالية.</span></p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PART IV: PRACTICAL GUIDANCE                -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- CHAPTER 10 -->
+  <section class="chapter" id="ch10">
+    <div class="chapter-label"><span class="line"></span> Chapter 10</div>
+    <h2>Common Mistakes ITIN Filers Make</h2>
+    <div class="h2-ar">الأخطاء الشائعة التي يرتكبها حاملو ITIN</div>
+
+    <p>ITIN filers often make preventable mistakes that trigger audits, rejections, or missed refunds. Here are the most common errors and how to avoid them:</p>
+
+    <h3>Mistake #1: Using Wrong Tax Form</h3>
+    <div class="info-card gold-border">
+      <div class="card-title">❌ Filing Form 1040 as a Non-Resident Alien</div>
+      <p>Non-resident aliens must file <strong>Form 1040-NR</strong>, not Form 1040. Filing the wrong form can cause the IRS to reject your return, delay your refund, or trigger an audit. Verify your residency status before choosing a form.</p>
+      <p><span class="ar">غير المقيمين لازم يقدموا 1040-NR وليس 1040. الفورم الخاطئ بيسبب رفض أو تحقيق.</span></p>
+    </div>
+
+    <h3>Mistake #2: Claiming Credits You're Not Eligible For</h3>
+    <div class="info-card navy-border">
+      <div class="card-title">❌ Claiming Child Tax Credit (CTC)</div>
+      <p>ITIN holders cannot claim the CTC. Many filers try anyway, hoping the IRS won't notice. The IRS always catches this error, and you'll receive a notice requesting the credit amount back. Don't claim CTC if you have an ITIN.</p>
+      <p><span class="ar">لا تحاول تدعي CTC لو كان عندك ITIN. الـ IRS بتكتشفها دايماً وبترد الفلوس.</span></p>
+    </div>
+
+    <h3>Mistake #3: Not Renewing an Expired ITIN</h3>
+    <p>If your ITIN has been suspended due to inactivity (3+ years without filing), you cannot file a return until you renew it. Many people discover their ITIN is expired only when they try to file. Renew proactively if you haven't filed in 2+ years.</p>
+    <p><span class="ar">لا تنسى تجدد ITIN إذا ما قدمت إقرار لسنتين أو أكثر. الـ IRS بتوقف الرقم تلقائياً.</span></p>
+
+    <h3>Mistake #4: Switching Between ITIN and SSN Without Notifying IRS</h3>
+    <p>If you obtain an SSN after having an ITIN (through a green card, work visa, or citizenship), you must stop using the ITIN and file with the SSN. Continuing to use both numbers creates a discrepancy that triggers IRS audits and penalties.</p>
+    <p><span class="ar">لو حصلت على SSN بعدما كان عندك ITIN، بدّل إلى SSN فوراً. استخدام الرقمين معاً يسبب مشاكل.</span></p>
+
+    <h3>Mistake #5: Incorrect ITIN on Joint Return</h3>
+    <p>If you're filing a joint return with your spouse, make sure both ITINs (or SSN/ITIN combination) are entered correctly. A single digit error causes the return to be rejected. Double-check the ITIN letter you received from the IRS.</p>
+    <p><span class="ar">في الإقرار المشترك، تأكد الأرقام صحيحة. حتى خطأ برقم واحد بيرفع الإقرار.</span></p>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Prevent Rejections</div>
+        <p>The best way to avoid mistakes: Use a tax software designed for ITIN filers (like Tax Advisor Pro) or work with a tax professional experienced in immigration and ITIN taxation. The small investment pays for itself in avoided errors and optimized refunds.</p>
+        <p><span class="ar">استخدم برنامج ضريبي متخصص بـ ITIN أو اشتغل مع محاسب متمرس. الاستثمار الصغير يستحق.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 11 -->
+  <section class="chapter" id="ch11">
+    <div class="chapter-label"><span class="line"></span> Chapter 11</div>
+    <h2>State Income Taxes for ITIN Holders</h2>
+    <div class="h2-ar">ضرائب الولاية لحاملي ITIN</div>
+
+    <p>In addition to federal taxes, some states require you to file a state income tax return if you earn income within their borders or live in a state with income tax. ITIN requirements vary by state.</p>
+
+    <h3>States That Require ITIN for State Taxes</h3>
+    <p>Most states that have an income tax require a valid <strong>ITIN, SSN, or ATIN (Adoption Taxpayer Identification Number)</strong> to file. A few states are flexible:</p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">✓ States Accepting ITIN</div>
+      <p><strong>California, New York, Illinois, Massachusetts, Maryland, New Jersey, Connecticut, Rhode Island</strong> — all accept ITIN for state income tax filing. <strong>New Mexico, Colorado</strong> — accept ITIN with some restrictions. Check your state's tax authority website for current rules.</p>
+      <p><span class="ar">معظم الولايات التي فيها ضريبة دخل تقبل ITIN. كاليفورنيا، نيويورك، إلينوي، وغيرها تقبل ITIN بدون مشاكل.</span></p>
+    </div>
+
+    <h3>States With NO Income Tax</h3>
+    <p>If you live in a state with no income tax, you don't need to file a state return. These states include: <strong>Alaska, Florida, Nevada, South Dakota, Tennessee, Texas, Washington, Wyoming</strong>. (Note: Some of these have other taxes like capital gains or sales tax, but no income tax.)</p>
+    <p><span class="ar">الولايات بدون ضريبة دخل: ألاسكا، فلوريدا، نيفادا، تكساس، وايومينغ وغيرها. ما بتحتاج تقدم state return.</span></p>
+
+    <h3>How to File State Taxes with ITIN</h3>
+    <p><strong>Step 1:</strong> Determine if your state has income tax and if it applies to you. <strong>Step 2:</strong> Obtain a state ITIN if required (some states issue their own ITINs; others use federal ITIN). <strong>Step 3:</strong> File your state return using the same information as your federal return. <strong>Step 4:</strong> Pay any state tax owed or claim a refund.</p>
+    <p><span class="ar">تأكد إذا كانت ولايتك فيها ضريبة دخل وإذا بتطبق عليك. احصل على ITIN الولاية (لو لازم). قدم إقرار الولاية. ادفع أو احصل على مرتجع.</span></p>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">🏛️</div>
+      <div class="tip-content">
+        <div class="tip-label">State-Specific Guidance</div>
+        <p>State tax rules for ITIN holders are complex and vary. We recommend consulting your state's department of revenue or a local tax professional to confirm your filing obligations. Many states have special rules for non-residents and immigrants.</p>
+        <p><span class="ar">القوانين تختلف من ولاية لأخرى. استشر قسم الضرائب بالولاية أو محاسب محلي للتأكد من التزاماتك.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 12 -->
+  <section class="chapter" id="ch12">
+    <div class="chapter-label"><span class="line"></span> Chapter 12</div>
+    <h2>How Tax Advisor Pro Helps ITIN Holders</h2>
+    <div class="h2-ar">كيف يساعدك Tax Advisor Pro</div>
+
+    <p>Tax Advisor Pro is specifically designed to support ITIN holders and immigrants filing their U.S. taxes. Here's how our app simplifies the process:</p>
+
+    <h3>ITIN-Specific Features</h3>
+    <div class="info-card gold-border">
+      <div class="card-title">🆔 ITIN Status Detection</div>
+      <p>When you input your ITIN, our app recognizes it and automatically adjusts your form based on your residency status (resident vs. non-resident alien). No need to manually choose between Form 1040 and 1040-NR — we do it for you.</p>
+      <p><span class="ar">لما تدخل ITIN، التطبيق يتعرف عليها ويختار الفورم الصحيح تلقائياً.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">⚠️ Eligibility Warnings</div>
+      <p>Our AI chatbot flags ineligible credits and deductions. If you try to claim the Child Tax Credit or EITC with an ITIN, the app alerts you: <em>"This credit is not available for ITIN filers"</em> — preventing costly mistakes before you file.</p>
+      <p><span class="ar">الـ AI يحذرك من الائتمانات اللي ما تقدر تدعيها. لو حاولت تدعي CTC، بتحصل على تحذير فوراً.</span></p>
+    </div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🌍 Bilingual Support (English & Arabic)</div>
+      <p>All guides, prompts, and explanations are in both English and Arabic. If you're more comfortable in Arabic, switch languages in settings. Every form field, instruction, and error message is available in your preferred language.</p>
+      <p><span class="ar">كل شي في التطبيق بالإنجليزي والعربي. بتقدر تختار لغتك المفضلة وكل التعليمات بتظهر بلغتك.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">📊 Treaty Benefit Guidance</div>
+      <p>The chatbot helps you identify if your country has a tax treaty with the U.S. and which treaty benefits you might qualify for. You can ask: <em>"Does [my country] have a treaty with the U.S.?"</em> or <em>"What treaty benefits am I eligible for?"</em></p>
+      <p><span class="ar">بتقدر تسأل الـ AI: "هل بلدي فيها معاهدة ضرائب مع أمريكا؟" والـ AI بيساعدك.</span></p>
+    </div>
+
+    <h3>Step-by-Step Workflow for ITIN Filers</h3>
+    <div class="step-guide">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Upload Documents</h4>
+        <p>Upload your ITIN letter, passport, visa, W-2s, 1099-NECs, or any tax documents. The AI scans them and auto-fills your information.</p>
+        <p><span class="ar">ارفع خطاب ITIN، جوازك، وثائق الدخل. الـ AI يقرأها ويعبي الفورمات.</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Verify Your ITIN</h4>
+        <p>Enter your 9-digit ITIN. The app recognizes it and sets your filing status and form automatically.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Declare Your Income</h4>
+        <p>Enter W-2s, 1099-NECs, interest, dividends, or other income. The app flags income types specific to your residency status.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Claim Eligible Deductions & Credits</h4>
+        <p>The app only shows deductions and credits you can claim. No ineligible options appear, reducing mistakes.</p>
+        <p><span class="ar">التطبيق يظهر لك فقط الخصومات والائتمانات اللي تقدر تدعيها.</span></p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Review & Ask Questions</h4>
+        <p>Use the AI chatbot to ask questions: <em>"Am I a resident alien or non-resident?"</em>, <em>"What documents do I need to renew my ITIN?"</em>, <em>"Can I claim this deduction?"</em> — get instant, personalized answers.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h4>Export & File</h4>
+        <p>Once completed, export your finalized return in PDF format. You can then file electronically through an e-file provider or IRS-approved tax software.</p>
+        <p><span class="ar">لما خلصت، صدّر الإقرار PDF وقدمه أونلاين أو بالبريد.</span></p>
+      </div>
+    </div>
+
+    <h3>AI Chatbot: Your ITIN Tax Expert</h3>
+    <p>Our AI chatbot is trained on ITIN-specific tax laws and can answer complex questions:</p>
+    <ul style="margin-left: 20px;">
+      <li>"How do I determine if I'm a resident or non-resident alien?"</li>
+      <li>"What documents do I need to renew my ITIN?"</li>
+      <li>"Can I claim my foreign spouse as a dependent?"</li>
+      <li>"Does my country have a tax treaty with the U.S.?"</li>
+      <li>"What happens if my ITIN expires?"</li>
+      <li>"Can I claim business deductions as an ITIN holder?"</li>
+      <li>"ما الفرق بين 1040 و 1040-NR؟" (Arabic questions too)</li>
+    </ul>
+
+    <div class="tip-box green">
+      <div class="tip-icon">✓</div>
+      <div class="tip-content">
+        <div class="tip-label">No Judgment, No Complexity</div>
+        <p>The chatbot doesn't judge your immigration status. Ask any question without fear. The AI treats your privacy seriously and provides confidential, expert guidance on your specific tax situation.</p>
+        <p><span class="ar">الـ AI ما بيحكم عليك. اسأل أي سؤال بثقة. كل شي سري وآمن.</span></p>
+      </div>
+    </div>
+
+    <h3>Avoiding Common Mistakes with Tax Advisor Pro</h3>
+    <p>Because Tax Advisor Pro is specifically designed for ITIN holders, it prevents the most common errors:</p>
+    <ul style="margin-left: 20px;">
+      <li>Choosing the wrong form (1040 vs. 1040-NR)</li>
+      <li>Claiming ineligible credits</li>
+      <li>Mixing ITIN and SSN on the same return</li>
+      <li>Forgetting to renew an expired ITIN</li>
+      <li>Missing treaty benefits</li>
+      <li>Incomplete documentation</li>
+    </ul>
+
+    <p style="margin-top: 16px;"><span class="ar">التطبيق يحميك من الأخطاء الشائعة. تقدر تركز على إدخال معلوماتك والـ AI بيتأكد كل شي صحيح.</span></p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="guide-footer">
+    <div style="font-size:28px;margin-bottom:12px;">✈️</div>
+    <p style="font-family:var(--font-display);font-size:18px;color:var(--gold);margin-bottom:8px;">Tax Advisor Pro</p>
+    <p>ITIN & Immigrant Tax Guide — دليل الضرائب للمهاجرين</p>
+    <p style="margin-top:16px;">2025 Tax Year (Filing 2026) &middot; Built with ♥ for <span class="gold">immigrants and ITIN holders</span></p>
+  </footer>
+
+</div>
+
+<script>
+// ── SCROLL TO CHAPTER (main navigation handler) ──
+function scrollToChapter(event, targetId) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  // Scroll the target into view
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Update active state immediately
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const clickedNav = document.querySelector('.nav-item[data-target="' + targetId + '"]');
+  if (clickedNav) clickedNav.classList.add('active');
+
+  // Update URL hash safely (skip if inside iframe)
+  try {
+    if (window.top === window.self) {
+      history.replaceState(null, '', '#' + targetId);
+    }
+  } catch(e) { /* ignore in iframe */ }
+
+  // Close mobile sidebar if open
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+}
+
+// ── Scroll progress bar ──
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+  if (height > 0) {
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  }
+});
+
+// ── Active nav highlight on scroll ──
+const chapters = document.querySelectorAll('.chapter');
+const navItems = document.querySelectorAll('.nav-item');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(item => item.classList.remove('active'));
+      const id = entry.target.id;
+      const activeNav = document.querySelector('.nav-item[data-target="' + id + '"]');
+      if (activeNav) activeNav.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+chapters.forEach(ch => observer.observe(ch));
+
+// ── Mobile sidebar toggle ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// ── Handle hash on page load ──
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    setTimeout(() => {
+      const target = document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  }
+});
+
+// ── Fade-in on scroll ──
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+chapters.forEach(ch => {
+  ch.style.animationPlayState = 'paused';
+  fadeObserver.observe(ch);
+});
+</script>
+<script src="guide-chat.js"></script>
+</body>
+</html>

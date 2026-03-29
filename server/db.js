@@ -29,9 +29,31 @@ async function init() {
 
   // Create tables
   db.run(`
+    CREATE TABLE IF NOT EXISTS users (
+      id TEXT PRIMARY KEY,
+      email TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      first_name TEXT DEFAULT '',
+      last_name TEXT DEFAULT '',
+      language TEXT DEFAULT 'en',
+      created_at TEXT DEFAULT (datetime('now')),
+      last_login TEXT DEFAULT (datetime('now'))
+    )
+  `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS auth_tokens (
+      token TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL,
+      created_at TEXT DEFAULT (datetime('now')),
+      expires_at TEXT NOT NULL,
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+  `);
+  db.run(`
     CREATE TABLE IF NOT EXISTS sessions (
       id TEXT PRIMARY KEY,
       name TEXT DEFAULT '',
+      user_id TEXT DEFAULT NULL,
       created_at TEXT DEFAULT (datetime('now')),
       updated_at TEXT DEFAULT (datetime('now'))
     )
@@ -84,6 +106,90 @@ function ensureSession(sessionId, name = '') {
 
 module.exports = {
   init,
+
+  // ── Auth Methods ──
+  createUser(id, email, passwordHash, firstName, lastName, language) {
+    db.run(`INSERT INTO users (id, email, password_hash, first_name, last_name, language) VALUES (?, ?, ?, ?, ?, ?)`,
+      [id, email, passwordHash, firstName, lastName, language]);
+    persist();
+  },
+
+  getUserByEmail(email) {
+    const result = db.exec(`SELECT id, email, password_hash, first_name, last_name, language, created_at, last_login FROM users WHERE email = ?`, [email]);
+    if (!result.length || !result[0].values.length) return null;
+    const r = result[0].values[0];
+    return {
+      id: r[0],
+      email: r[1],
+      password_hash: r[2],
+      first_name: r[3],
+      last_name: r[4],
+      language: r[5],
+      created_at: r[6],
+      last_login: r[7]
+    };
+  },
+
+  getUserById(id) {
+    const result = db.exec(`SELECT id, email, password_hash, first_name, last_name, language, created_at, last_login FROM users WHERE id = ?`, [id]);
+    if (!result.length || !result[0].values.length) return null;
+    const r = result[0].values[0];
+    return {
+      id: r[0],
+      email: r[1],
+      password_hash: r[2],
+      first_name: r[3],
+      last_name: r[4],
+      language: r[5],
+      created_at: r[6],
+      last_login: r[7]
+    };
+  },
+
+  saveAuthToken(token, userId, expiresAt) {
+    db.run(`INSERT INTO auth_tokens (token, user_id, expires_at) VALUES (?, ?, ?)`,
+      [token, userId, expiresAt]);
+    persist();
+  },
+
+  getAuthToken(token) {
+    const result = db.exec(`SELECT token, user_id, created_at, expires_at FROM auth_tokens WHERE token = ? AND expires_at > datetime('now')`, [token]);
+    if (!result.length || !result[0].values.length) return null;
+    const r = result[0].values[0];
+    return {
+      token: r[0],
+      user_id: r[1],
+      created_at: r[2],
+      expires_at: r[3]
+    };
+  },
+
+  deleteAuthToken(token) {
+    db.run(`DELETE FROM auth_tokens WHERE token = ?`, [token]);
+    persist();
+  },
+
+  updateLastLogin(userId) {
+    db.run(`UPDATE users SET last_login = datetime('now') WHERE id = ?`, [userId]);
+    persist();
+  },
+
+  linkSessionToUser(sessionId, userId) {
+    db.run(`UPDATE sessions SET user_id = ? WHERE id = ?`, [userId, sessionId]);
+    persist();
+  },
+
+  getUserSessions(userId) {
+    const result = db.exec(`
+      SELECT s.id, s.name, s.created_at, s.updated_at,
+        (SELECT COUNT(*) FROM documents WHERE session_id = s.id) as doc_count
+      FROM sessions s WHERE s.user_id = ? ORDER BY s.updated_at DESC
+    `, [userId]);
+    if (!result.length) return [];
+    return result[0].values.map(r => ({
+      id: r[0], name: r[1], created_at: r[2], updated_at: r[3], doc_count: r[4]
+    }));
+  },
 
   listSessions() {
     const result = db.exec(`

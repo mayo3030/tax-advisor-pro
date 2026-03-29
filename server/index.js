@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 const db = require('./db');
 const pdfGenerator = require('./pdf-generator');
 
@@ -268,6 +269,125 @@ app.get('/api/file/:fileId', (req, res) => {
     res.send(buffer);
   } catch (err) {
     console.error('File serve error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ══════════════════════════════════════════════
+// ── AUTH — signup, login, logout, profile ──
+// ══════════════════════════════════════════════
+
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+  return `${salt}:${hash}`;
+}
+
+function verifyPassword(password, stored) {
+  const [salt, hash] = stored.split(':');
+  const verify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+  return hash === verify;
+}
+
+function generateToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
+
+// Auth middleware
+function requireAuth(req, res, next) {
+  const token = req.headers.authorization?.replace('Bearer ', '');
+  if (!token) return res.status(401).json({ error: 'Authentication required' });
+  const authData = db.getAuthToken(token);
+  if (!authData) return res.status(401).json({ error: 'Invalid or expired token' });
+  req.userId = authData.user_id;
+  next();
+}
+
+// Signup
+app.post('/api/auth/signup', (req, res) => {
+  try {
+    const { email, password, firstName, lastName, language } = req.body;
+    if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+    if (password.length < 8) return res.status(400).json({ error: 'Password must be at least 8 characters' });
+
+    const existing = db.getUserByEmail(email);
+    if (existing) return res.status(409).json({ error: 'Email already registered' });
+
+    const userId = uuidv4();
+    const passwordHash = hashPassword(password);
+    db.createUser(userId, email, passwordHash, firstName || '', lastName || '', language || 'en');
+
+    const token = generateToken();
+    const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days
+    db.saveAuthToken(token, userId, expires);
+    db.updateLastLogin(userId);
+
+    res.json({ token, user: { id: userId, email, firstName, lastName, language } });
+  } catch (err) {
+    console.error('Signup error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Login
+app.post('/api/auth/login', (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+
+    const user = db.getUserByEmail(email);
+    if (!user || !verifyPassword(password, user.password_hash)) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    const token = generateToken();
+    const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+    db.saveAuthToken(token, user.id, expires);
+    db.updateLastLogin(user.id);
+
+    res.json({ token, user: { id: user.id, email: user.email, firstName: user.first_name, lastName: user.last_name, language: user.language } });
+  } catch (err) {
+    console.error('Login error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Logout
+app.post('/api/auth/logout', (req, res) => {
+  const token = req.headers.authorization?.replace('Bearer ', '');
+  if (token) db.deleteAuthToken(token);
+  res.json({ success: true });
+});
+
+// Get profile
+app.get('/api/auth/profile', requireAuth, (req, res) => {
+  try {
+    const user = db.getUserById(req.userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json({ id: user.id, email: user.email, firstName: user.first_name, lastName: user.last_name, language: user.language });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Link session to user
+app.post('/api/auth/link-session', requireAuth, (req, res) => {
+  try {
+    const { sessionId } = req.body;
+    if (!sessionId) return res.status(400).json({ error: 'sessionId required' });
+    db.linkSessionToUser(sessionId, req.userId);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get user's sessions (prior year data)
+app.get('/api/auth/sessions', requireAuth, (req, res) => {
+  try {
+    const sessions = db.getUserSessions(req.userId);
+    res.json(sessions);
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
