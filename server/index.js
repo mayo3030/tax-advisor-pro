@@ -176,6 +176,102 @@ app.post('/api/generate-pdf', async (req, res) => {
   }
 });
 
+// ══════════════════════════════════════════════
+// ── CHAT HISTORY — save & load messages ──
+// ══════════════════════════════════════════════
+
+// Save a single chat message
+app.post('/api/chat', (req, res) => {
+  try {
+    const { sessionId, role, content, attachment } = req.body;
+    if (!sessionId || !role || !content) {
+      return res.status(400).json({ error: 'sessionId, role, and content are required' });
+    }
+    // Store attachment metadata in the content as JSON if present
+    const msgContent = attachment
+      ? JSON.stringify({ text: content, attachment })
+      : content;
+    db.saveChatMessage(sessionId, role, msgContent);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Chat save error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Load full chat history for a session
+app.get('/api/chat/:sessionId', (req, res) => {
+  try {
+    const history = db.getChatHistory(req.params.sessionId);
+    res.json(history);
+  } catch (err) {
+    console.error('Chat load error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Clear chat history for a session
+app.delete('/api/chat/:sessionId', (req, res) => {
+  try {
+    db.clearChatHistory
+      ? db.clearChatHistory(req.params.sessionId)
+      : db.run && db.run(`DELETE FROM chat_history WHERE session_id = ?`, [req.params.sessionId]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ══════════════════════════════════════════════
+// ── FILE UPLOAD FOR CHAT — images & documents ──
+// ══════════════════════════════════════════════
+
+// Upload a file specifically for chat (returns URL to retrieve it)
+app.post('/api/chat-upload', upload.single('file'), (req, res) => {
+  try {
+    const sessionId = req.body.sessionId || uuidv4();
+    const f = req.file;
+    if (!f) return res.status(400).json({ error: 'No file provided' });
+
+    const fileId = uuidv4();
+    const fileObj = {
+      id: fileId,
+      name: f.originalname,
+      type: f.mimetype,
+      size: f.size,
+      base64: f.buffer.toString('base64')
+    };
+    db.saveDocument(sessionId, fileObj);
+
+    res.json({
+      id: fileId,
+      name: f.originalname,
+      type: f.mimetype,
+      size: f.size,
+      url: `/api/file/${fileId}`
+    });
+  } catch (err) {
+    console.error('Chat upload error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Serve a file by ID (for displaying images/docs in chat)
+app.get('/api/file/:fileId', (req, res) => {
+  try {
+    const fileData = db.getFileById(req.params.fileId);
+    if (!fileData) return res.status(404).json({ error: 'File not found' });
+
+    const buffer = Buffer.from(fileData.base64, 'base64');
+    res.setHeader('Content-Type', fileData.type);
+    res.setHeader('Content-Disposition', `inline; filename="${fileData.name}"`);
+    res.send(buffer);
+  } catch (err) {
+    console.error('File serve error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── SPA fallback ──
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
