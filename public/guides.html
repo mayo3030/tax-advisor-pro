@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Guides Library — مكتبة الأدلة الضريبية | Tax Advisor Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d3b66;
+  --navy-light: #1a5276;
+  --navy-dark: #071e38;
+  --navy-deep: #050e1a;
+  --gold: #c9a84c;
+  --gold-light: #dab95e;
+  --gold-dark: #b08f3a;
+  --gold-pale: #f5ecd4;
+  --cream: #faf8f2;
+  --white: #ffffff;
+  --text: #1a1f36;
+  --text-light: #5e6a82;
+  --border: #e2ddd2;
+  --success: #0f5132;
+  --success-bg: #e8f5ef;
+  --danger: #b03a2e;
+  --info-bg: #e8eff8;
+  --font-display: 'Playfair Display', 'Noto Sans Arabic', serif;
+  --font-body: 'Lato', 'Noto Sans Arabic', sans-serif;
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 20px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 40px rgba(13,59,102,0.10);
+  --radius: 6px;
+  --radius-lg: 14px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--cream); color: var(--text); line-height: 1.7; }
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--navy-deep);
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--gold);
+}
+.topbar-left { display: flex; align-items: center; gap: 12px; }
+.topbar-left .logo { font-size: 24px; }
+.topbar-left h1 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.topbar-right { display: flex; gap: 12px; }
+.topbar-btn {
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  border: none;
+  cursor: pointer;
+}
+.topbar-btn.gold { background: var(--gold); color: var(--navy-deep); }
+.topbar-btn.gold:hover { background: var(--gold-light); }
+.topbar-btn.outline { background: transparent; color: var(--gold); border: 1.5px solid rgba(201,168,76,0.4); }
+.topbar-btn.outline:hover { background: rgba(201,168,76,0.1); }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-light) 100%);
+  color: white;
+  padding: 80px 40px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 6px 18px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.hero h1 .gold { color: var(--gold); }
+.hero .hero-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.45);
+  direction: rtl;
+  margin-bottom: 16px;
+}
+.hero p { font-size: 16px; color: rgba(255,255,255,0.65); font-weight: 300; max-width: 600px; margin: 0 auto; }
+
+/* ── SEARCH ── */
+.search-section {
+  max-width: 480px;
+  margin: -24px auto 0;
+  position: relative;
+  z-index: 10;
+  padding: 0 20px;
+}
+.search-box {
+  width: 100%;
+  padding: 14px 20px 14px 44px;
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--white);
+  box-shadow: var(--shadow-lg);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-box:focus { border-color: var(--gold); }
+.search-box::placeholder { color: #b0b5c3; }
+.search-icon {
+  position: absolute;
+  left: 36px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  pointer-events: none;
+}
+
+/* ── FEATURED GUIDE ── */
+.featured {
+  max-width: 1100px;
+  margin: 40px auto 0;
+  padding: 0 20px;
+}
+.featured-card {
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  color: white;
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.22s ease;
+  text-decoration: none;
+}
+.featured-card:hover { transform: translateY(-3px); }
+.featured-info h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.featured-info p { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+.featured-btn {
+  padding: 12px 28px;
+  background: var(--gold);
+  color: var(--navy-deep);
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.18s;
+}
+.featured-btn:hover { background: var(--gold-light); }
+
+/* ── SECTION HEADERS ── */
+.section-header {
+  max-width: 1100px;
+  margin: 48px auto 20px;
+  padding: 0 20px;
+}
+.section-header h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--navy);
+}
+.section-header .ar {
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-size: 16px;
+  color: var(--text-light);
+  direction: rtl;
+}
+
+/* ── STATE GRID ── */
+.state-grid {
+  max-width: 1100px;
+  margin: 0 auto 60px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.state-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.22s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.state-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--gold);
+}
+.state-card .state-abbr {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.state-card h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 2px;
+}
+.state-card .state-ar {
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-size: 13px;
+  color: var(--text-light);
+  direction: rtl;
+  margin-bottom: 10px;
+}
+.state-card .state-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.state-tag.no-tax { background: var(--success-bg); color: var(--success); }
+.state-tag.flat { background: var(--gold-pale); color: var(--gold-dark); }
+.state-tag.progressive { background: var(--info-bg); color: var(--navy); }
+.state-tag.high { background: #fde8e5; color: var(--danger); }
+
+.state-card .state-rate {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 8px;
+}
+
+/* ── FOOTER ── */
+.guide-footer {
+  background: var(--navy-deep);
+  color: rgba(255,255,255,0.5);
+  padding: 40px;
+  text-align: center;
+  font-size: 13px;
+}
+.guide-footer .gold { color: var(--gold); }
+
+/* ── HIDDEN ── */
+.hidden { display: none !important; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .topbar { padding: 12px 16px; }
+  .topbar-left h1 { font-size: 14px; }
+  .hero { padding: 60px 20px 50px; }
+  .hero h1 { font-size: 30px; }
+  .featured-card { flex-direction: column; text-align: center; }
+  .state-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="logo">⚖️</span>
+    <h1>Tax Advisor Pro</h1>
+  </div>
+  <div class="topbar-right">
+    <a href="guide.html" class="topbar-btn outline">📖 Main Guide</a>
+    <a href="index.html" class="topbar-btn gold">← Back to App</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">✦ 13 State Guides — 2025 Tax Year</div>
+  <h1>State <span class="gold">Tax Guides</span> Library</h1>
+  <div class="hero-ar">مكتبة أدلة الضرائب لكل ولاية</div>
+  <p>Comprehensive, bilingual tax guides for every major U.S. state. Find your state and learn everything about your taxes.</p>
+</header>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <span class="search-icon">🔍</span>
+  <input type="text" class="search-box" id="stateSearch" placeholder="Search states... ابحث عن ولايتك..." oninput="filterStates(this.value)">
+</div>
+
+<!-- FEATURED: Federal Guide -->
+<div class="featured">
+  <a href="guide.html" class="featured-card">
+    <div class="featured-info">
+      <h3>📘 The Complete Federal Tax Guide</h3>
+      <p>Start here! Learn how U.S. federal taxes work — brackets, deductions, credits, filing — plus a complete guide to using the Tax Advisor Pro app. Bilingual English + Arabic.</p>
+    </div>
+    <span class="featured-btn">Read Guide →</span>
+  </a>
+</div>
+
+<!-- NO INCOME TAX STATES -->
+<div class="section-header">
+  <h2>No Income Tax States</h2>
+  <div class="ar">ولايات بدون ضريبة دخل</div>
+</div>
+<div class="state-grid" id="noTaxGrid">
+  <a href="guide-fl.html" class="state-card" data-name="Florida فلوريدا">
+    <div class="state-abbr">FL</div>
+    <h3>Florida</h3>
+    <div class="state-ar">فلوريدا</div>
+    <span class="state-tag no-tax">No Income Tax</span>
+    <div class="state-rate">Sales tax 6-8% &middot; Homestead exemption $50,722</div>
+  </a>
+  <a href="guide-tx.html" class="state-card" data-name="Texas تكساس">
+    <div class="state-abbr">TX</div>
+    <h3>Texas</h3>
+    <div class="state-ar">تكساس</div>
+    <span class="state-tag no-tax">No Income Tax</span>
+    <div class="state-rate">Sales tax 6.25-8.25% &middot; High property taxes</div>
+  </a>
+  <a href="guide-wa.html" class="state-card" data-name="Washington واشنطن">
+    <div class="state-abbr">WA</div>
+    <h3>Washington</h3>
+    <div class="state-ar">واشنطن</div>
+    <span class="state-tag no-tax">No Income Tax</span>
+    <div class="state-rate">7% capital gains tax &middot; Sales tax 6.5-10.25%</div>
+  </a>
+</div>
+
+<!-- PROGRESSIVE TAX STATES -->
+<div class="section-header">
+  <h2>Progressive Tax States</h2>
+  <div class="ar">ولايات بضريبة تصاعدية</div>
+</div>
+<div class="state-grid" id="progressiveGrid">
+  <a href="guide-ca.html" class="state-card" data-name="California كاليفورنيا">
+    <div class="state-abbr">CA</div>
+    <h3>California</h3>
+    <div class="state-ar">كاليفورنيا</div>
+    <span class="state-tag high">1% — 13.3%</span>
+    <div class="state-rate">Highest state tax &middot; 9 brackets</div>
+  </a>
+  <a href="guide-ny.html" class="state-card" data-name="New York نيويورك">
+    <div class="state-abbr">NY</div>
+    <h3>New York</h3>
+    <div class="state-ar">نيويورك</div>
+    <span class="state-tag high">4% — 10.9%</span>
+    <div class="state-rate">+ NYC local tax 3-3.9% &middot; 9 brackets</div>
+  </a>
+  <a href="guide-nj.html" class="state-card" data-name="New Jersey نيو جيرسي">
+    <div class="state-abbr">NJ</div>
+    <h3>New Jersey</h3>
+    <div class="state-ar">نيو جيرسي</div>
+    <span class="state-tag high">1.4% — 10.75%</span>
+    <div class="state-rate">No standard deduction &middot; Highest property tax</div>
+  </a>
+  <a href="guide-oh.html" class="state-card" data-name="Ohio أوهايو">
+    <div class="state-abbr">OH</div>
+    <h3>Ohio</h3>
+    <div class="state-ar">أوهايو</div>
+    <span class="state-tag progressive">0% — 3.75%</span>
+    <div class="state-rate">No tax on first $26,050 &middot; Low rates</div>
+  </a>
+  <a href="guide-va.html" class="state-card" data-name="Virginia فيرجينيا">
+    <div class="state-abbr">VA</div>
+    <h3>Virginia</h3>
+    <div class="state-ar">فيرجينيا</div>
+    <span class="state-tag progressive">2% — 5.75%</span>
+    <div class="state-rate">4 brackets &middot; $8,000 standard deduction</div>
+  </a>
+</div>
+
+<!-- FLAT TAX STATES -->
+<div class="section-header">
+  <h2>Flat Tax States</h2>
+  <div class="ar">ولايات بضريبة ثابتة</div>
+</div>
+<div class="state-grid" id="flatGrid">
+  <a href="guide-ga.html" class="state-card" data-name="Georgia جورجيا">
+    <div class="state-abbr">GA</div>
+    <h3>Georgia</h3>
+    <div class="state-ar">جورجيا</div>
+    <span class="state-tag flat">Flat 5.49%</span>
+    <div class="state-rate">$12,000 MFJ standard deduction</div>
+  </a>
+  <a href="guide-il.html" class="state-card" data-name="Illinois إلينوي">
+    <div class="state-abbr">IL</div>
+    <h3>Illinois</h3>
+    <div class="state-ar">إلينوي</div>
+    <span class="state-tag flat">Flat 4.95%</span>
+    <div class="state-rate">No local income tax &middot; Property tax credits</div>
+  </a>
+  <a href="guide-nc.html" class="state-card" data-name="North Carolina نورث كارولينا">
+    <div class="state-abbr">NC</div>
+    <h3>North Carolina</h3>
+    <div class="state-ar">نورث كارولينا</div>
+    <span class="state-tag flat">Flat 4.5%</span>
+    <div class="state-rate">$12,750 single standard deduction</div>
+  </a>
+  <a href="guide-mi.html" class="state-card" data-name="Michigan ميشيغان">
+    <div class="state-abbr">MI</div>
+    <h3>Michigan</h3>
+    <div class="state-ar">ميشيغان</div>
+    <span class="state-tag flat">Flat 4.25%</span>
+    <div class="state-rate">$5,600 personal exemption</div>
+  </a>
+  <a href="guide-pa.html" class="state-card" data-name="Pennsylvania بنسلفانيا">
+    <div class="state-abbr">PA</div>
+    <h3>Pennsylvania</h3>
+    <div class="state-ar">بنسلفانيا</div>
+    <span class="state-tag flat">Flat 3.07%</span>
+    <div class="state-rate">No standard deduction &middot; Local earned income tax</div>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer class="guide-footer">
+  <div style="font-size:24px;margin-bottom:8px;">⚖️</div>
+  <p style="font-family:var(--font-display);font-size:16px;color:var(--gold);margin-bottom:6px;">Tax Advisor Pro — State Guides Library</p>
+  <p>2025 Tax Year (Filing 2026) &middot; 13 States &middot; Bilingual English + Arabic</p>
+  <p style="margin-top:12px;">Built with care for <span class="gold">Mina</span></p>
+</footer>
+
+<script>
+function filterStates(query) {
+  const q = query.toLowerCase().trim();
+  document.querySelectorAll('.state-card').forEach(card => {
+    const name = (card.getAttribute('data-name') || '').toLowerCase();
+    card.classList.toggle('hidden', q.length > 0 && !name.includes(q));
+  });
+}
+</script>
+</body>
+</html>

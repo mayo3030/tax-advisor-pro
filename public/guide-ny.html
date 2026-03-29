@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New York Tax Guide — دليل ضرائب نيويورك</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d3b66;
+  --navy-light: #1a5276;
+  --navy-dark: #071e38;
+  --navy-deep: #050e1a;
+  --gold: #c9a84c;
+  --gold-light: #dab95e;
+  --gold-dark: #b08f3a;
+  --gold-pale: #f5ecd4;
+  --gold-glow: rgba(201,168,76,0.25);
+  --cream: #faf8f2;
+  --cream-dark: #f0ebe0;
+  --white: #ffffff;
+  --text: #1a1f36;
+  --text-light: #5e6a82;
+  --text-faint: #8b92a5;
+  --border: #e2ddd2;
+  --success: #0f5132;
+  --success-bg: #e8f5ef;
+  --danger: #b03a2e;
+  --danger-bg: #fde8e5;
+  --info-bg: #e8eff8;
+
+  --font-display: 'Playfair Display', 'Noto Sans Arabic', serif;
+  --font-body: 'Lato', 'Noto Sans Arabic', sans-serif;
+
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 20px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 40px rgba(13,59,102,0.10);
+  --shadow-gold: 0 0 30px rgba(201,168,76,0.2);
+
+  --radius: 6px;
+  --radius-lg: 14px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* ── SCROLL PROGRESS ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  z-index: 10000;
+  transition: width 0.1s linear;
+}
+
+/* ── SIDEBAR NAVIGATION ── */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--navy-deep);
+  color: white;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 0;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
+
+.sidebar-header {
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+}
+.sidebar-header .logo-icon {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 8px;
+}
+.sidebar-header h2 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+}
+.sidebar-header .subtitle {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.nav-section {
+  padding: 20px 16px 8px;
+}
+.nav-section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold-dark);
+  font-weight: 700;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+.nav-item:hover {
+  background: rgba(201,168,76,0.08);
+  color: white;
+}
+.nav-item.active {
+  background: rgba(201,168,76,0.12);
+  color: var(--gold);
+  font-weight: 700;
+}
+.nav-item .nav-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.nav-item.active .nav-num {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border-color: var(--gold);
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-light) 100%);
+  color: white;
+  padding: 100px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  max-width: 650px;
+}
+.hero h1 .gold { color: var(--gold); }
+.hero .hero-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+  direction: rtl;
+}
+.hero p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  max-width: 560px;
+  font-weight: 300;
+}
+
+/* ── CHAPTER ── */
+.chapter {
+  padding: 80px 60px;
+  max-width: 840px;
+  border-bottom: 1px solid var(--border);
+  animation: fadeUp 0.5s ease both;
+}
+.chapter:last-child { border-bottom: none; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  color: var(--gold-dark);
+  margin-bottom: 12px;
+}
+.chapter-label .line {
+  width: 30px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.chapter h2 {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.chapter .h2-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-light);
+  direction: rtl;
+  margin-bottom: 28px;
+}
+
+.chapter h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 36px 0 14px;
+  padding-left: 16px;
+  border-left: 3px solid var(--gold);
+}
+
+.chapter p {
+  margin-bottom: 16px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.chapter p .ar {
+  display: block;
+  direction: rtl;
+  text-align: right;
+  color: var(--text-light);
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* ── LUXURY CARDS ── */
+.info-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px;
+  margin: 24px 0;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.22s ease;
+  position: relative;
+}
+.info-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.info-card.gold-border {
+  border-left: 4px solid var(--gold);
+}
+.info-card.navy-border {
+  border-left: 4px solid var(--navy);
+}
+.info-card .card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-card p {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+/* ── TIP BOXES ── */
+.tip-box {
+  display: flex;
+  gap: 14px;
+  padding: 20px 22px;
+  border-radius: var(--radius-lg);
+  margin: 24px 0;
+}
+.tip-box.gold {
+  background: var(--gold-pale);
+  border: 1px solid rgba(201,168,76,0.3);
+}
+.tip-box.green {
+  background: var(--success-bg);
+  border: 1px solid rgba(15,81,50,0.15);
+}
+.tip-box.blue {
+  background: var(--info-bg);
+  border: 1px solid rgba(13,59,102,0.12);
+}
+.tip-box.red {
+  background: var(--danger-bg);
+  border: 1px solid rgba(176,58,46,0.15);
+}
+.tip-box .tip-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.tip-box .tip-content {
+  flex: 1;
+}
+.tip-box .tip-label {
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  color: var(--navy);
+}
+.tip-box p { font-size: 14px; margin-bottom: 4px; }
+
+/* ── STEP CARDS (for app guide) ── */
+.step-guide {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin: 28px 0;
+}
+.step-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(13,59,102,0.15);
+}
+.step-body {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+}
+.step-body h4 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.step-body p { font-size: 14px; line-height: 1.7; margin-bottom: 6px; }
+
+/* ── TABLE ── */
+.tax-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.tax-table thead {
+  background: var(--navy);
+  color: var(--gold);
+}
+.tax-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.tax-table td {
+  padding: 12px 18px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.tax-table tr:last-child td { border-bottom: none; }
+.tax-table tr:hover td { background: var(--cream); }
+
+/* ── KEYBOARD SHORTCUTS / BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.badge.gold { background: var(--gold-pale); color: var(--gold-dark); }
+.badge.navy { background: var(--info-bg); color: var(--navy); }
+
+/* ── FOOTER ── */
+.guide-footer {
+  background: var(--navy-deep);
+  color: rgba(255,255,255,0.5);
+  padding: 48px 60px;
+  text-align: center;
+  font-size: 13px;
+}
+.guide-footer .gold { color: var(--gold); }
+
+/* ── MOBILE MENU ── */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 2000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--gold);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .main { margin-left: 0; }
+  .hero { padding: 80px 24px 60px; }
+  .hero h1 { font-size: 32px; }
+  .hero .hero-ar { font-size: 20px; }
+  .chapter { padding: 50px 24px; }
+  .chapter h2 { font-size: 26px; }
+  .guide-footer { padding: 36px 24px; }
+}
+
+/* ── PRINT ── */
+@media print {
+  .sidebar, .mobile-menu-btn, .scroll-progress { display: none !important; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px; }
+  .chapter { page-break-inside: avoid; padding: 30px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Mobile Menu Button -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="logo-icon">🏛️</span>
+    <h2>NY Tax Guide</h2>
+    <div class="subtitle">2025 Tax Year</div>
+  </div>
+
+  <div style="padding:16px 16px 0;">
+    <a href="guide.html" class="nav-item" style="background:var(--gold);color:var(--navy-deep);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;margin-bottom:8px;">
+      ← Back to Main Guide
+    </a>
+    <a href="index.html" class="nav-item" style="background:rgba(201,168,76,0.2);color:var(--gold);font-weight:700;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;">
+      ← Back to App
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">New York Taxes</div>
+    <a class="nav-item" href="#ch1" data-target="ch1" onclick="scrollToChapter(event,'ch1')"><span class="nav-num">1</span> NY Tax Overview</a>
+    <a class="nav-item" href="#ch2" data-target="ch2" onclick="scrollToChapter(event,'ch2')"><span class="nav-num">2</span> Deductions & Credits</a>
+    <a class="nav-item" href="#ch3" data-target="ch3" onclick="scrollToChapter(event,'ch3')"><span class="nav-num">3</span> NY Filing</a>
+    <a class="nav-item" href="#ch4" data-target="ch4" onclick="scrollToChapter(event,'ch4')"><span class="nav-num">4</span> NYC & Local Taxes</a>
+    <a class="nav-item" href="#ch5" data-target="ch5" onclick="scrollToChapter(event,'ch5')"><span class="nav-num">5</span> Self-Employment</a>
+    <a class="nav-item" href="#ch6" data-target="ch6" onclick="scrollToChapter(event,'ch6')"><span class="nav-num">6</span> Tips & Pitfalls</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-badge">✦ New York — 2025 Tax Year</div>
+    <h1>The New York<br><span class="gold">Tax Guide</span></h1>
+    <div class="hero-ar">دليل ضرائب نيويورك الشامل</div>
+    <p>Master New York state and local income taxes, NYC surcharges, and strategic planning tips for 2025 filers — in English and Arabic.</p>
+  </header>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- NEW YORK STATE TAXES                       -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- CHAPTER 1 -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="line"></span> Chapter 1</div>
+    <h2>New York Tax Overview</h2>
+    <div class="h2-ar">نظرة عامة على ضرائب نيويورك</div>
+
+    <p>New York has a <strong>progressive income tax system</strong> with nine tax brackets ranging from <strong>4% to 10.9%</strong>. If you live in New York City, you also pay a <strong>local NYC income tax</strong> of 3.078% to 3.876% on top of the state tax.
+    <span class="ar">نيويورك لها نظام ضرائب تصاعدي — من ٤٪ لـ ١٠.٩٪. لو تسكن في نيويورك سيتي، تدفع ضريبة محلية إضافية ٣.٠٧٨٪ لـ ٣.٨٧٦٪.</span></p>
+
+    <h3>New York State Tax Brackets (2025)</h3>
+
+    <table class="tax-table">
+      <thead>
+        <tr><th>Bracket</th><th>Income Range (Single)</th><th>Income Range (MFJ)</th><th>Rate</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>$0–$4,850</td><td>$0–$9,700</td><td>4.00%</td></tr>
+        <tr><td>2</td><td>$4,851–$9,700</td><td>$9,701–$19,400</td><td>4.50%</td></tr>
+        <tr><td>3</td><td>$9,701–$14,600</td><td>$19,401–$29,200</td><td>5.85%</td></tr>
+        <tr><td>4</td><td>$14,601–$21,400</td><td>$29,201–$42,800</td><td>6.25%</td></tr>
+        <tr><td>5</td><td>$21,401–$80,650</td><td>$42,801–$161,550</td><td>6.85%</td></tr>
+        <tr><td>6</td><td>$80,651–$215,400</td><td>$161,551–$323,200</td><td>9.65%</td></tr>
+        <tr><td>7</td><td>$215,401–$1,077,550</td><td>$323,201–$2,155,350</td><td>10.30%</td></tr>
+        <tr><td>8</td><td>$1,077,551–$5,000,000</td><td>$2,155,351–$5,000,000</td><td>10.90%</td></tr>
+        <tr><td>9</td><td>$5,000,001+</td><td>$5,000,001+</td><td>10.90%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">NYC Surcharge Alert</div>
+        <p>If you live in New York City, add 3.078% to 3.876% on top of state taxes, plus a potential 0.375% MCTD surcharge. Your <strong>effective combined tax rate can reach 15%+</strong>.</p>
+        <p><span class="ar">لو تسكن في مدينة نيويورك، أضف ضريبة محلية فوق ضريبة الولاية. النسبة المركبة ممكن توصل ١٥٪.</span></p>
+      </div>
+    </div>
+
+    <h3>Standard Deduction (2025)</h3>
+
+    <div class="info-card gold-border">
+      <div class="card-title">📊 NY Standard Deduction</div>
+      <p><strong>Single:</strong> $8,000<br><strong>Married Filing Jointly:</strong> $16,050<br><strong>Head of Household:</strong> $11,900</p>
+      <p><span class="ar">الخصم المعياري في نيويورك أقل من الفيدرالي. المتزوجان يحصلون على $16,050.</span></p>
+    </div>
+
+    <h3>NYC Local Income Tax</h3>
+    <p>New York City residents pay an <strong>additional</strong> local income tax with brackets ranging from <strong>3.078% to 3.876%</strong> based on income. This is on top of state tax, not instead of it.</p>
+    <p><span class="ar">سكان نيويورك سيتي يدفعون ضريبة محلية إضافية فوق ضريبة الولاية. مش بدل الضريبة — إضافة عليها.</span></p>
+  </section>
+
+  <!-- CHAPTER 2 -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="line"></span> Chapter 2</div>
+    <h2>NY Deductions & Credits</h2>
+    <div class="h2-ar">الخصومات والائتمانات في نيويورك</div>
+
+    <p>New York offers several state-specific tax credits that can significantly reduce your tax bill. These are in addition to federal credits.</p>
+
+    <h3>Empire State Child Credit</h3>
+
+    <div class="info-card gold-border">
+      <div class="card-title">👶 Empire State Child Credit</div>
+      <p><strong>Up to $1,000 per child under age 4</strong><br><strong>Up to $330 per child ages 4–16</strong><br>Income limits: $6,000 for single filers, $7,500 for head of household, $10,000 for married filing jointly.</p>
+      <p><span class="ar">ائتمان نيويورك للأطفال لحد ١,٠٠٠$ لكل طفل تحت ٤ سنين، و٣٣٠$ من ٤ لـ ١٦ سنة. فيها حد أقصى للدخل.</span></p>
+    </div>
+
+    <h3>New York EITC</h3>
+
+    <div class="info-card navy-border">
+      <div class="card-title">💰 NY Earned Income Tax Credit</div>
+      <p>New York's EITC is approximately <strong>30% of your federal EITC</strong>. If you qualify for federal EITC, you automatically qualify for NY EITC (no additional application). Maximum credit varies by number of children.</p>
+      <p><span class="ar">ائتمان نيويورك هو حوالي ٣٠٪ من الائتمان الفيدرالي. لو اتأهلت للفيدرالي، اتأهلت للنيويورك تلقائي.</span></p>
+    </div>
+
+    <h3>College Tuition Credit</h3>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🎓 Tuition Credit and Deduction</div>
+      <p><strong>Credit:</strong> Up to $400 per year if your NY adjusted gross income is under $80,000 (single) or $160,000 (married).<br><strong>Deduction:</strong> Instead of the credit, you can deduct up to $10,000 in tuition and fees if your income exceeds the credit limits.</p>
+      <p><span class="ar">رصيد التعليم لحد ٤٠٠$ أو خصم لحد ١٠,٠٠٠$. اختار اللي أفضل بوضعك.</span></p>
+    </div>
+
+    <h3>Pension & Retirement Exemption</h3>
+
+    <div class="tip-box green">
+      <div class="tip-icon">✅</div>
+      <div class="tip-content">
+        <div class="tip-label">Retiree Benefit</div>
+        <p>If you are age 59½ or older, you can exclude up to <strong>$20,000</strong> of eligible retirement income from New York taxable income. <strong>Social Security is 100% exempt</strong>. <strong>Military retirement pay is fully exempt</strong> regardless of age.</p>
+        <p><span class="ar">لو عمرك ٥٩.٥ أو أكثر، ممكن تخصم لحد ٢٠,٠٠٠$ من دخل التقاعد. الضمان الاجتماعي معفوف ١٠٠٪. رتبة عسكرية معفوفة كاملة.</span></p>
+      </div>
+    </div>
+
+    <h3>Child and Dependent Care Credit</h3>
+    <p>New York allows a credit for childcare expenses up to certain limits. This is calculated on your NY tax return (Form IT-201) alongside the federal credit.</p>
+
+  </section>
+
+  <!-- CHAPTER 3 -->
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="line"></span> Chapter 3</div>
+    <h2>New York Filing</h2>
+    <div class="h2-ar">كيفية التقديم في نيويورك</div>
+
+    <p>New York uses its own tax forms and has specific filing requirements depending on your residency status.</p>
+
+    <h3>Forms You'll Need</h3>
+
+    <div class="info-card gold-border">
+      <div class="card-title">📋 Form IT-201 (Resident Return)</div>
+      <p>Use this form if you are a New York resident (domiciled in NY or maintained a permanent home here). It's similar to the federal 1040 but specifically for New York taxes.</p>
+      <p><span class="ar">استخدم IT-201 لو تسكن في نيويورك. فيها فراغات للدخل والخصومات والائتمانات النيويوركية.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">📋 Form IT-201-NR (Non-Resident Return)</div>
+      <p>Use this form if you earned income in New York but are not a NY resident. You only report the income earned in New York, not your total income from other states.</p>
+      <p><span class="ar">اذا ما تسكن في نيويورك بس تشتغل فيها، استخدم IT-201-NR وأبلّغ عن الدخل من نيويورك بس.</span></p>
+    </div>
+
+    <h3>Key Deadlines</h3>
+
+    <div class="tip-box red">
+      <div class="tip-icon">📅</div>
+      <div class="tip-content">
+        <div class="tip-label">2025 Tax Year Deadlines</div>
+        <p><strong>Due Date:</strong> April 15, 2026<br><strong>Extension (Form IT-370):</strong> October 15, 2026 (automatic 6-month extension)<br>Note: Extensions extend the filing deadline only, not the payment deadline. Pay any tax owed by April 15.</p>
+        <p><span class="ar">آخر موعد: ١٥ أبريل ٢٠٢٦. تمديد ممكن لـ ١٥ أكتوبر بس لازم تدفع بـ ١٥ أبريل.</span></p>
+      </div>
+    </div>
+
+    <h3>Estimated Tax Payments</h3>
+    <p>If you expect to owe <strong>$300 or more</strong> in New York income tax, you must pay quarterly estimated taxes. Use <strong>Form IT-2105</strong> to calculate. Due dates are:</p>
+    <p>January 15 (for prior year), April 15, June 15, and September 15. If your 1099 income changes during the year, you can recalculate your estimated payments.</p>
+    <p><span class="ar">اذا متوقع تدفع ٣٠٠$ أو أكثر، ادفع تقديرات كل ٣ شهور. المواعيد: يناير، أبريل، يونيو، سبتمبر.</span></p>
+
+  </section>
+
+  <!-- CHAPTER 4 -->
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="line"></span> Chapter 4</div>
+    <h2>NYC & Local Taxes</h2>
+    <div class="h2-ar">ضرائب نيويورك سيتي والضرائب المحلية</div>
+
+    <p>New York City has one of the highest combined tax rates in the nation. Residents pay state, local, and potential metropolitan surcharges.</p>
+
+    <h3>NYC Local Income Tax Brackets</h3>
+
+    <table class="tax-table">
+      <thead>
+        <tr><th>Income Level</th><th>Single Rate</th><th>MFJ Rate</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Low income</td><td>3.078%</td><td>3.078%</td></tr>
+        <tr><td>Middle income</td><td>3.5%</td><td>3.5%</td></tr>
+        <tr><td>Higher income</td><td>3.876%</td><td>3.876%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Combined Tax Impact</div>
+        <p>A NYC resident in the 10.9% state bracket plus 3.876% city bracket plus 0.375% MCTD surcharge faces an effective combined rate of <strong>15.151%</strong>. This is among the highest in the U.S.</p>
+        <p><span class="ar">السكان في نيويورك سيتي يواجهون نسب ضريبية عالية جداً — الولاية + المدينة + اضافية = ١٥٪ أو أكثر!</span></p>
+      </div>
+    </div>
+
+    <h3>MCTD Surcharge (Metropolitan Commuter Transportation Duty)</h3>
+    <p>NYC residents and workers in the metro area are subject to a <strong>0.375% MCTD surcharge</strong> on New York-source income over certain thresholds. This applies to both salaries and self-employment income.</p>
+
+    <h3>Yonkers Earnings Tax</h3>
+    <p>If you work or live in Yonkers, you pay an additional <strong>1.25% to 1.75% earnings tax</strong> on top of state and local NYC taxes (if applicable).</p>
+
+    <h3>Sales Tax</h3>
+    <div class="info-card gold-border">
+      <div class="card-title">🛒 New York & NYC Sales Tax</div>
+      <p><strong>State Sales Tax:</strong> 4%<br><strong>Local Sales Tax (outside NYC):</strong> Up to 4.875%<br><strong>NYC Combined Sales Tax:</strong> 8.875% (4% state + 4.5% city + 0.375% MCTD)<br>Note: Groceries and most prescription drugs are exempt.</p>
+      <p><span class="ar">ضريبة المبيعات في نيويورك ٤٪ ولايات + محلي. في نيويورك سيتي تصير ٨.٨٧٥٪. المواد الغذائية معفوفة.</span></p>
+    </div>
+
+  </section>
+
+  <!-- CHAPTER 5 -->
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="line"></span> Chapter 5</div>
+    <h2>Self-Employment in NY</h2>
+    <div class="h2-ar">العمل الحر في نيويورك</div>
+
+    <p>If you have 1099 self-employment income in New York, you owe both federal and state self-employment taxes.</p>
+
+    <h3>Federal Self-Employment Tax</h3>
+    <p>All self-employed individuals pay a flat <strong>15.3% federal self-employment tax</strong> (12.4% for Social Security + 2.9% for Medicare) on 92.35% of net self-employment income. There is no separate New York self-employment tax.</p>
+
+    <h3>New York Income Tax on SE Income</h3>
+    <p>Your net self-employment income is subject to New York state and local income tax at your applicable bracket (4% to 10.9% state, plus NYC rates if applicable).</p>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">💼</div>
+      <div class="tip-content">
+        <div class="tip-label">SE Income Example</div>
+        <p>If you have $50,000 in net SE income:</p>
+        <p>• Federal SE tax: $50,000 × 92.35% × 15.3% = $7,074<br>• NY state tax (6.85% bracket): $50,000 × 6.85% = $3,425<br>• NYC tax (3.5%): $50,000 × 3.5% = $1,750<br>• <strong>Total: $12,249 (24.5% effective rate)</strong></p>
+        <p><span class="ar">لو عندك ٥٠,٠٠٠$ دخل حر، الضرائب الاتحادية + الولاية + المدينة تصير حوالي ١٢,٠٠٠$ (٢٤.٥٪).</span></p>
+      </div>
+    </div>
+
+    <h3>MCTD Threshold</h3>
+    <p>The <strong>0.375% MCTD surcharge</strong> applies to net self-employment income exceeding <strong>$150,000</strong> in New York City.</p>
+
+    <h3>Estimated Payments Required</h3>
+    <p>If you expect to owe $300 or more in combined federal and state taxes, make quarterly estimated payments via the IRS and New York (Form IT-2105).</p>
+
+  </section>
+
+  <!-- CHAPTER 6 -->
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="line"></span> Chapter 6</div>
+    <h2>NY Tips & Pitfalls</h2>
+    <div class="h2-ar">نصائح وتحذيرات ضرائب نيويورك</div>
+
+    <h3>The Highest Taxes in the Nation</h3>
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Reality Check</div>
+        <p>NYC residents pay among the highest combined income, payroll, and sales taxes in the United States. A resident earning $200,000 may face an effective combined federal + NY rate exceeding 45%.</p>
+        <p><span class="ar">نيويورك سيتي من أغلى الأماكن للضرائب في أمريكا. دخل ٢٠٠,٠٠٠$ قد يواجه نسبة مركبة ٤٥٪ أو أكثر!</span></p>
+      </div>
+    </div>
+
+    <h3>Retiree Paradise (with Limits)</h3>
+    <div class="tip-box green">
+      <div class="tip-icon">✅</div>
+      <div class="tip-content">
+        <div class="tip-label">Retirement Income Breaks</div>
+        <p>New York offers generous breaks for retirees age 59½+: up to $20,000 in retirement income exclusion, 100% Social Security exemption, and full military retirement exemption. This attracts retirees despite high working-age taxes.</p>
+        <p><span class="ar">نيويورك لطيفة مع التقاعدين — اعفاء ضريبي ٢٠,٠٠٠$ من التقاعد + ضمان اجتماعي كامل معفوف.</span></p>
+      </div>
+    </div>
+
+    <h3>Standard Deduction vs. Federal</h3>
+    <p>The New York standard deduction ($8,000 single / $16,050 MFJ) is lower than the federal deduction ($15,000 single / $30,000 MFJ). You must file a NY return even if you don't owe federal tax.</p>
+
+    <h3>Property Tax Relief Proposals</h3>
+    <p>New York periodically proposes property tax relief for homeowners and seniors, but these programs change frequently. Check <strong>tax.ny.gov</strong> for current programs and eligibility.</p>
+
+    <h3>No Separate State SE Tax</h3>
+    <div class="info-card navy-border">
+      <div class="card-title">💡 Good News for Freelancers</div>
+      <p>Unlike some states, New York does NOT have a separate state self-employment tax. You only pay the federal SE tax (15.3%) plus NY income tax on your net SE income. This saves self-employed individuals money compared to states with dual SE taxes.</p>
+      <p><span class="ar">نيويورك ما فيها ضريبة عمل حر منفصلة — بس الفيدرالي ١٥.٣٪ وضريبة الدخل. هاي أخبار حلوة للعاملين بالحر!</span></p>
+    </div>
+
+    <h3>NYC vs. Suburbs: Tax Planning</h3>
+    <p>Many high-income earners move just outside NYC to save on the 3.5% to 3.876% local tax. Living in Westchester, New Jersey, or Long Island can significantly reduce taxes despite commuting costs. However, New York considers "domicile" based on intent and connections, not just residence.</p>
+
+    <h3>Nonresident Status</h3>
+    <p>If you moved out of New York, you may still owe NY tax on income earned while resident or income sourced to NY. Use Form IT-201-NR to report only NY-source income. Keep records of your move date and documentation of new state residency.</p>
+
+    <div class="tip-box gold">
+      <div class="tip-icon">🔑</div>
+      <div class="tip-content">
+        <div class="tip-label">Record Keeping</div>
+        <p>Keep all documentation: W-2s, 1099s, receipts for deductions, and proof of state/city residence changes. New York audits residency claims carefully, especially for high-income filers.</p>
+        <p><span class="ar">احفظ كل الأوراق والإيصالات. نيويورك تدقق على ادّعاءات السكن خاصة للأعلى دخلاً.</span></p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="guide-footer">
+    <div style="font-size:28px;margin-bottom:12px;">🏛️</div>
+    <p style="font-family:var(--font-display);font-size:18px;color:var(--gold);margin-bottom:8px;">New York Tax Guide</p>
+    <p>دليل ضرائب نيويورك الشامل</p>
+    <p style="margin-top:16px;">2025 Tax Year (Filing 2026) &middot; Bilingual Resource</p>
+  </footer>
+
+</div>
+
+<script>
+// ── SCROLL TO CHAPTER (main navigation handler) ──
+function scrollToChapter(event, targetId) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  // Scroll the target into view
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Update active state immediately
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const clickedNav = document.querySelector('.nav-item[data-target="' + targetId + '"]');
+  if (clickedNav) clickedNav.classList.add('active');
+
+  // Update URL hash safely (skip if inside iframe)
+  try {
+    if (window.top === window.self) {
+      history.replaceState(null, '', '#' + targetId);
+    }
+  } catch(e) { /* ignore in iframe */ }
+
+  // Close mobile sidebar if open
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+}
+
+// ── Scroll progress bar ──
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+  if (height > 0) {
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  }
+});
+
+// ── Active nav highlight on scroll ──
+const chapters = document.querySelectorAll('.chapter');
+const navItems = document.querySelectorAll('.nav-item');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(item => item.classList.remove('active'));
+      const id = entry.target.id;
+      const activeNav = document.querySelector('.nav-item[data-target="' + id + '"]');
+      if (activeNav) activeNav.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+chapters.forEach(ch => observer.observe(ch));
+
+// ── Mobile sidebar toggle ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// ── Handle hash on page load ──
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    setTimeout(() => {
+      const target = document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  }
+});
+
+// ── Fade-in on scroll ──
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+chapters.forEach(ch => {
+  ch.style.animationPlayState = 'paused';
+  fadeObserver.observe(ch);
+});
+</script>
+</body>
+</html>

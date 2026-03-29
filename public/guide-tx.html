@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Texas Tax Guide — دليل ضرائب تكساس | Tax Advisor Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d3b66;
+  --navy-light: #1a5276;
+  --navy-dark: #071e38;
+  --navy-deep: #050e1a;
+  --gold: #c9a84c;
+  --gold-light: #dab95e;
+  --gold-dark: #b08f3a;
+  --gold-pale: #f5ecd4;
+  --gold-glow: rgba(201,168,76,0.25);
+  --cream: #faf8f2;
+  --cream-dark: #f0ebe0;
+  --white: #ffffff;
+  --text: #1a1f36;
+  --text-light: #5e6a82;
+  --text-faint: #8b92a5;
+  --border: #e2ddd2;
+  --success: #0f5132;
+  --success-bg: #e8f5ef;
+  --danger: #b03a2e;
+  --danger-bg: #fde8e5;
+  --info-bg: #e8eff8;
+  --font-display: 'Playfair Display', 'Noto Sans Arabic', serif;
+  --font-body: 'Lato', 'Noto Sans Arabic', sans-serif;
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 20px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 40px rgba(13,59,102,0.10);
+  --shadow-gold: 0 0 30px rgba(201,168,76,0.2);
+  --radius: 6px;
+  --radius-lg: 14px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--cream); color: var(--text); line-height: 1.75; font-size: 16px; font-weight: 400; }
+.scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light)); z-index: 10000; transition: width 0.1s linear; }
+.sidebar { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: var(--navy-deep); color: white; overflow-y: auto; z-index: 1000; padding: 0; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
+.sidebar-header { padding: 32px 24px 24px; border-bottom: 1px solid rgba(201,168,76,0.15); text-align: center; }
+.sidebar-header .logo-icon { font-size: 36px; display: block; margin-bottom: 8px; }
+.sidebar-header h2 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; }
+.sidebar-header .subtitle { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+.nav-section { padding: 20px 16px 8px; }
+.nav-section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-dark); font-weight: 700; padding: 0 8px; margin-bottom: 8px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius); color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; font-weight: 400; transition: all 0.18s ease; cursor: pointer; margin-bottom: 2px; }
+.nav-item:hover { background: rgba(201,168,76,0.08); color: white; }
+.nav-item.active { background: rgba(201,168,76,0.12); color: var(--gold); font-weight: 700; }
+.nav-item .nav-num { width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.08); }
+.nav-item.active .nav-num { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); }
+.main { margin-left: 280px; min-height: 100vh; }
+.hero { background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-light) 100%); color: white; padding: 100px 60px 80px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.25); padding: 6px 16px; border-radius: 50px; font-size: 12px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 24px; }
+.hero h1 { font-family: var(--font-display); font-size: 52px; font-weight: 800; line-height: 1.15; margin-bottom: 16px; max-width: 650px; }
+.hero h1 .gold { color: var(--gold); }
+.hero .hero-ar { font-family: 'Noto Sans Arabic', serif; font-size: 28px; font-weight: 700; color: rgba(255,255,255,0.5); margin-bottom: 24px; direction: rtl; }
+.hero p { font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.7); max-width: 560px; font-weight: 300; }
+.chapter { padding: 80px 60px; max-width: 840px; border-bottom: 1px solid var(--border); animation: fadeUp 0.5s ease both; }
+.chapter:last-child { border-bottom: none; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 700; color: var(--gold-dark); margin-bottom: 12px; }
+.chapter-label .line { width: 30px; height: 2px; background: var(--gold); }
+.chapter h2 { font-family: var(--font-display); font-size: 34px; font-weight: 800; color: var(--navy); line-height: 1.25; margin-bottom: 8px; }
+.chapter .h2-ar { font-family: 'Noto Sans Arabic', serif; font-size: 22px; font-weight: 700; color: var(--text-light); direction: rtl; margin-bottom: 28px; }
+.chapter h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--navy); margin: 36px 0 14px; padding-left: 16px; border-left: 3px solid var(--gold); }
+.chapter p { margin-bottom: 16px; color: var(--text); font-size: 16px; line-height: 1.8; }
+.chapter p .ar { display: block; direction: rtl; text-align: right; color: var(--text-light); font-family: 'Noto Sans Arabic', sans-serif; font-size: 14px; margin-top: 4px; }
+.info-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px 28px; margin: 24px 0; box-shadow: var(--shadow-sm); transition: all 0.22s ease; position: relative; }
+.info-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.info-card.gold-border { border-left: 4px solid var(--gold); }
+.info-card.navy-border { border-left: 4px solid var(--navy); }
+.info-card .card-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.info-card p { margin-bottom: 8px; font-size: 15px; }
+.tip-box { display: flex; gap: 14px; padding: 20px 22px; border-radius: var(--radius-lg); margin: 24px 0; }
+.tip-box.gold { background: var(--gold-pale); border: 1px solid rgba(201,168,76,0.3); }
+.tip-box.green { background: var(--success-bg); border: 1px solid rgba(15,81,50,0.15); }
+.tip-box.blue { background: var(--info-bg); border: 1px solid rgba(13,59,102,0.12); }
+.tip-box.red { background: var(--danger-bg); border: 1px solid rgba(176,58,46,0.15); }
+.tip-box .tip-icon { font-size: 22px; flex-shrink: 0; line-height: 1; }
+.tip-box .tip-content { flex: 1; }
+.tip-box .tip-label { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; color: var(--navy); }
+.tip-box p { font-size: 14px; margin-bottom: 4px; }
+.tip-box p:last-child { margin-bottom: 0; }
+table.tax-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+table.tax-table th { background: var(--navy-deep); color: white; padding: 12px; text-align: left; font-weight: 700; }
+table.tax-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+table.tax-table tr:hover { background: var(--gold-pale); }
+.guide-footer { text-align: center; padding: 60px 60px; background: var(--navy-deep); color: white; border-top: 1px solid rgba(201,168,76,0.15); }
+.guide-footer p { margin-bottom: 8px; font-size: 14px; line-height: 1.6; }
+.guide-footer .gold { color: var(--gold); }
+.mobile-menu-btn { display: none; position: fixed; top: 20px; left: 20px; width: 40px; height: 40px; background: var(--navy-deep); color: white; border: none; border-radius: var(--radius); font-size: 18px; z-index: 2000; cursor: pointer; transition: all 0.2s ease; }
+.mobile-menu-btn:hover { background: var(--navy); }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .main { margin-left: 0; }
+  .hero { padding: 80px 24px 60px; }
+  .hero h1 { font-size: 32px; }
+  .hero .hero-ar { font-size: 20px; }
+  .chapter { padding: 50px 24px; }
+  .chapter h2 { font-size: 26px; }
+  .guide-footer { padding: 36px 24px; }
+}
+@media print {
+  .sidebar, .mobile-menu-btn, .scroll-progress { display: none !important; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px; }
+  .chapter { page-break-inside: avoid; padding: 30px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Mobile Menu Button -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="logo-icon">⭐</span>
+    <h2>Texas Tax</h2>
+    <div class="subtitle">2025 Guide</div>
+  </div>
+
+  <div style="padding:16px 16px 0;">
+    <a href="guide.html" class="nav-item" style="background:var(--gold);color:var(--navy-deep);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;font-size:12px;margin-bottom:8px;">
+      ← Back to Main Guide
+    </a>
+    <a href="index.html" class="nav-item" style="background:rgba(201,168,76,0.15);color:var(--gold);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;font-size:12px;">
+      ← Back to App — الرجوع للتطبيق
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Texas Taxes</div>
+    <a class="nav-item" href="#ch1" data-target="ch1" onclick="scrollToChapter(event,'ch1')"><span class="nav-num">1</span> Texas: No State Income Tax!</a>
+    <a class="nav-item" href="#ch2" data-target="ch2" onclick="scrollToChapter(event,'ch2')"><span class="nav-num">2</span> Sales Tax & Deductions</a>
+    <a class="nav-item" href="#ch3" data-target="ch3" onclick="scrollToChapter(event,'ch3')"><span class="nav-num">3</span> Filing & Federal Only</a>
+    <a class="nav-item" href="#ch4" data-target="ch4" onclick="scrollToChapter(event,'ch4')"><span class="nav-num">4</span> Property & Business Taxes</a>
+    <a class="nav-item" href="#ch5" data-target="ch5" onclick="scrollToChapter(event,'ch5')"><span class="nav-num">5</span> Self-Employment & Business</a>
+    <a class="nav-item" href="#ch6" data-target="ch6" onclick="scrollToChapter(event,'ch6')"><span class="nav-num">6</span> Tips & Advantages</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-badge">✦ Texas — 2025 Tax Year</div>
+    <h1>The Texas<br><span class="gold">Tax Guide</span></h1>
+    <div class="hero-ar">دليل ضرائب تكساس الشامل</div>
+    <p>Everything you need to understand Texas state taxes, maximize your deductions, and navigate tax savings opportunities — explained clearly in English and Arabic.</p>
+  </header>
+
+  <!-- CHAPTERS -->
+
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="line"></span> Chapter 1</div>
+    <h2>Texas: No State Income Tax!</h2>
+    <div class="h2-ar">تكساس: لا توجد ضريبة دخل حكومية!</div>
+    <div class="tip-box gold" style="margin-bottom:32px;">
+<div class="tip-icon">🎉</div>
+<div class="tip-content">
+<div class="tip-label">Zero State Income Tax</div>
+<p><strong>Texas has NO state income tax.</strong> Whether you earn $50,000 or $5 million, you owe <strong>$0</strong> in state income tax. This is one of the biggest tax advantages of living in Texas.</p>
+<p><span class="ar">تكساس لا تفرض ضريبة دخل ولائية على الإطلاق — لا شيء! سواء تكسب ٥٠ ألف أو ٥ مليون، تدفع صفر.</span></p>
+</div>
+</div>
+
+<h3>Why No Income Tax?</h3>
+<p>Texas generates revenue through <strong>sales tax, property tax, and oil/gas taxes</strong>. The state constitution originally prohibited an income tax; voters have consistently rejected proposals to add one.</p>
+
+<h3>What You Still Owe</h3>
+<p>While there's no state income tax, you still pay:</p>
+<ul style="margin-left:20px;margin-bottom:16px;">
+<li><strong>Federal income tax</strong> (to IRS, not Texas)</li>
+<li><strong>Sales tax:</strong> 6.25% statewide + local up to 2% = 8.25% total</li>
+<li><strong>Property tax:</strong> Average 0.8% of home value (varies by county)</li>
+<li><strong>Capital gains tax:</strong> None (no state tax on investments)</li>
+</ul>
+
+<div class="tip-box green">
+<div class="tip-icon">✅</div>
+<div class="tip-content">
+<div class="tip-label">Federal Return Still Required</div>
+<p>You still file federal Form 1040 with the IRS by April 15. Texas just doesn't collect its own income tax. Self-employed: pay federal self-employment tax normally.</p>
+<p><span class="ar">بتقدّم الإقرار الفيدرالي عادي للـ IRS — تكساس ما بتاخد شيء إضافي.</span></p>
+</div>
+</div>
+  </section>
+
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="line"></span> Chapter 2</div>
+    <h2>Sales Tax & Deductions</h2>
+    <div class="h2-ar">ضريبة المبيعات والخصومات</div>
+    <h3>No State Income Tax = More Sales Tax</h3>
+<p>Texas has <strong>NO deductions or credits for income tax</strong> because there is no income tax to deduct from. However, sales tax applies to most goods and many services.</p>
+
+<h3>Sales Tax Rates by Region</h3>
+<p>State base: <strong>6.25%</strong>. Local counties add up to 2% additional tax. Total rates:</p>
+<ul style="margin-left:20px;">
+<li><strong>Houston/Harris County:</strong> 8.25%</li>
+<li><strong>Dallas/Dallas County:</strong> 8.25%</li>
+<li><strong>Austin/Travis County:</strong> 8.25%</li>
+<li><strong>San Antonio/Bexar County:</strong> 8.25%</li>
+<li><strong>Most rural counties:</strong> 6.25% to 7.25%</li>
+</ul>
+
+<h3>What's NOT Taxed</h3>
+<p><strong>Groceries:</strong> Not subject to sales tax (unprepared foods only). <strong>Prescription drugs:</strong> Not taxed. <strong>Medical devices:</strong> Generally not taxed if prescribed. Check for exemptions on your specific purchase.</p>
+
+<div class="info-card navy-border">
+<div class="card-title">🏠 Property Tax Overview</div>
+<p>Texas property tax averages <strong>0.8% of home value</strong> but ranges from 0.5% to 1.8% depending on county. No state income tax means property taxes fund schools locally.</p>
+<p><span class="ar">ضريبة الملكية في تكساس تتراوح بين ٠.٥٪ و ١.٨٪ حسب المقاطعة.</span></p>
+</div>
+  </section>
+
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="line"></span> Chapter 3</div>
+    <h2>Filing & Federal Only</h2>
+    <div class="h2-ar">الإقرارات الفيدرالية فقط</div>
+    <h3>You Only File Federal (Form 1040)</h3>
+<p>Since Texas has no state income tax, you <strong>do not file any Texas state return</strong>. You file your federal return with the IRS by <strong>April 15</strong> as normal.</p>
+
+<h3>Self-Employed in Texas</h3>
+<p>Self-employed Texans file <strong>Schedule C (Profit or Loss)</strong> and <strong>Schedule SE (Self-Employment Tax)</strong> with their federal return. Federal self-employment tax is ~15.3% (half deductible).</p>
+
+<h3>No Estimated Taxes to the State</h3>
+<p>Since there's no state income tax, you <strong>do not make quarterly estimated payments to Texas</strong>. You only make federal estimated tax payments (Form 1040-ES) if needed.</p>
+
+<div class="tip-box gold">
+<div class="tip-icon">💡</div>
+<div class="tip-content">
+<div class="tip-label">Paperwork Advantage</div>
+<p>Texans file only 1 state return (federal) compared to residents of other states who file 2. This saves time, complexity, and reduces audit risk.</p>
+<p><span class="ar">الإقرار الوحيد اللي تقدّمه هو الفيدرالي — توفير الوقت والتعقيد.</span></p>
+</div>
+</div>
+  </section>
+
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="line"></span> Chapter 4</div>
+    <h2>Property & Business Taxes</h2>
+    <div class="h2-ar">ضرائب الملكية والأعمال</div>
+    <h3>Property Tax Details</h3>
+<p>Homeowners pay property tax to their <strong>county appraisal district</strong>. The tax is based on the appraised value of your home. Homestead exemptions vary by county but typically reduce taxable value by $25,000–$50,000.</p>
+
+<h3>Homestead Exemption</h3>
+<p>If your primary home qualifies for homestead exemption, you get a <strong>reduction on the appraised value</strong> used for tax calculation. Must apply through your county appraisal district by <strong>April 30</strong> following the year of purchase.</p>
+
+<div class="info-card gold-border">
+<div class="card-title">🏠 Save on Property Tax</div>
+<p>Veterans, seniors, and disabled persons may qualify for additional exemptions. Some counties offer tax freezes for seniors (tax amount stays the same even if home value increases).</p>
+<p><span class="ar">المحاربون القدماء والمسنون والعاجزون قد يستحقون إعفاءات إضافية.</span></p>
+</div>
+
+<h3>No State Corporate Income Tax</h3>
+<p>Texas also has <strong>no corporate income tax</strong> — only federal corporate tax applies. This makes Texas attractive for entrepreneurs and business owners.</p>
+
+<h3>Franchise Tax (Margin Tax)</h3>
+<p>Businesses with gross revenue over $1.23 million pay a franchise tax (0.375%–1.5% depending on business structure). Not an income tax, but a revenue-based tax on large businesses.</p>
+  </section>
+
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="line"></span> Chapter 5</div>
+    <h2>Self-Employment & Business</h2>
+    <div class="h2-ar">العمل الحر والأعمال التجارية</div>
+    <h3>Self-Employment Tax (Federal)</h3>
+<p>Self-employed Texans pay <strong>federal self-employment tax (~15.3% total, 12.4% Social Security + 2.9% Medicare)</strong>. You can deduct 1/2 of SE tax on your federal return.</p>
+
+<h3>No State Withholding or Estimated Payments</h3>
+<p>Texas has <strong>NO state income tax withholding</strong>. Employers don't take Texas state tax out of your paycheck. You only pay federal income tax withholding and FICA taxes.</p>
+
+<div class="tip-box green">
+<div class="tip-icon">✅</div>
+<div class="tip-content">
+<div class="tip-label">More Take-Home Pay</div>
+<p>Because there's no state income tax, Texans see more money in their paycheck compared to same-income residents of high-tax states. No surprise state tax bill at year-end.</p>
+<p><span class="ar">الرواتب في تكساس تعطيك أكثر نقود — ما في ضريبة ولائية تنخصم.</span></p>
+</div>
+</div>
+
+<h3>Business Owners: Franchise Tax Threshold</h3>
+<p>If your business gross revenue exceeds $1.23 million, you owe franchise tax. Track your revenue carefully — crossing this threshold triggers a new tax obligation.</p>
+  </section>
+
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="line"></span> Chapter 6</div>
+    <h2>Tips & Advantages</h2>
+    <div class="h2-ar">نصائح والمميزات</div>
+    <div class="tip-box gold">
+<div class="tip-icon">🎉</div>
+<div class="tip-content">
+<div class="tip-label">The Texas Advantage</div>
+<p>Zero state income tax saves the average Texas family $2,000–$5,000+ per year compared to high-tax states. Over a career, that's $100,000+. Combined with no state income tax on capital gains, Texas is a tax haven for high earners.</p>
+<p><span class="ar">عدم وجود ضريبة دخل توفّر للعائلة الواحدة ٢٠٠٠–٥٠٠٠$ سنوياً أو أكثر مقارنة بالولايات الأخرى.</span></p>
+</div>
+</div>
+
+<h3>Watch Out: Property Tax is High</h3>
+<p>While Texas has no state income tax, property taxes are among the highest in the nation (0.8% average). If you're buying a home, budget for property tax carefully. It's not included in your mortgage payment.</p>
+
+<div class="tip-box blue">
+<div class="tip-icon">🏠</div>
+<div class="tip-content">
+<div class="tip-label">Homestead Exemption is Key</div>
+<p>File for homestead exemption in your county as soon as you buy a home. Many Texans save $500–$1,500+ per year on property tax through this exemption.</p>
+<p><span class="ar">تقدّم طلب الإعفاء من ضريبة الملكية في مقاطعتك — توفير كبير جداً.</span></p>
+</div>
+</div>
+
+<h3>Keep Federal Records (No State Audit Pressure)</h3>
+<p>Since Texas doesn't tax income, you face less state audit risk. However, keep all federal tax records for 3–7 years in case the IRS audits you.</p>
+  </section>
+
+  <footer class="guide-footer">
+    <div style="font-size:28px;margin-bottom:12px;">⭐</div>
+    <p style="font-family:var(--font-display);font-size:18px;color:var(--gold);margin-bottom:8px;">Texas Tax Guide</p>
+    <p>دليل ضرائب تكساس</p>
+    <p style="margin-top:16px;">2025 Tax Year (Filing 2026) &middot; Built with ♥ for <span class="gold">Mina</span></p>
+  </footer>
+
+</div>
+
+<script>
+// ── SCROLL TO CHAPTER (main navigation handler) ──
+function scrollToChapter(event, targetId) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const clickedNav = document.querySelector('.nav-item[data-target="' + targetId + '"]');
+  if (clickedNav) clickedNav.classList.add('active');
+
+  try {
+    if (window.top === window.self) {
+      history.replaceState(null, '', '#' + targetId);
+    }
+  } catch(e) { /* ignore in iframe */ }
+
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+}
+
+// ── Scroll progress bar ──
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+  if (height > 0) {
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  }
+});
+
+// ── Active nav highlight on scroll ──
+const chapters = document.querySelectorAll('.chapter');
+const navItems = document.querySelectorAll('.nav-item');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(item => item.classList.remove('active'));
+      const id = entry.target.id;
+      const activeNav = document.querySelector('.nav-item[data-target="' + id + '"]');
+      if (activeNav) activeNav.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+chapters.forEach(ch => observer.observe(ch));
+
+// ── Mobile sidebar toggle ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// ── Handle hash on page load ──
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    setTimeout(() => {
+      const target = document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  }
+});
+
+// ── Fade-in on scroll ──
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+chapters.forEach(ch => {
+  ch.style.animationPlayState = 'paused';
+  fadeObserver.observe(ch);
+});
+</script>
+</body>
+</html>

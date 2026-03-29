@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florida Tax Guide — دليل ضرائب فلوريدا</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d3b66;
+  --navy-light: #1a5276;
+  --navy-dark: #071e38;
+  --navy-deep: #050e1a;
+  --gold: #c9a84c;
+  --gold-light: #dab95e;
+  --gold-dark: #b08f3a;
+  --gold-pale: #f5ecd4;
+  --gold-glow: rgba(201,168,76,0.25);
+  --cream: #faf8f2;
+  --cream-dark: #f0ebe0;
+  --white: #ffffff;
+  --text: #1a1f36;
+  --text-light: #5e6a82;
+  --text-faint: #8b92a5;
+  --border: #e2ddd2;
+  --success: #0f5132;
+  --success-bg: #e8f5ef;
+  --danger: #b03a2e;
+  --danger-bg: #fde8e5;
+  --info-bg: #e8eff8;
+
+  --font-display: 'Playfair Display', 'Noto Sans Arabic', serif;
+  --font-body: 'Lato', 'Noto Sans Arabic', sans-serif;
+
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 20px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 40px rgba(13,59,102,0.10);
+  --shadow-gold: 0 0 30px rgba(201,168,76,0.2);
+
+  --radius: 6px;
+  --radius-lg: 14px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* ── SCROLL PROGRESS ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  z-index: 10000;
+  transition: width 0.1s linear;
+}
+
+/* ── SIDEBAR NAVIGATION ── */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--navy-deep);
+  color: white;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 0;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
+
+.sidebar-header {
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+}
+.sidebar-header .logo-icon {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 8px;
+}
+.sidebar-header h2 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+}
+.sidebar-header .subtitle {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.nav-section {
+  padding: 20px 16px 8px;
+}
+.nav-section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold-dark);
+  font-weight: 700;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+.nav-item:hover {
+  background: rgba(201,168,76,0.08);
+  color: white;
+}
+.nav-item.active {
+  background: rgba(201,168,76,0.12);
+  color: var(--gold);
+  font-weight: 700;
+}
+.nav-item .nav-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.nav-item.active .nav-num {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border-color: var(--gold);
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-light) 100%);
+  color: white;
+  padding: 100px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  max-width: 650px;
+}
+.hero h1 .gold { color: var(--gold); }
+.hero .hero-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+  direction: rtl;
+}
+.hero p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  max-width: 560px;
+  font-weight: 300;
+}
+
+/* ── CHAPTER ── */
+.chapter {
+  padding: 80px 60px;
+  max-width: 840px;
+  border-bottom: 1px solid var(--border);
+  animation: fadeUp 0.5s ease both;
+}
+.chapter:last-child { border-bottom: none; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  color: var(--gold-dark);
+  margin-bottom: 12px;
+}
+.chapter-label .line {
+  width: 30px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.chapter h2 {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.chapter .h2-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-light);
+  direction: rtl;
+  margin-bottom: 28px;
+}
+
+.chapter h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 36px 0 14px;
+  padding-left: 16px;
+  border-left: 3px solid var(--gold);
+}
+
+.chapter p {
+  margin-bottom: 16px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.chapter p .ar {
+  display: block;
+  direction: rtl;
+  text-align: right;
+  color: var(--text-light);
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* ── LUXURY CARDS ── */
+.info-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px;
+  margin: 24px 0;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.22s ease;
+  position: relative;
+}
+.info-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.info-card.gold-border {
+  border-left: 4px solid var(--gold);
+}
+.info-card.navy-border {
+  border-left: 4px solid var(--navy);
+}
+.info-card .card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-card p {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+/* ── TIP BOXES ── */
+.tip-box {
+  display: flex;
+  gap: 14px;
+  padding: 20px 22px;
+  border-radius: var(--radius-lg);
+  margin: 24px 0;
+}
+.tip-box.gold {
+  background: var(--gold-pale);
+  border: 1px solid rgba(201,168,76,0.3);
+}
+.tip-box.green {
+  background: var(--success-bg);
+  border: 1px solid rgba(15,81,50,0.15);
+}
+.tip-box.blue {
+  background: var(--info-bg);
+  border: 1px solid rgba(13,59,102,0.12);
+}
+.tip-box.red {
+  background: var(--danger-bg);
+  border: 1px solid rgba(176,58,46,0.15);
+}
+.tip-box .tip-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.tip-box .tip-content {
+  flex: 1;
+}
+.tip-box .tip-label {
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  color: var(--navy);
+}
+.tip-box p { font-size: 14px; margin-bottom: 4px; }
+
+/* ── STEP CARDS (for app guide) ── */
+.step-guide {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin: 28px 0;
+}
+.step-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(13,59,102,0.15);
+}
+.step-body {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+}
+.step-body h4 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.step-body p { font-size: 14px; line-height: 1.7; margin-bottom: 6px; }
+
+/* ── TABLE ── */
+.tax-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.tax-table thead {
+  background: var(--navy);
+  color: var(--gold);
+}
+.tax-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.tax-table td {
+  padding: 12px 18px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.tax-table tr:last-child td { border-bottom: none; }
+.tax-table tr:hover td { background: var(--cream); }
+
+/* ── KEYBOARD SHORTCUTS / BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.badge.gold { background: var(--gold-pale); color: var(--gold-dark); }
+.badge.navy { background: var(--info-bg); color: var(--navy); }
+
+/* ── FOOTER ── */
+.guide-footer {
+  background: var(--navy-deep);
+  color: rgba(255,255,255,0.5);
+  padding: 48px 60px;
+  text-align: center;
+  font-size: 13px;
+}
+.guide-footer .gold { color: var(--gold); }
+
+/* ── MOBILE MENU ── */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 2000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--gold);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .main { margin-left: 0; }
+  .hero { padding: 80px 24px 60px; }
+  .hero h1 { font-size: 32px; }
+  .hero .hero-ar { font-size: 20px; }
+  .chapter { padding: 50px 24px; }
+  .chapter h2 { font-size: 26px; }
+  .guide-footer { padding: 36px 24px; }
+}
+
+/* ── PRINT ── */
+@media print {
+  .sidebar, .mobile-menu-btn, .scroll-progress { display: none !important; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px; }
+  .chapter { page-break-inside: avoid; padding: 30px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Mobile Menu Button -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="logo-icon">☀️</span>
+    <h2>Florida Taxes</h2>
+    <div class="subtitle">State Guide 2025</div>
+  </div>
+
+  <div style="padding:16px 16px 0;">
+    <a href="guide.html" class="nav-item" style="background:var(--gold);color:var(--navy-deep);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;margin-bottom:8px;">
+      ← Back to Main Guide
+    </a>
+    <a href="index.html" class="nav-item" style="background:rgba(201,168,76,0.2);color:white;font-weight:700;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;">
+      ← Back to App
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Florida State Taxes</div>
+    <a class="nav-item" href="#ch1" data-target="ch1" onclick="scrollToChapter(event,'ch1')"><span class="nav-num">1</span> Tax Overview</a>
+    <a class="nav-item" href="#ch2" data-target="ch2" onclick="scrollToChapter(event,'ch2')"><span class="nav-num">2</span> Property Taxes</a>
+    <a class="nav-item" href="#ch3" data-target="ch3" onclick="scrollToChapter(event,'ch3')"><span class="nav-num">3</span> Sales Tax</a>
+    <a class="nav-item" href="#ch4" data-target="ch4" onclick="scrollToChapter(event,'ch4')"><span class="nav-num">4</span> Self-Employed</a>
+    <a class="nav-item" href="#ch5" data-target="ch5" onclick="scrollToChapter(event,'ch5')"><span class="nav-num">5</span> Retirees</a>
+    <a class="nav-item" href="#ch6" data-target="ch6" onclick="scrollToChapter(event,'ch6')"><span class="nav-num">6</span> Tips & Advantages</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-badge">✦ Florida — 2025 Tax Year</div>
+    <h1>The Florida<br><span class="gold">Tax Guide</span></h1>
+    <div class="hero-ar">دليل ضرائب فلوريدا</div>
+    <p>Good news! Florida has no state income tax. Learn what taxes you DO pay, claim exemptions, and maximize your advantage as a Florida resident.</p>
+  </header>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- FLORIDA STATE TAXES                        -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- CHAPTER 1 -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="line"></span> Chapter 1</div>
+    <h2>Florida Tax Overview</h2>
+    <div class="h2-ar">نظرة عامة على ضرائب فلوريدا</div>
+
+    <div class="tip-box green">
+      <div class="tip-icon">✅</div>
+      <div class="tip-content">
+        <div class="tip-label">Good News!</div>
+        <p><strong>Florida has NO state income tax.</strong> Unlike 41 other states, Florida residents pay ZERO state income tax on wages, 1099 income, investments, retirement distributions, or any other income. You are one of only 9 states with this advantage.
+        <span class="ar">فلوريدا ما فيها ضريبة دخل الولاية! بخلاف ٤١ ولاية، فلوريدا ما تفرض ضرائب على الراتب أو الفريلانس أو الأسهم. أنت في واحدة من ٩ ولايات بهذه الميزة.</span></p>
+      </div>
+    </div>
+
+    <h3>What This Means</h3>
+    <p><strong>No filing required</strong> for state income tax. You file only your federal return (Form 1040) to the IRS. No state brackets, no state deductions, no state return to file.
+    <span class="ar">لا تحتاج تقدم إقرار ضريبة ولاية. بتقدم للـ IRS بس. لا شرائح ضريبية، لا خصومات ولاية، لا إقرار ولاية.</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">💰 What You Still Pay</div>
+      <p>Although Florida has no income tax, you pay:</p>
+      <ul style="margin:12px 0 0 20px;line-height:1.8;">
+        <li><strong>Federal income tax</strong> — to the IRS (same 10%-37% brackets)</li>
+        <li><strong>Self-employment tax</strong> — if 1099 freelancer (15.3% = 12.4% Social Security + 2.9% Medicare)</li>
+        <li><strong>Sales tax</strong> — 6% state + 0%-2% county = 6%-8%+ (see Chapter 3)</li>
+        <li><strong>Property tax</strong> — on real estate (see Chapter 2)</li>
+        <li><strong>Federal payroll taxes</strong> — Social Security & Medicare deductions from W-2</li>
+      </ul>
+      <p style="margin-top:12px;"><span class="ar">ضريبة الفيدرال، ضريبة العمل الحر، ضريبة المبيعات، ضريبة الممتلكات، وضرائب الرواتب الفيدرالية — لكن ما في ضريبة دخل الولاية!</span></p>
+    </div>
+
+    <h3>Tax Savings Comparison</h3>
+    <p>Here's how Florida compares to other high-tax states. If you earn $100,000:</p>
+
+    <table class="tax-table">
+      <thead>
+        <tr><th>State</th><th>State Income Tax Rate</th><th>Tax on $100K Income</th><th>Annual Savings vs. FL</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Florida</strong></td><td>0%</td><td>$0</td><td>—</td></tr>
+        <tr><td>New Jersey</td><td>1.4% - 10.75%</td><td>~$6,100</td><td>$6,100</td></tr>
+        <tr><td>New York</td><td>3.876% - 10.9%</td><td>~$7,500</td><td>$7,500</td></tr>
+        <tr><td>California</td><td>1% - 13.3%</td><td>~$9,300</td><td>$9,300</td></tr>
+        <tr><td>Massachusetts</td><td>5%</td><td>$5,000</td><td>$5,000</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:20px;"><strong>Over a 30-year career earning $100K annually,</strong> a Florida resident saves $180,000+ in state income taxes compared to a New Jersey resident, with no effort required.
+    <span class="ar">على مدار ٣٠ سنة، سكان فلوريدا يوفروا أكثر من ١٨٠ ألف دولار ضرائب ولاية مقارنة بولاية نيوجيرسي!</span></p>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <div class="tip-label">Pro Tip</div>
+        <p>If you moved to Florida from another state, confirm your residency is established. You need either a Florida driver's license, voter registration, or proof of home ownership to claim Florida tax residency status.</p>
+        <p><span class="ar">لو انتقلت لفلوريدا حديثا، أثبت إقامتك بـ رخصة قيادة أو تسجيل انتخابات أو ملكية منزل.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 2 -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="line"></span> Chapter 2</div>
+    <h2>Florida Property Taxes</h2>
+    <div class="h2-ar">ضرائب الممتلكات في فلوريدا</div>
+
+    <p>Property tax is Florida's main tax on real estate. Although Florida has no income tax, property owners must pay annual property taxes. However, Florida offers powerful exemptions.</p>
+    <p><span class="ar">ضريبة الممتلكات هي الضريبة الرئيسية على العقارات. لكن فلوريدا توفر إعفاءات قوية جداً.</span></p>
+
+    <h3>Homestead Exemption</h3>
+    <p>The <strong>Homestead Exemption</strong> is Florida's largest property tax break. If you own a home in Florida and claim it as your primary residence, you automatically qualify.</p>
+    <p><span class="ar">إعفاء الممتلكات السكنية الرئيسية — هذا أكبر خصم على ضرائب الممتلكات في فلوريدا.</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">📋 Homestead Exemption 2025</div>
+      <p><strong>School Tax Exemption:</strong> First $25,000 of assessed value — exempted from school taxes</p>
+      <p><strong>Non-School Exemption:</strong> Additional $25,722 of assessed value — exempted from non-school taxes (county, municipal, special districts)</p>
+      <p><strong>Total Protection:</strong> $50,722 of your home's value is exempt from all property taxes</p>
+      <p><span class="ar">إعفاء ضريبة المدارس: أول ٢٥,٠٠٠$. إعفاء غير المدرسي: إضافي ٢٥,٧٢٢$. المجموع ٥٠,٧٢٢$ معفي من كل الضرائب.</span></p>
+    </div>
+
+    <h3>Example: How Much You Save</h3>
+    <p>Suppose your home is valued at $350,000 and the millage rate (tax rate) is 12 per $1,000 of value (typical for Florida):</p>
+    <ul style="margin:12px 0 0 20px;line-height:1.8;">
+      <li><strong>Without Homestead:</strong> $350,000 × 0.012 = $4,200/year</li>
+      <li><strong>With Homestead:</strong> ($350,000 - $50,722) × 0.012 = $3,395/year</li>
+      <li><strong>Annual Savings:</strong> $805/year</li>
+      <li><strong>Over 20 years:</strong> $16,100 saved</li>
+    </ul>
+    <p><span class="ar">بدون إعفاء: ٤,٢٠٠$ سنة. مع الإعفاء: ٣,٣٩٥$ سنة. توفير ٨٠٥$ سنة!</span></p>
+
+    <h3>Save Our Homes (SOH) Cap</h3>
+    <p>Florida's <strong>Save Our Homes</strong> amendment limits how much your assessed home value can increase each year. Once you claim homestead exemption, your property's assessed value can rise <strong>no more than 3% per year,</strong> even if the market value doubles.</p>
+    <p><span class="ar">القانون يمنع قيمة منزلك المقيّمة من الارتفاع أكثر من ٣٪ سنة، حتى لو ارتفعت قيمة السوق.</span></p>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Deadline!</div>
+        <p><strong>Application deadline:</strong> March 3, 2025 is the final deadline to apply for homestead exemption for the 2025 tax year. Apply online through your county property appraiser's website, or file Form DR 501 by mail.</p>
+        <p><span class="ar">آخر موعد للتقديم ٣ مارس ٢٠٢٥. قدّم أونلاين عبر موقع تقييم الممتلكات بالمقاطعة.</span></p>
+      </div>
+    </div>
+
+    <h3>How to Apply</h3>
+    <div class="step-guide">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Check Your County's Website</h4>
+        <p>Visit your county property appraiser's website (e.g., Miami-Dade, Broward, Hillsborough) and look for "Homestead Exemption" or "Property Tax Exemptions."</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Gather Documents</h4>
+        <p>You'll need proof of ownership (deed or mortgage statement) and proof of residency (Florida driver's license, voter registration, or utility bill).</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Submit Online or By Mail</h4>
+        <p>Most counties offer online filing. Otherwise, file Form DR 501 (Homestead Property Tax Exemption Application) and mail it before the March 3 deadline.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Get Confirmation</h4>
+        <p>You'll receive a homestead exemption certificate. Your property taxes will be calculated with the exemption starting the next tax bill.</p>
+      </div>
+    </div>
+
+    <h3>Average Property Tax Rates</h3>
+    <p>Florida's average effective property tax rate is <strong>0.80%</strong> of home value per year — below the national average of 0.99%. Combined with the homestead exemption, Florida property owners pay significantly less than neighbors in other states.</p>
+
+    <table class="tax-table">
+      <thead>
+        <tr><th>State</th><th>Average Effective Rate</th><th>Tax on $300K Home</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Florida (with Homestead)</strong></td><td>~0.80%</td><td>~$2,000</td></tr>
+        <tr><td>Texas</td><td>1.80%</td><td>$5,400</td></tr>
+        <tr><td>New Jersey</td><td>2.49%</td><td>$7,470</td></tr>
+        <tr><td>Ohio</td><td>1.56%</td><td>$4,680</td></tr>
+      </tbody>
+    </table>
+
+  </section>
+
+  <!-- CHAPTER 3 -->
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="line"></span> Chapter 3</div>
+    <h2>Florida Sales Tax</h2>
+    <div class="h2-ar">ضريبة المبيعات في فلوريدا</div>
+
+    <p>Since Florida has no income tax, the state relies on <strong>sales tax</strong> as its main revenue source. Here's what you need to know.</p>
+    <p><span class="ar">بما أن فلوريدا بلا ضريبة دخل، الدولة تعتمد على ضريبة المبيعات — هاي الضريبة الرئيسية.</span></p>
+
+    <h3>Sales Tax Rates</h3>
+    <ul style="margin:12px 0 0 20px;line-height:1.8;">
+      <li><strong>State Sales Tax:</strong> 6% statewide</li>
+      <li><strong>County Surtax:</strong> 0% to 2% (discretionary)</li>
+      <li><strong>Total Range:</strong> 6% to 8%+</li>
+    </ul>
+    <p><span class="ar">ضريبة الولاية ٦٪. ضريبة المقاطعة من ٠ لـ ٢٪. المجموع من ٦ لـ ٨٪ أو أكثر.</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">📍 County-by-County Examples</div>
+      <p><strong>Miami-Dade County:</strong> 6% state + 1% county = 7%</p>
+      <p><strong>Broward County:</strong> 6% state + 1% county = 7%</p>
+      <p><strong>Orange County (Orlando):</strong> 6% state + 0.5% county = 6.5%</p>
+      <p><strong>Hillsborough County (Tampa):</strong> 6% state + 1.5% county = 7.5%</p>
+      <p><span class="ar">الضريبة تختلف من مقاطعة لأخرى من ٦.٥٪ إلى ٧.٥٪.</span></p>
+    </div>
+
+    <h3>What's Taxable vs. Exempt</h3>
+    <table class="tax-table">
+      <thead>
+        <tr><th>Item</th><th>Taxable?</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Groceries &amp; food</td><td>NO</td><td>Exempt (prepared food is taxed)</td></tr>
+        <tr><td>Prescription medicine</td><td>NO</td><td>Exempt with valid Rx</td></tr>
+        <tr><td>Over-the-counter medicine</td><td>YES</td><td>Vitamins, pain relievers taxed</td></tr>
+        <tr><td>Clothing</td><td>YES</td><td>All apparel taxed</td></tr>
+        <tr><td>Utilities (electric, water)</td><td>YES</td><td>Residential utilities taxed</td></tr>
+        <tr><td>Services (haircuts, repairs)</td><td>YES</td><td>Most services taxed</td></tr>
+        <tr><td>Medical services</td><td>NO</td><td>Doctor visits, health services exempt</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Tax-Free Holidays</h3>
+    <p>Florida offers brief <strong>sales tax holidays</strong> throughout the year:</p>
+    <ul style="margin:12px 0 0 20px;line-height:1.8;">
+      <li><strong>Back-to-School Holiday:</strong> One weekend in August (school supplies and clothing)</li>
+      <li><strong>Energy Star Appliances Holiday:</strong> Early January (energy-efficient appliances)</li>
+      <li><strong>Disaster Preparedness Holiday:</strong> Late May (emergency supplies)</li>
+    </ul>
+    <p><span class="ar">أيام إعفاء من ضريبة المبيعات عند شراء مدرسيات، أجهزة كهربائية، وتجهيزات الطوارئ.</span></p>
+
+    <div class="tip-box gold">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <div class="tip-label">Pro Tip</div>
+        <p>Plan major purchases during tax-free holidays. Buying a computer or school supplies during the tax holiday saves you 6-8% without any extra effort.</p>
+        <p><span class="ar">اشتري احتياجاتك خلال أيام الإعفاء — توفّر ٦ لـ ٨٪ على كل مشترياتك.</span></p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CHAPTER 4 -->
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="line"></span> Chapter 4</div>
+    <h2>Florida for Self-Employed</h2>
+    <div class="h2-ar">فلوريدا للعاملين الحرين والمستقلين</div>
+
+    <p>Self-employed workers and freelancers get a massive advantage in Florida: no state income tax on 1099 earnings.</p>
+    <p><span class="ar">العاملين الحرين بتوهم ميزة ضخمة: لا ضريبة ولاية على دخل الفريلانس.</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🚀 The Self-Employed Advantage</div>
+      <p><strong>No state income tax</strong> on freelance income, consulting, gig work, or business profit</p>
+      <p><strong>No state self-employment tax</strong> (the 15.3% you pay for Social Security + Medicare is federal only)</p>
+      <p><strong>Federal SE tax still applies,</strong> but that's the same in every state. Florida saves you the state portion.</p>
+      <p><span class="ar">لا ضريبة ولاية على دخل الفريلانس، لا ضريبة عمل حر الولاية. الضريبة الفيدرالية ١٥.٣٪ موجودة في كل الولايات، بس فلوريدا ما فيها ضرائب ولاية إضافية.</span></p>
+    </div>
+
+    <h3>Example: Freelancer Income Comparison</h3>
+    <p>A Florida freelancer earning $80,000 in 1099 income:</p>
+    <ul style="margin:12px 0 0 20px;line-height:1.8;">
+      <li><strong>Federal income tax:</strong> ~$10,200 (12% effective rate)</li>
+      <li><strong>Federal SE tax:</strong> ~$11,304 (15.3% of net)</li>
+      <li><strong>Florida state tax:</strong> $0</li>
+      <li><strong>Total:</strong> ~$21,504 in taxes</li>
+    </ul>
+
+    <p>Same freelancer in <strong>California</strong>:</p>
+    <ul style="margin:12px 0 0 20px;line-height:1.8;">
+      <li><strong>Federal income tax:</strong> ~$10,200</li>
+      <li><strong>Federal SE tax:</strong> ~$11,304</li>
+      <li><strong>California state tax:</strong> ~$5,600 (6.5% - 13.3%)</li>
+      <li><strong>Total:</strong> ~$27,104 in taxes</li>
+    </ul>
+
+    <p><strong>Annual Savings in Florida: $5,600</strong> on the same $80K income.
+    <span class="ar">فريلانسر في فلوريدا يوفّر ٥,٦٠٠$ سنة مقارنة بكاليفورنيا — على نفس الدخل!</span></p>
+
+    <h3>Business Registration</h3>
+    <p>If you're self-employed in Florida, you may need to register your business:</p>
+
+    <div class="info-card navy-border">
+      <div class="card-title">📝 Registration Requirements</div>
+      <p><strong>Business Tax Receipt (BTR):</strong> Most counties require this local license. Cost varies ($50-$200). No state fee for a Florida tax ID.</p>
+      <p><strong>DBA (Doing Business As):</strong> If using a trade name, file with your county. Usually $50-$100.</p>
+      <p><strong>Corporate Taxes:</strong> If you form an S-Corp or C-Corp, Florida has NO corporate income tax. You're only taxed at federal level.</p>
+      <p><span class="ar">قد تحتاج رخصة أعمال محلية من المقاطعة. لكن فلوريدا ما فيها ضريبة دخل شركات!</span></p>
+    </div>
+
+    <h3>Quarterly Estimated Tax Payments</h3>
+    <p>Since you have no Florida state taxes, you only pay federal estimated taxes to the IRS, not Florida. The federal quarterly payment dates remain:</p>
+    <ul style="margin:12px 0 0 20px;line-height:1.8;">
+      <li>Q1 (Jan-Mar): Paid by April 15</li>
+      <li>Q2 (Apr-Jun): Paid by June 15</li>
+      <li>Q3 (Jul-Sep): Paid by September 15</li>
+      <li>Q4 (Oct-Dec): Paid by January 15</li>
+    </ul>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">💼</div>
+      <div class="tip-content">
+        <div class="tip-label">Pro Tip — Keep Good Records</div>
+        <p>Even though Florida doesn't tax business income, the IRS does. Keep meticulous records of income and expenses. Deduct home office, vehicle mileage, supplies, software, and professional services.</p>
+        <p><span class="ar">احتفظ بسجلات جيدة للدخل والمصاريف. الـ IRS بيطلب أرقام صحيحة.</span></p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CHAPTER 5 -->
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="line"></span> Chapter 5</div>
+    <h2>Florida for Retirees</h2>
+    <div class="h2-ar">فلوريدا للمتقاعدين</div>
+
+    <p>Florida is a retirement paradise. No state income tax means retirees keep more of their nest egg. Here's what's tax-free in Florida:</p>
+    <p><span class="ar">فلوريدا جنة للمتقاعدين! لا ضريبة ولاية يعني تاخد دخلك كامل.</span></p>
+
+    <table class="tax-table">
+      <thead>
+        <tr><th>Retirement Income Type</th><th>State Tax in FL?</th><th>Federal Tax?</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Social Security</td><td>NO</td><td>NO*</td><td>*If combined income &lt; $25K (single)</td></tr>
+        <tr><td>Pension (teacher, military, etc.)</td><td>NO</td><td>YES</td><td>Fully exempt in FL (major advantage!)</td></tr>
+        <tr><td>401(k) distributions</td><td>NO</td><td>YES</td><td>No FL tax on withdrawals</td></tr>
+        <tr><td>IRA distributions</td><td>NO</td><td>YES</td><td>No FL tax on withdrawals</td></tr>
+        <tr><td>Investment/capital gains</td><td>NO</td><td>YES</td><td>Stocks, bonds, real estate sales</td></tr>
+        <tr><td>Rental income</td><td>NO</td><td>YES</td><td>If you own rental property</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🎯 Pension Tax Advantage</div>
+      <p>This is Florida's biggest gift to retirees. <strong>ALL pension income is exempt from Florida state tax,</strong> including military pensions, police/fire pensions, teacher pensions, and government pensions.</p>
+      <p>Retire with a $50,000/year pension? In Florida, ZERO state tax. In another state like New York, you'd pay ~$4,000/year state tax on the same pension.</p>
+      <p><span class="ar">كل دخل التقاعد معفي من ضريبة فلوريدا — عسكري، شرطة، معلمين، حكومي. لا تدفع ولا فلس ضريبة ولاية!</span></p>
+    </div>
+
+    <h3>Homestead Exemption for Retirees</h3>
+    <p>Retirees get the full homestead exemption benefit (Chapter 2). Plus, Florida's Save Our Homes cap protects your assessed home value from skyrocketing, keeping property taxes stable even as neighborhoods appreciate.</p>
+
+    <h3>Real Retirement Scenario</h3>
+    <p>Meet Margaret, a retired teacher in Florida. Her annual income:</p>
+    <ul style="margin:12px 0 0 20px;line-height:1.8;">
+      <li>Teacher pension: $45,000/year</li>
+      <li>Social Security: $22,000/year</li>
+      <li>401(k) withdrawals: $20,000/year</li>
+      <li><strong>Total income: $87,000/year</strong></li>
+    </ul>
+
+    <p><strong>State income tax in Florida: $0</strong></p>
+    <p><strong>Federal income tax: ~$4,200</strong> (5% effective rate)</p>
+    <p><strong>Effective tax rate: 4.8%</strong></p>
+
+    <p>If Margaret lived in New York with the same $87,000 income:</p>
+    <p><strong>State income tax in NY: ~$6,000</strong> (6.9% effective rate)</p>
+    <p><strong>Total taxes: ~$10,200</strong> (11.7% effective rate)</p>
+
+    <p><strong>Retirement savings by living in Florida: $6,000+/year</strong>
+    <span class="ar">المتقاعدة تيه تحقق توفير ٦,٠٠٠$ سنة بس بالعيش في فلوريدا بدل نيويورك!</span></p>
+
+    <h3>Why Florida is #1 for Retirees</h3>
+    <div class="tip-box green">
+      <div class="tip-icon">✅</div>
+      <div class="tip-content">
+        <div class="tip-label">Retiree Paradise</div>
+        <p>1. <strong>No state income tax</strong> on pensions, SS, or investment income</p>
+        <p>2. <strong>Homestead exemption</strong> saves $800-$2,000/year on property taxes</p>
+        <p>3. <strong>Save Our Homes cap</strong> prevents property taxes from spiking</p>
+        <p>4. <strong>Warm weather</strong> = lower heating costs</p>
+        <p>5. <strong>No state estate tax</strong> (more on Chapter 6)</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CHAPTER 6 -->
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="line"></span> Chapter 6</div>
+    <h2>Florida Tips & Advantages</h2>
+    <div class="h2-ar">نصائح وميزات فلوريدا الضريبية</div>
+
+    <h3>Summary: What Makes Florida Special</h3>
+    <p>Here's why Florida is a tax haven for high earners, remote workers, retirees, and business owners:</p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">💎 No State Income Tax</div>
+      <p>The single biggest advantage. Unlike 41 states, Florida doesn't tax wages, 1099 income, pensions, Social Security, or investment gains. You keep 100% of earnings after federal taxes.</p>
+      <p><span class="ar">الميزة الأكبر: بدون ضريبة دخل ولاية. تاخد دخلك كامل بعد الفيدرال بس.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">🏡 Homestead Exemption</div>
+      <p>$50,722 of home value is exempt from all property taxes. Plus the 3% annual cap prevents assessments from rising faster than inflation.</p>
+      <p><span class="ar">٥٠,٧٢٢$ من قيمة البيت معفي من الضرائب، والقيمة المقيّمة تطلع ٣٪ سنة بس.</span></p>
+    </div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">💼 Perfect for Remote Workers</div>
+      <p>Earn $120K/year for a California company but live in Florida? You pay ZERO Florida state income tax on that salary. Your company doesn't care where you live; Florida doesn't tax the income. Federal taxes apply either way.</p>
+      <p><span class="ar">تشتغل لشركة بكاليفورنيا وتعيش في فلوريدا؟ لا ضريبة ولاية على الراتب!</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">🏢 No Corporate Income Tax</div>
+      <p>If you form a business entity (S-Corp, C-Corp, LLC), Florida charges NO state corporate income tax. Your only business taxes are federal. This is a major advantage for business owners.</p>
+      <p><span class="ar">لا ضريبة دخل شركات في فلوريدا! لو عندك بزنس، ما تدفع ضريبة ولاية على الأرباح.</span></p>
+    </div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">📈 Investment-Friendly</div>
+      <p>Sell stocks, real estate, or investments at a profit? No Florida state capital gains tax. You only owe federal capital gains tax (which is the same in every state).</p>
+      <p><span class="ar">بعت أسهم وكسبت فلوس؟ بدون ضريبة ولاية على الأرباح الرأسمالية!</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">💀 No State Estate Tax</div>
+      <p>When you pass your assets to heirs, Florida charges NO state estate or inheritance tax. (Federal estate tax may apply if your estate exceeds $13.61M in 2025, but that's rare.)</p>
+      <p><span class="ar">لا ضريبة وراثة في فلوريدا. الوصية والتركة معفية من ضرائب الولاية.</span></p>
+    </div>
+
+    <h3>Actionable Tips</h3>
+
+    <div class="tip-box green">
+      <div class="tip-icon">✅</div>
+      <div class="tip-content">
+        <div class="tip-label">Apply for Homestead ASAP</div>
+        <p>If you own a home in Florida, file for homestead exemption immediately. Don't wait. The deadline is March 3 each year. You save $500-$2,000/year.</p>
+        <p><span class="ar">لو عندك بيت في فلوريدا، قدّم طلب الإعفاء حالا. الموعد النهائي ٣ مارس.</span></p>
+      </div>
+    </div>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <div class="tip-label">Consider Establishing Residency</div>
+        <p>If you're considering moving to Florida or are new, get a Florida driver's license, register to vote, and establish residency proof. This protects you if the IRS ever questions your state tax residency.</p>
+        <p><span class="ar">لو أنت جديد في فلوريدا، احصل على رخصة قيادة وتسجيل انتخابات لتأكيد الإقامة.</span></p>
+      </div>
+    </div>
+
+    <div class="tip-box gold">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <div class="tip-label">Organize Your 1099 Income</div>
+        <p>If self-employed, keep detailed records of all income and business expenses. Without a state income tax, you might think the IRS won't look closely — wrong! Federal audits still happen. Document everything.</p>
+        <p><span class="ar">لو عندك دخل 1099، احفظ كل الإيصالات والمصاريف. الـ IRS بتفتش على المستندات.</span></p>
+      </div>
+    </div>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Still File Federal Taxes</div>
+        <p>Florida has no state income tax, but you MUST file your federal return (Form 1040) to the IRS if you meet income thresholds. Don't skip federal filing just because Florida has no state tax. The penalty is steep.</p>
+        <p><span class="ar">فلوريدا بدون ضريبة ولاية، بس لازم تقدم للـ IRS. بدون ضريبة فيدرالية لا تقدم يعني غرامات.</span></p>
+      </div>
+    </div>
+
+    <h3>Questions to Ask Yourself</h3>
+    <ul style="margin:12px 0 0 20px;line-height:1.8;">
+      <li>Am I a Florida homeowner? → <strong>Apply for homestead exemption now.</strong></li>
+      <li>Do I have 1099 self-employment income? → <strong>Keep meticulous tax records and deduct all business expenses.</strong></li>
+      <li>Am I retired with a pension? → <strong>Excellent news — it's 100% tax-free in Florida.</strong></li>
+      <li>Do I earn income in another state remotely? → <strong>Move to Florida and keep earning with zero state tax.</strong></li>
+      <li>Am I considering moving to Florida? → <strong>Establish residency immediately with FL driver's license and voter registration.</strong></li>
+    </ul>
+
+    <h3>Final Thoughts</h3>
+    <p>Florida's lack of state income tax is a tremendous advantage. Combined with the homestead exemption and low property taxes, Florida offers substantial tax savings for residents of all types: high earners, self-employed professionals, retirees, and investors.</p>
+    <p><span class="ar">فلوريدا توفر مزايا ضريبية ضخمة. لا دخل ولاية، إعفاء ممتلكات، وضرائب ممتلكات منخفضة — كل هذا يعني توفيرات ضخمة.</span></p>
+
+    <p>While you still pay federal income taxes, Social Security/Medicare payroll taxes, and sales taxes, the absence of state income tax puts more money back in your pocket every year. Make the most of it by organizing your finances, claiming all available exemptions, and keeping good records.</p>
+    <p><span class="ar">احفظ الفلوس بتطبيق كل المزايا والإعفاءات اللي فلوريدا توفّرها.</span></p>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- FOOTER -->
+  <footer class="guide-footer">
+    <p>This guide is for educational purposes. For specific tax advice, consult a <span class="gold">Florida tax professional, CPA, or EA.</span> Tax laws change annually.
+    <br><span style="direction:rtl;display:block;margin-top:8px;">هذا الدليل لأغراض تعليمية فقط. استشر محاسب أو متخصص ضرائب للاستشارة الشخصية.</span></p>
+    <p style="margin-top:16px;font-size:12px;">© 2025 Tax Advisor Pro — Florida Edition. All rights reserved.</p>
+  </footer>
+
+</div>
+
+<script>
+// ── SCROLL TO CHAPTER (main navigation handler) ──
+function scrollToChapter(event, targetId) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  // Scroll the target into view
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Update active state immediately
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const clickedNav = document.querySelector('.nav-item[data-target="' + targetId + '"]');
+  if (clickedNav) clickedNav.classList.add('active');
+
+  // Update URL hash safely (skip if inside iframe)
+  try {
+    if (window.top === window.self) {
+      history.replaceState(null, '', '#' + targetId);
+    }
+  } catch(e) { /* ignore in iframe */ }
+
+  // Close mobile sidebar if open
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+}
+
+// ── Scroll progress bar ──
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+  if (height > 0) {
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  }
+});
+
+// ── Active nav highlight on scroll ──
+const chapters = document.querySelectorAll('.chapter');
+const navItems = document.querySelectorAll('.nav-item');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(item => item.classList.remove('active'));
+      const id = entry.target.id;
+      const activeNav = document.querySelector('.nav-item[data-target="' + id + '"]');
+      if (activeNav) activeNav.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+chapters.forEach(ch => observer.observe(ch));
+
+// ── Mobile sidebar toggle ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// ── Handle hash on page load ──
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    setTimeout(() => {
+      const target = document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  }
+});
+
+// ── Fade-in on scroll ──
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+chapters.forEach(ch => {
+  ch.style.animationPlayState = 'paused';
+  fadeObserver.observe(ch);
+});
+</script>
+</body>
+</html>

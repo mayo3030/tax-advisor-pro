@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>California Tax Guide — دليل ضرائب كاليفورنيا | Tax Advisor Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d3b66;
+  --navy-light: #1a5276;
+  --navy-dark: #071e38;
+  --navy-deep: #050e1a;
+  --gold: #c9a84c;
+  --gold-light: #dab95e;
+  --gold-dark: #b08f3a;
+  --gold-pale: #f5ecd4;
+  --gold-glow: rgba(201,168,76,0.25);
+  --cream: #faf8f2;
+  --cream-dark: #f0ebe0;
+  --white: #ffffff;
+  --text: #1a1f36;
+  --text-light: #5e6a82;
+  --text-faint: #8b92a5;
+  --border: #e2ddd2;
+  --success: #0f5132;
+  --success-bg: #e8f5ef;
+  --danger: #b03a2e;
+  --danger-bg: #fde8e5;
+  --info-bg: #e8eff8;
+  --font-display: 'Playfair Display', 'Noto Sans Arabic', serif;
+  --font-body: 'Lato', 'Noto Sans Arabic', sans-serif;
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 20px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 40px rgba(13,59,102,0.10);
+  --shadow-gold: 0 0 30px rgba(201,168,76,0.2);
+  --radius: 6px;
+  --radius-lg: 14px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--cream); color: var(--text); line-height: 1.75; font-size: 16px; font-weight: 400; }
+.scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light)); z-index: 10000; transition: width 0.1s linear; }
+.sidebar { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: var(--navy-deep); color: white; overflow-y: auto; z-index: 1000; padding: 0; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
+.sidebar-header { padding: 32px 24px 24px; border-bottom: 1px solid rgba(201,168,76,0.15); text-align: center; }
+.sidebar-header .logo-icon { font-size: 36px; display: block; margin-bottom: 8px; }
+.sidebar-header h2 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; }
+.sidebar-header .subtitle { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+.nav-section { padding: 20px 16px 8px; }
+.nav-section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-dark); font-weight: 700; padding: 0 8px; margin-bottom: 8px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius); color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; font-weight: 400; transition: all 0.18s ease; cursor: pointer; margin-bottom: 2px; }
+.nav-item:hover { background: rgba(201,168,76,0.08); color: white; }
+.nav-item.active { background: rgba(201,168,76,0.12); color: var(--gold); font-weight: 700; }
+.nav-item .nav-num { width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.08); }
+.nav-item.active .nav-num { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); }
+.main { margin-left: 280px; min-height: 100vh; }
+.hero { background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-light) 100%); color: white; padding: 100px 60px 80px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.25); padding: 6px 16px; border-radius: 50px; font-size: 12px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 24px; }
+.hero h1 { font-family: var(--font-display); font-size: 52px; font-weight: 800; line-height: 1.15; margin-bottom: 16px; max-width: 650px; }
+.hero h1 .gold { color: var(--gold); }
+.hero .hero-ar { font-family: 'Noto Sans Arabic', serif; font-size: 28px; font-weight: 700; color: rgba(255,255,255,0.5); margin-bottom: 24px; direction: rtl; }
+.hero p { font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.7); max-width: 560px; font-weight: 300; }
+.chapter { padding: 80px 60px; max-width: 840px; border-bottom: 1px solid var(--border); animation: fadeUp 0.5s ease both; }
+.chapter:last-child { border-bottom: none; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 700; color: var(--gold-dark); margin-bottom: 12px; }
+.chapter-label .line { width: 30px; height: 2px; background: var(--gold); }
+.chapter h2 { font-family: var(--font-display); font-size: 34px; font-weight: 800; color: var(--navy); line-height: 1.25; margin-bottom: 8px; }
+.chapter .h2-ar { font-family: 'Noto Sans Arabic', serif; font-size: 22px; font-weight: 700; color: var(--text-light); direction: rtl; margin-bottom: 28px; }
+.chapter h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--navy); margin: 36px 0 14px; padding-left: 16px; border-left: 3px solid var(--gold); }
+.chapter p { margin-bottom: 16px; color: var(--text); font-size: 16px; line-height: 1.8; }
+.chapter p .ar { display: block; direction: rtl; text-align: right; color: var(--text-light); font-family: 'Noto Sans Arabic', sans-serif; font-size: 14px; margin-top: 4px; }
+.info-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px 28px; margin: 24px 0; box-shadow: var(--shadow-sm); transition: all 0.22s ease; position: relative; }
+.info-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.info-card.gold-border { border-left: 4px solid var(--gold); }
+.info-card.navy-border { border-left: 4px solid var(--navy); }
+.info-card .card-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.info-card p { margin-bottom: 8px; font-size: 15px; }
+.tip-box { display: flex; gap: 14px; padding: 20px 22px; border-radius: var(--radius-lg); margin: 24px 0; }
+.tip-box.gold { background: var(--gold-pale); border: 1px solid rgba(201,168,76,0.3); }
+.tip-box.green { background: var(--success-bg); border: 1px solid rgba(15,81,50,0.15); }
+.tip-box.blue { background: var(--info-bg); border: 1px solid rgba(13,59,102,0.12); }
+.tip-box.red { background: var(--danger-bg); border: 1px solid rgba(176,58,46,0.15); }
+.tip-box .tip-icon { font-size: 22px; flex-shrink: 0; line-height: 1; }
+.tip-box .tip-content { flex: 1; }
+.tip-box .tip-label { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; color: var(--navy); }
+.tip-box p { font-size: 14px; margin-bottom: 4px; }
+.tip-box p:last-child { margin-bottom: 0; }
+table.tax-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+table.tax-table th { background: var(--navy-deep); color: white; padding: 12px; text-align: left; font-weight: 700; }
+table.tax-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+table.tax-table tr:hover { background: var(--gold-pale); }
+.guide-footer { text-align: center; padding: 60px 60px; background: var(--navy-deep); color: white; border-top: 1px solid rgba(201,168,76,0.15); }
+.guide-footer p { margin-bottom: 8px; font-size: 14px; line-height: 1.6; }
+.guide-footer .gold { color: var(--gold); }
+.mobile-menu-btn { display: none; position: fixed; top: 20px; left: 20px; width: 40px; height: 40px; background: var(--navy-deep); color: white; border: none; border-radius: var(--radius); font-size: 18px; z-index: 2000; cursor: pointer; transition: all 0.2s ease; }
+.mobile-menu-btn:hover { background: var(--navy); }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .main { margin-left: 0; }
+  .hero { padding: 80px 24px 60px; }
+  .hero h1 { font-size: 32px; }
+  .hero .hero-ar { font-size: 20px; }
+  .chapter { padding: 50px 24px; }
+  .chapter h2 { font-size: 26px; }
+  .guide-footer { padding: 36px 24px; }
+}
+@media print {
+  .sidebar, .mobile-menu-btn, .scroll-progress { display: none !important; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px; }
+  .chapter { page-break-inside: avoid; padding: 30px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Mobile Menu Button -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="logo-icon">🌞</span>
+    <h2>California Tax</h2>
+    <div class="subtitle">2025 Guide</div>
+  </div>
+
+  <div style="padding:16px 16px 0;">
+    <a href="guide.html" class="nav-item" style="background:var(--gold);color:var(--navy-deep);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;font-size:12px;margin-bottom:8px;">
+      ← Back to Main Guide
+    </a>
+    <a href="index.html" class="nav-item" style="background:rgba(201,168,76,0.15);color:var(--gold);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;font-size:12px;">
+      ← Back to App — الرجوع للتطبيق
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">California Taxes</div>
+    <a class="nav-item" href="#ch1" data-target="ch1" onclick="scrollToChapter(event,'ch1')"><span class="nav-num">1</span> California Tax Overview</a>
+    <a class="nav-item" href="#ch2" data-target="ch2" onclick="scrollToChapter(event,'ch2')"><span class="nav-num">2</span> Deductions & Credits</a>
+    <a class="nav-item" href="#ch3" data-target="ch3" onclick="scrollToChapter(event,'ch3')"><span class="nav-num">3</span> CA Filing Requirements</a>
+    <a class="nav-item" href="#ch4" data-target="ch4" onclick="scrollToChapter(event,'ch4')"><span class="nav-num">4</span> Property & Sales Tax</a>
+    <a class="nav-item" href="#ch5" data-target="ch5" onclick="scrollToChapter(event,'ch5')"><span class="nav-num">5</span> Self-Employment & 1099s</a>
+    <a class="nav-item" href="#ch6" data-target="ch6" onclick="scrollToChapter(event,'ch6')"><span class="nav-num">6</span> Tips & Pitfalls</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-badge">✦ California — 2025 Tax Year</div>
+    <h1>The California<br><span class="gold">Tax Guide</span></h1>
+    <div class="hero-ar">دليل ضرائب كاليفورنيا الشامل</div>
+    <p>Everything you need to understand California state taxes, maximize your deductions, and navigate tax savings opportunities — explained clearly in English and Arabic.</p>
+  </header>
+
+  <!-- CHAPTERS -->
+
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="line"></span> Chapter 1</div>
+    <h2>California Tax Overview</h2>
+    <div class="h2-ar">نظرة عامة على ضرائب كاليفورنيا</div>
+    California has a <strong>progressive income tax system</strong> with rates ranging from 1% to 13.3% across 9 tax brackets — the highest state income tax in the US. <span class="ar">كاليفورنيا فيها ضرائب تصاعدية من ١٪ لحد ١٣.٣٪ — أعلى ضريبة حكومية في أمريكا.</span>
+
+<h3>2025 CA Tax Brackets (Single Filers)</h3>
+<table class="tax-table">
+<thead><tr><th>Income Range</th><th>Tax Rate</th></tr></thead>
+<tbody>
+<tr><td>$0 — $10,099</td><td>1%</td></tr>
+<tr><td>$10,100 — $23,942</td><td>2%</td></tr>
+<tr><td>$23,943 — $37,788</td><td>4%</td></tr>
+<tr><td>$37,789 — $52,455</td><td>6%</td></tr>
+<tr><td>$52,456 — $66,295</td><td>8%</td></tr>
+<tr><td>$66,296 — $340,328</td><td>9.3%</td></tr>
+<tr><td>$340,329 — $408,393</td><td>10.3%</td></tr>
+<tr><td>$408,394 — $680,656</td><td>11.3%</td></tr>
+<tr><td>$680,657+</td><td>13.3%</td></tr>
+</tbody>
+</table>
+
+<div class="tip-box gold">
+<div class="tip-icon">⚠️</div>
+<div class="tip-content">
+<div class="tip-label">High Tax Rate</div>
+<p>California's 13.3% top rate applies to income over $680,656. Even middle-income earners hit 9.3% quickly. Combined with federal tax, your marginal rate could exceed 40%.</p>
+<p><span class="ar">معدل كاليفورنيا ١٣.٣٪ على الدخل العالي جداً. حتى الموظفين برواتب متوسطة يصلوا لـ ٩.٣٪ سريع جداً.</span></p>
+</div>
+</div>
+
+<h3>Standard Deduction (2025)</h3>
+<p><strong>Single:</strong> $5,202 | <strong>Married Filing Jointly:</strong> $10,404. California also allows federal itemized deductions capped at $10,000 (including property and income taxes).</p>
+
+<h3>Filing Threshold</h3>
+<p>Single: Gross income of $22,107 or more (or $1 if self-employed with net earnings $400+).</p>
+  </section>
+
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="line"></span> Chapter 2</div>
+    <h2>Deductions & Credits</h2>
+    <div class="h2-ar">الخصومات والائتمانات</div>
+    <div class="info-card gold-border">
+<div class="card-title">🏠 Property Tax Deduction Cap</div>
+<p>California follows federal limits: total state and local taxes (SALT) deduction capped at <strong>$10,000</strong>. This includes property tax, sales tax, and state income tax combined.</p>
+<p><span class="ar">كاليفورنيا تحدد الخصم الكلي للضرائب المحلية والولائية بـ ١٠,٠٠٠$ فقط.</span></p>
+</div>
+
+<div class="info-card navy-border">
+<div class="card-title">💰 CA EITC (Enhanced in 2021)</div>
+<p>California's Earned Income Tax Credit is <strong>worth up to $3,733</strong> for families with children, and <strong>up to $2,790</strong> for single filers or married couples without kids. Much more generous than federal.</p>
+<p><span class="ar">الـ EITC في كاليفورنيا يصل لـ ٣,٧٣٣$ للعائلات بأطفال — أفضل من الفيدرالي بكثير.</span></p>
+</div>
+
+<h3>Dependent Parent Credit</h3>
+<p>If you support a parent age 65+, you may claim a credit of up to <strong>$500</strong> (married filing jointly) or <strong>$250</strong> (single). Income limits apply.</p>
+
+<h3>Energy/Solar Credits</h3>
+<p>California offers credits for solar installation, electric vehicles, and home energy efficiency upgrades — some of the most generous in the nation.</p>
+
+<div class="tip-box blue">
+<div class="tip-icon">🚗</div>
+<div class="tip-content">
+<div class="tip-label">EV Tax Credits</div>
+<p>California residents may qualify for state rebates on electric vehicle purchases (up to $7,500 in addition to federal credits). Check ca.gov for current programs.</p>
+<p><span class="ar">سيارات كهربائية: كاليفورنيا تقدم خصومات حكومية لحد ٧,٥٠٠$ إضافية للفيدرالي.</span></p>
+</div>
+</div>
+  </section>
+
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="line"></span> Chapter 3</div>
+    <h2>CA Filing Requirements</h2>
+    <div class="h2-ar">متطلبات الإقرار في كاليفورنيا</div>
+    <h3>Form CA 540 (or 540-NR)</h3>
+<p>All California residents must file Form <strong>CA 540</strong> if they meet income thresholds. Non-residents file <strong>CA 540-NR</strong>. Part-year residents file both CA and prior state forms.</p>
+
+<h3>Key Deadlines</h3>
+<p><strong>April 15:</strong> Tax return due (same as federal). <strong>October 15:</strong> Automatic 6-month extension available. <strong>Late Payment:</strong> Penalties and interest accrue at 1% per month.</p>
+
+<h3>Estimated Quarterly Tax (Form 540-ES)</h3>
+<p>Self-employed or those with substantial non-wage income should pay quarterly estimates. Due dates: April 15, June 15, September 15, January 15 of next year.</p>
+
+<div class="tip-box green">
+<div class="tip-icon">✅</div>
+<div class="tip-content">
+<div class="tip-label">Electronic Filing (e-File)</div>
+<p>California encourages e-filing. Use a tax software or IRS-certified provider. E-filed returns with direct deposit are processed faster and receive refunds in 21 days.</p>
+<p><span class="ar">الإقرارات الإلكترونية تُعالج أسرع بكثير — الاسترجاع ياتيك في ٢١ يوم.</span></p>
+</div>
+</div>
+  </section>
+
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="line"></span> Chapter 4</div>
+    <h2>Property & Sales Tax</h2>
+    <div class="h2-ar">ضرائب الملكية والمبيعات</div>
+    <h3>Property Tax Overview</h3>
+<p>California's property tax is relatively low at <strong>~0.76% of assessed home value</strong> (Proposition 13 limits increases to 2% per year). However, homebuyers pay assessed value, not market value.</p>
+
+<h3>Sales Tax</h3>
+<p>Statewide base rate is <strong>7.25%</strong>, but local county/city taxes can add 1-2.5%, bringing total rates to <strong>7.25%–10.75%</strong> depending on location.</p>
+
+<div class="info-card gold-border">
+<div class="card-title">🏠 Homeowner's Property Tax Exemption</div>
+<p>Primary home may qualify for a <strong>$7,000 exemption</strong> on assessed value, reducing your annual bill by ~$53. Must apply through county assessor.</p>
+<p><span class="ar">البيت الأساسي يمكن أن يتمتع بإعفاء ٧٠٠٠$ من القيمة المقيّمة — توفير حوالي ٥٣$ سنوياً.</span></p>
+</div>
+
+<h3>Proposition 19 (2020)</h3>
+<p>Allows homeowners 55+ to transfer current assessed value to new home (once in 2 years). Non-primary residences and commercial property assessments reset to market value upon sale.</p>
+  </section>
+
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="line"></span> Chapter 5</div>
+    <h2>Self-Employment & 1099s</h2>
+    <div class="h2-ar">العمل الحر والـ 1099s</div>
+    <h3>Estimated Tax Quarterly Payments</h3>
+<p>If you earn self-employment income, you must file quarterly estimates using <strong>Form 540-ES</strong>. Total expected CA tax minus withholding should be paid in 4 equal installments.</p>
+
+<h3>Franchise Tax Board (FTB) Payment Options</h3>
+<p>Pay online via <strong>taxes.ca.gov</strong>, by mail (check), or through approved payment processors. E-Pay and Direct Debit often have discounts.</p>
+
+<div class="tip-box gold">
+<div class="tip-icon">💡</div>
+<div class="tip-content">
+<div class="tip-label">Self-Employment Tax Deduction</div>
+<p>Deduct 1/2 of CA self-employment tax on Form 540 Schedule CA. Unlike federal, California doesn't allow deduction of the full SE tax — only your own half.</p>
+<p><span class="ar">تستطيع خصم نصف ضريبة العمل الحر، ليس الكل — هذا في كاليفورنيا فقط.</span></p>
+</div>
+</div>
+
+<h3>AB 5 & Independent Contractor Status</h3>
+<p>California's AB 5 law makes it harder to classify workers as contractors. If you're misclassified, you may owe back taxes. Consult a tax professional if your status is unclear.</p>
+  </section>
+
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="line"></span> Chapter 6</div>
+    <h2>Tips & Pitfalls</h2>
+    <div class="h2-ar">نصائح وأخطاء شائعة</div>
+    <div class="tip-box red">
+<div class="tip-icon">🚨</div>
+<div class="tip-content">
+<div class="tip-label">Common Pitfall: Moving in/out</div>
+<p>If you moved to CA mid-year, you're a part-year resident. File both CA and your prior state's returns. Same if you moved out. Amend if needed to avoid penalties.</p>
+<p><span class="ar">لو انتقلت لكاليفورنيا في منتصف السنة، بتقدّم إقرار جزئي. ما تخطّيها!</span></p>
+</div>
+</div>
+
+<h3>SALT Cap Impact</h3>
+<p>The $10,000 federal SALT cap hits CA hard. Many high earners can't deduct all their state and property taxes. Track them separately on Form 540 Schedule CA.</p>
+
+<div class="tip-box green">
+<div class="tip-icon">✅</div>
+<div class="tip-content">
+<div class="tip-label">Claim CA EITC</div>
+<p>Many working families miss the CA EITC because they don't know about it. If you earn $70,000 or less (depending on filing status), check your eligibility. It's fully refundable!</p>
+<p><span class="ar">الكثير من العائلات تنسى الـ EITC في كاليفورنيا. تأكد أنك تقدّمها!</span></p>
+</div>
+</div>
+
+<h3>Avoid Franchise Tax Board Penalties</h3>
+<p>California penalizes late payment and filing. E-file by deadline to avoid penalties. If you owe, make a payment arrangement immediately — the FTB is strict.</p>
+  </section>
+
+  <footer class="guide-footer">
+    <div style="font-size:28px;margin-bottom:12px;">🌞</div>
+    <p style="font-family:var(--font-display);font-size:18px;color:var(--gold);margin-bottom:8px;">California Tax Guide</p>
+    <p>دليل ضرائب كاليفورنيا</p>
+    <p style="margin-top:16px;">2025 Tax Year (Filing 2026) &middot; Built with ♥ for <span class="gold">Mina</span></p>
+  </footer>
+
+</div>
+
+<script>
+// ── SCROLL TO CHAPTER (main navigation handler) ──
+function scrollToChapter(event, targetId) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const clickedNav = document.querySelector('.nav-item[data-target="' + targetId + '"]');
+  if (clickedNav) clickedNav.classList.add('active');
+
+  try {
+    if (window.top === window.self) {
+      history.replaceState(null, '', '#' + targetId);
+    }
+  } catch(e) { /* ignore in iframe */ }
+
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+}
+
+// ── Scroll progress bar ──
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+  if (height > 0) {
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  }
+});
+
+// ── Active nav highlight on scroll ──
+const chapters = document.querySelectorAll('.chapter');
+const navItems = document.querySelectorAll('.nav-item');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(item => item.classList.remove('active'));
+      const id = entry.target.id;
+      const activeNav = document.querySelector('.nav-item[data-target="' + id + '"]');
+      if (activeNav) activeNav.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+chapters.forEach(ch => observer.observe(ch));
+
+// ── Mobile sidebar toggle ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// ── Handle hash on page load ──
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    setTimeout(() => {
+      const target = document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  }
+});
+
+// ── Fade-in on scroll ──
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+chapters.forEach(ch => {
+  ch.style.animationPlayState = 'paused';
+  fadeObserver.observe(ch);
+});
+</script>
+</body>
+</html>

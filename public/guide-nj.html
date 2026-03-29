@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Jersey Tax Guide — دليل ضرائب نيو جيرسي | Tax Advisor Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d3b66;
+  --navy-light: #1a5276;
+  --navy-dark: #071e38;
+  --navy-deep: #050e1a;
+  --gold: #c9a84c;
+  --gold-light: #dab95e;
+  --gold-dark: #b08f3a;
+  --gold-pale: #f5ecd4;
+  --gold-glow: rgba(201,168,76,0.25);
+  --cream: #faf8f2;
+  --cream-dark: #f0ebe0;
+  --white: #ffffff;
+  --text: #1a1f36;
+  --text-light: #5e6a82;
+  --text-faint: #8b92a5;
+  --border: #e2ddd2;
+  --success: #0f5132;
+  --success-bg: #e8f5ef;
+  --danger: #b03a2e;
+  --danger-bg: #fde8e5;
+  --info-bg: #e8eff8;
+
+  --font-display: 'Playfair Display', 'Noto Sans Arabic', serif;
+  --font-body: 'Lato', 'Noto Sans Arabic', sans-serif;
+
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 20px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 40px rgba(13,59,102,0.10);
+  --shadow-gold: 0 0 30px rgba(201,168,76,0.2);
+
+  --radius: 6px;
+  --radius-lg: 14px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* ── SCROLL PROGRESS ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  z-index: 10000;
+  transition: width 0.1s linear;
+}
+
+/* ── SIDEBAR NAVIGATION ── */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--navy-deep);
+  color: white;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 0;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
+
+.sidebar-header {
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+}
+.sidebar-header .logo-icon {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 8px;
+}
+.sidebar-header h2 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+}
+.sidebar-header .subtitle {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.nav-section {
+  padding: 20px 16px 8px;
+}
+.nav-section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold-dark);
+  font-weight: 700;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+.nav-item:hover {
+  background: rgba(201,168,76,0.08);
+  color: white;
+}
+.nav-item.active {
+  background: rgba(201,168,76,0.12);
+  color: var(--gold);
+  font-weight: 700;
+}
+.nav-item .nav-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.nav-item.active .nav-num {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border-color: var(--gold);
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-light) 100%);
+  color: white;
+  padding: 100px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  max-width: 650px;
+}
+.hero h1 .gold { color: var(--gold); }
+.hero .hero-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+  direction: rtl;
+}
+.hero p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  max-width: 560px;
+  font-weight: 300;
+}
+
+/* ── CHAPTER ── */
+.chapter {
+  padding: 80px 60px;
+  max-width: 840px;
+  border-bottom: 1px solid var(--border);
+  animation: fadeUp 0.5s ease both;
+}
+.chapter:last-child { border-bottom: none; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  color: var(--gold-dark);
+  margin-bottom: 12px;
+}
+.chapter-label .line {
+  width: 30px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.chapter h2 {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.chapter .h2-ar {
+  font-family: 'Noto Sans Arabic', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-light);
+  direction: rtl;
+  margin-bottom: 28px;
+}
+
+.chapter h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 36px 0 14px;
+  padding-left: 16px;
+  border-left: 3px solid var(--gold);
+}
+
+.chapter p {
+  margin-bottom: 16px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.chapter p .ar {
+  display: block;
+  direction: rtl;
+  text-align: right;
+  color: var(--text-light);
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* ── LUXURY CARDS ── */
+.info-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px;
+  margin: 24px 0;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.22s ease;
+  position: relative;
+}
+.info-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.info-card.gold-border {
+  border-left: 4px solid var(--gold);
+}
+.info-card.navy-border {
+  border-left: 4px solid var(--navy);
+}
+.info-card .card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-card p {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+/* ── TIP BOXES ── */
+.tip-box {
+  display: flex;
+  gap: 14px;
+  padding: 20px 22px;
+  border-radius: var(--radius-lg);
+  margin: 24px 0;
+}
+.tip-box.gold {
+  background: var(--gold-pale);
+  border: 1px solid rgba(201,168,76,0.3);
+}
+.tip-box.green {
+  background: var(--success-bg);
+  border: 1px solid rgba(15,81,50,0.15);
+}
+.tip-box.blue {
+  background: var(--info-bg);
+  border: 1px solid rgba(13,59,102,0.12);
+}
+.tip-box.red {
+  background: var(--danger-bg);
+  border: 1px solid rgba(176,58,46,0.15);
+}
+.tip-box .tip-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.tip-box .tip-content {
+  flex: 1;
+}
+.tip-box .tip-label {
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  color: var(--navy);
+}
+.tip-box p { font-size: 14px; margin-bottom: 4px; }
+
+/* ── STEP CARDS (for app guide) ── */
+.step-guide {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin: 28px 0;
+}
+.step-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(13,59,102,0.15);
+}
+.step-body {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+}
+.step-body h4 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.step-body p { font-size: 14px; line-height: 1.7; margin-bottom: 6px; }
+
+/* ── TABLE ── */
+.tax-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.tax-table thead {
+  background: var(--navy);
+  color: var(--gold);
+}
+.tax-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.tax-table td {
+  padding: 12px 18px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.tax-table tr:last-child td { border-bottom: none; }
+.tax-table tr:hover td { background: var(--cream); }
+
+/* ── KEYBOARD SHORTCUTS / BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.badge.gold { background: var(--gold-pale); color: var(--gold-dark); }
+.badge.navy { background: var(--info-bg); color: var(--navy); }
+
+/* ── FOOTER ── */
+.guide-footer {
+  background: var(--navy-deep);
+  color: rgba(255,255,255,0.5);
+  padding: 48px 60px;
+  text-align: center;
+  font-size: 13px;
+}
+.guide-footer .gold { color: var(--gold); }
+
+/* ── MOBILE MENU ── */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 2000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--gold);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .main { margin-left: 0; }
+  .hero { padding: 80px 24px 60px; }
+  .hero h1 { font-size: 32px; }
+  .hero .hero-ar { font-size: 20px; }
+  .chapter { padding: 50px 24px; }
+  .chapter h2 { font-size: 26px; }
+  .guide-footer { padding: 36px 24px; }
+}
+
+/* ── PRINT ── */
+@media print {
+  .sidebar, .mobile-menu-btn, .scroll-progress { display: none !important; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px; }
+  .chapter { page-break-inside: avoid; padding: 30px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Mobile Menu Button -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="logo-icon">🏛️</span>
+    <h2>New Jersey Tax</h2>
+    <div class="subtitle">2025 Guide</div>
+  </div>
+
+  <div style="padding:16px 16px 0;">
+    <a href="guide.html" class="nav-item" style="background:var(--gold);color:var(--navy-deep);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;font-size:12px;margin-bottom:8px;">
+      ← Back to Main Guide
+    </a>
+    <a href="index.html" class="nav-item" style="background:rgba(201,168,76,0.15);color:var(--gold);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;font-size:12px;">
+      ← Back to App — الرجوع للتطبيق
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">NJ State Taxes</div>
+    <a class="nav-item" href="#ch1" data-target="ch1" onclick="scrollToChapter(event,'ch1')"><span class="nav-num">1</span> NJ Tax Overview</a>
+    <a class="nav-item" href="#ch2" data-target="ch2" onclick="scrollToChapter(event,'ch2')"><span class="nav-num">2</span> Deductions & Credits</a>
+    <a class="nav-item" href="#ch3" data-target="ch3" onclick="scrollToChapter(event,'ch3')"><span class="nav-num">3</span> NJ Filing</a>
+    <a class="nav-item" href="#ch4" data-target="ch4" onclick="scrollToChapter(event,'ch4')"><span class="nav-num">4</span> Property Taxes</a>
+    <a class="nav-item" href="#ch5" data-target="ch5" onclick="scrollToChapter(event,'ch5')"><span class="nav-num">5</span> Self-Employment</a>
+    <a class="nav-item" href="#ch6" data-target="ch6" onclick="scrollToChapter(event,'ch6')"><span class="nav-num">6</span> Tips & Pitfalls</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-badge">✦ New Jersey — 2025 Tax Year</div>
+    <h1>The New Jersey<br><span class="gold">Tax Guide</span></h1>
+    <div class="hero-ar">دليل ضرائب نيو جيرسي الشامل</div>
+    <p>Everything you need to understand New Jersey state taxes, maximize your deductions, and navigate property tax relief programs — explained clearly in English and Arabic.</p>
+  </header>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- NJ STATE TAXES                             -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- CHAPTER 1 -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="line"></span> Chapter 1</div>
+    <h2>NJ Tax Overview</h2>
+    <div class="h2-ar">نظرة عامة على ضرائب نيو جيرسي</div>
+
+    <p>New Jersey has a <strong>progressive income tax system</strong> with rates ranging from 1.4% to 10.75% across 7-8 tax brackets. Unlike the federal system, New Jersey does <strong>not have a standard deduction</strong> — instead, you claim <strong>personal exemptions</strong> and <strong>dependent exemptions</strong> to reduce your taxable income.
+    <span class="ar">نيو جيرسي فيها ضرائب تصاعدية من ١.٤٪ لحد ١٠.٧٥٪. بخلاف الفيدرالي، ما في خصم معياري — بدل ما تاخد خصم ثابت، بتطالب بإعفاءات شخصية وإعفاءات المعالين.</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🏛️ The NJ Tax Difference</div>
+      <p>Every year you file a <strong>Form NJ-1040</strong> (or NJ-1040NR for non-residents) to report your income, exemptions, deductions, and credits. Your state tax is calculated separately from your federal tax.</p>
+      <p><span class="ar">كل سنة بتعبي فورم NJ-1040 عشان تبلّغ عن دخلك والإعفاءات والخصومات. الضريبة الولائية تحتسب منفصلة عن الفيدرالي.</span></p>
+    </div>
+
+    <h3>2025 NJ Tax Brackets (Single Filers)</h3>
+
+    <table class="tax-table">
+      <thead>
+        <tr><th>Income Range</th><th>Tax Rate</th><th>الفئة</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>$0 — $24,350</td><td>1.4%</td><td>أول ٢٤,٣٥٠$</td></tr>
+        <tr><td>$24,351 — $61,100</td><td>1.75%</td><td>من ٢٤,٣٥١ لـ ٦١,١٠٠$</td></tr>
+        <tr><td>$61,101 — $96,300</td><td>3.5%</td><td>من ٦١,١٠١ لـ ٩٦,٣٠٠$</td></tr>
+        <tr><td>$96,301 — $155,575</td><td>5.525%</td><td>من ٩٦,٣٠١ لـ ١٥٥,٥٧٥$</td></tr>
+        <tr><td>$155,576 — $289,300</td><td>6.37%</td><td>من ١٥٥,٥٧٦ لـ ٢٨٩,٣٠٠$</td></tr>
+        <tr><td>$289,301 — $1,000,000</td><td>8.97%</td><td>من ٢٨٩,٣٠١ لـ ١,٠٠٠,٠٠٠$</td></tr>
+        <tr><td>$1,000,001+</td><td>10.75%</td><td>فوق ١,٠٠٠,٠٠٠$</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box gold">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <div class="tip-label">Important Difference</div>
+        <p>NJ rates are much lower than federal, and there's <strong>no standard deduction</strong>. This means you claim exemptions instead: $1,000 per person + $1,500 per dependent. If you don't have dependents, you still get a $1,000 exemption.</p>
+        <p><span class="ar">معدلات نيو جيرسي أقل بكثير من الفيدرالي. ما في خصم ثابت — بدل ما تاخد خصم معياري، بتطالب بإعفاءات: ١٠٠٠$ لكل شخص + ١٥٠٠$ لكل معال.</span></p>
+      </div>
+    </div>
+
+    <h3>Filing Threshold (When You Must File)</h3>
+    <p><strong>Single:</strong> Your gross income must be at least $10,000. <strong>Married Filing Jointly:</strong> Combined income must be at least $20,000. If your income is below these thresholds, you may still want to file to claim refundable tax credits like NJ EITC.
+    <span class="ar">أعزب: الدخل لازم يكون ١٠ آلاف$ على الأقل. متزوج: الدخل المشترك لازم يكون ٢٠ ألف$ على الأقل.</span></p>
+
+    <div class="tip-box green">
+      <div class="tip-icon">✅</div>
+      <div class="tip-content">
+        <div class="tip-label">Even If Below Threshold</div>
+        <p>Even if your income is below the filing threshold, file anyway if you had taxes withheld or if you're eligible for EITC or other credits — you might get a refund!</p>
+        <p><span class="ar">حتى لو دخلك أقل من المتطلب، قدّم الإقرار لو انخصمت منك ضرائب أو لو أهل للـ EITC — ممكن ترجعلك فلوس!</span></p>
+      </div>
+    </div>
+
+    <h3>Married Filing Separately in NJ</h3>
+    <p>New Jersey allows married couples to file separately. Each spouse gets a $1,000 exemption plus $1,500 per dependent (split as they decide). This is less common than federal but useful in some situations.</p>
+    <p><span class="ar">نيو جيرسي تسمح للمتزوجين يقدموا إقرارات منفصلة. كل واحد ياخد ١٠٠٠$ إعفاء.</span></p>
+  </section>
+
+  <!-- CHAPTER 2 -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="line"></span> Chapter 2</div>
+    <h2>NJ Deductions & Credits</h2>
+    <div class="h2-ar">الخصومات والائتمانات في نيو جيرسي</div>
+
+    <p>New Jersey offers several <strong>state-specific deductions and credits</strong> that can significantly reduce your tax bill. Combined with federal credits, these can make a huge difference.</p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">🏠 Property Tax Deduction</div>
+      <p>Up to <strong>$15,000</strong> of property taxes paid on your home are deductible from your NJ income. Renters can deduct <strong>18% of rent</strong> (up to about $2,700). This is one of the biggest NJ deductions.</p>
+      <p><span class="ar">خصم الضريبة العقارية لحد ١٥٠٠٠$ من ضريبة البيت اللي بتدفعها. المستأجرين يخصموا ١٨٪ من الإيجار.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">🎓 Tuition Deduction</div>
+      <p>Up to <strong>$10,000</strong> per year for qualified college tuition and fees (at accredited institutions). This applies to you, your spouse, or dependents. The deduction is taken on Form NJ-1040, not federal Form 1040.</p>
+      <p><span class="ar">خصم الرسوم الجامعية لحد ١٠٠٠٠$ في السنة.</span></p>
+    </div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">💰 NJ EITC (Earned Income Tax Credit)</div>
+      <p>New Jersey's EITC is <strong>40% of the federal EITC</strong> you claim. If the federal EITC gives you $2,000, the NJ EITC adds another $800 — a total of $2,800. Fully refundable.</p>
+      <p><span class="ar">الـ EITC في نيو جيرسي هو ٤٠٪ من الـ EITC الفيدرالي. لو الفيدرالي أعطاك ٢٠٠٠$، نيو جيرسي تزيدك ٨٠٠$ — المجموع ٢٨٠٠$!</span></p>
+    </div>
+
+    <h3>ANCHOR Property Tax Relief Program</h3>
+    <p>If you own your home or are a renter with low income, you may qualify for the <strong>ANCHOR program</strong> (Affordable New Jersey Communities and Housing Relief for Homeowners).</p>
+
+    <table class="tax-table">
+      <thead>
+        <tr><th>Income Limit</th><th>Homeowner Benefit</th><th>Renter Benefit</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Under $150,000</td><td>$1,500</td><td>$1,500</td></tr>
+        <tr><td>$150,001 — $250,000</td><td>$1,000</td><td>$1,000</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">🎯</div>
+      <div class="tip-content">
+        <div class="tip-label">ANCHOR Details</div>
+        <p>ANCHOR is a one-time payment sent directly to homeowners and renters. You don't deduct it — you just receive it. Check NJ tax form NJ-1040 or visit <strong>nj.gov/anchor</strong> to see if you qualify. Income limits are high ($250,000), so many NJ residents benefit.</p>
+        <p><span class="ar">الـ ANCHOR دفعة لمرة واحدة توصللك مباشرة. ما بتخصمها من الضريبة — يعني إضافة صافية على دخلك!</span></p>
+      </div>
+    </div>
+
+    <h3>Stay NJ Program (For Seniors)</h3>
+    <p>Homeowners age 50+ with low income can get <strong>50% of property tax paid</strong>, up to <strong>$6,500 per year</strong>. Requires annual application but doesn't need to be renewed if your situation doesn't change.</p>
+    <p><span class="ar">برنامج "ابقى في نيو جيرسي" للمسنين — يخفض الضريبة العقارية بـ ٥٠٪ لحد ٦,٥٠٠$ كل سنة.</span></p>
+
+    <div class="info-card navy-border">
+      <div class="card-title">🏡 Homestead Property Tax Exemption</div>
+      <p>Primary residence homeowners may qualify for a $0 property tax or significant reduction on their primary home (each county has different programs). Check your county assessor's office.</p>
+      <p><span class="ar">بيوت السكن الأساسي قد تتمتع بإعفاء من ضريبة الملكية أو تخفيف كبير.</span></p>
+    </div>
+
+    <h3>Other NJ Credits</h3>
+    <p><strong>Child and Dependent Care Credit:</strong> Up to 30% of childcare expenses (max $3,000 expenses = $900 credit). <strong>Earned Income Tax Credit (Federal):</strong> Also applies in NJ — don't forget to claim it on your state return too!</p>
+  </section>
+
+  <!-- CHAPTER 3 -->
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="line"></span> Chapter 3</div>
+    <h2>NJ Filing Requirements</h2>
+    <div class="h2-ar">متطلبات التقديم في نيو جيرسي</div>
+
+    <p>New Jersey has its own filing deadline, forms, and rules. Make sure you understand both NJ and federal requirements if you're a NJ resident.</p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">📋 Filing Forms</div>
+      <p><strong>NJ-1040:</strong> Used by NJ residents. <strong>NJ-1040NR:</strong> Used by non-residents with NJ-source income (like rental property or business in NJ). <strong>NJ-1040-S:</strong> For pass-through entities and S corporations.</p>
+      <p><span class="ar">فورم NJ-1040 للمقيمين في نيو جيرسي. NJ-1040NR للغير مقيمين اللي عندهم دخل من نيو جيرسي.</span></p>
+    </div>
+
+    <h3>Key Dates</h3>
+    <p><strong>Regular Deadline:</strong> April 15, 2026 (same as federal). <strong>Extension Deadline:</strong> October 15, 2026 (6-month extension). <strong>Important:</strong> Even if you file for an extension, you must pay <strong>80% of your estimated tax</strong> by April 15 or face penalties and interest.</p>
+    <p><span class="ar">الموعد العادي: ١٥ أبريل ٢٠٢٦. التمديد: ١٥ أكتوبر ٢٠٢٦. لازم تدفع على الأقل ٨٠٪ من الضريبة المتوقعة بالموعد الأول حتى لو مددت.</span></p>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Extension ≠ Automatic Forgiveness</div>
+        <p>Filing an extension gives you time to prepare your return, but <strong>not</strong> time to pay taxes. If you owe money, pay by April 15 even if you file the extension. Interest starts accruing immediately after April 15.</p>
+        <p><span class="ar">التمديد ما معناته تأجيل الدفع! لازم تدفع ما تقدره بالموعد الأول، وإلا بتتفاقم الفوائس والغرامات.</span></p>
+      </div>
+    </div>
+
+    <h3>Estimated Quarterly Tax Payments (NJ-1040-ES)</h3>
+    <p>If you owe more than $400 in state taxes with no withholding, you must make <strong>quarterly estimated payments</strong> using <strong>Form NJ-1040-ES</strong>. Dates: April 15, June 15, September 15, and January 15.</p>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">📅</div>
+      <div class="tip-content">
+        <div class="tip-label">Quarterly Payment Rule</div>
+        <p>Calculate your expected annual tax, divide by 4, and pay by each quarterly date. Underpayment can trigger a penalty even if you pay in full by April 15 next year.</p>
+        <p><span class="ar">احسب الضريبة المتوقعة السنوية وقسمها على ٤، وادفع كل ثلاث شهور. عدم الدفع في الموعد المحدد ممكن يسبب غرامة حتى لو دفعت كل شي بعدين.</span></p>
+      </div>
+    </div>
+
+    <h3>Where to File</h3>
+    <p>New Jersey has <strong>no income tax on retirement income</strong> (pensions, Social Security, IRA withdrawals) for residents over 62. This is huge! Additionally, NJ does not tax earned income of residents over 62 in some cases — check eligibility.</p>
+    <p><span class="ar">نيو جيرسي ما تفرض ضريبة على دخل التقاعد (المعاشات والضمان الاجتماعي) للمسنين فوق ٦٢ سنة!</span></p>
+  </section>
+
+  <!-- CHAPTER 4 -->
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="line"></span> Chapter 4</div>
+    <h2>Property Taxes in NJ</h2>
+    <div class="h2-ar">الضريبة العقارية في نيو جيرسي</div>
+
+    <p>New Jersey has the <strong>highest property tax burden</strong> in the nation — the average homeowner pays about 2.5% of property value annually. This is why NJ offers so many relief programs.</p>
+    <p><span class="ar">نيو جيرسي عندها أعلى ضرائب عقارية في أمريكا! لذلك فيه برامج كثير عشان تساعد السكان.</span></p>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Reality Check</div>
+        <p>A $300,000 home in NJ typically pays $7,500-9,000 annually in property taxes. Combined with federal deductions, state programs, and credits, you can offset a significant portion.</p>
+        <p><span class="ar">بيت بـ ٣٠٠ ألف دولار في نيو جيرسي يدفع حوالي ٧,٥٠٠ لـ ٩,٠٠٠$ سنة ضرائب عقارية!</span></p>
+      </div>
+    </div>
+
+    <h3>How to Maximize Property Tax Relief</h3>
+
+    <div class="step-guide">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Deduct on Federal Taxes</h4>
+        <p>Up to $10,000 in state and local property taxes (SALT) can be deducted on your federal Form 1040. If your NJ property taxes exceed this, the excess is not deductible.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Deduct on NJ Taxes</h4>
+        <p>Up to $15,000 in NJ property taxes deduct from NJ taxable income (no federal SALT limit applied here). Renters deduct 18% of rent instead.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Apply for ANCHOR</h4>
+        <p>Annual program for homeowners/renters with income under $250,000. Provides $1,000-1,500 per year. No deduction — it's direct relief.</p>
+      </div>
+    </div>
+
+    <div class="step-guide">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Check County/Local Programs</h4>
+        <p>Your county assessor's office may offer homestead exemptions, senior exemptions, or other local relief. Most are automatic or require simple annual application.</p>
+      </div>
+    </div>
+
+    <h3>Assessment Challenges</h3>
+    <p>If you believe your home's assessed value is too high, file an assessment challenge with your county assessor by <strong>April 1</strong> each year. If successful, your property tax can be reduced retroactively.</p>
+    <p><span class="ar">لو تعتقد التقييم العقاري غالي، تقدر تطعن فيه قبل ١ أبريل. لو نجحت، الضريبة تنخفض.</span></p>
+
+    <div class="tip-box gold">
+      <div class="tip-icon">💡</div>
+      <div class="tip-content">
+        <div class="tip-label">Pro Tip: Sales Ratio</div>
+        <p>If properties in your neighborhood recently sold for less than their assessed value, use this in your challenge. Assessors must assess at "true market value," and recent sales prove what that is.</p>
+        <p><span class="ar">لو بيوت في حيك اتباعت برخص من التقييم، استخدم هاي المعلومة بالطعن.</span></p>
+      </div>
+    </div>
+
+    <h3>Pass-Through Entity Tax (BAIT) as SALT Workaround</h3>
+    <p>If you own a pass-through entity (LLC, S-Corp, partnership) and pay high NJ taxes, you can elect to pay <strong>Pass-Through Entity Tax (BAIT) at 10.9%</strong> on income over $1 million. This shift reduces your federal taxable income and helps you avoid the $10,000 SALT cap.</p>
+    <p><span class="ar">لو عندك بزنس كـ LLC أو S-Corp بدخل عالي، تقدر تختار تدفع ضريبة المؤسسة المالكة (BAIT) بدل الضريبة الشخصية — هاي تساعد تتجنب حد الـ SALT الـ ١٠ آلاف$.</span></p>
+  </section>
+
+  <!-- CHAPTER 5 -->
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="line"></span> Chapter 5</div>
+    <h2>Self-Employment in NJ</h2>
+    <div class="h2-ar">العمل الحر والضرائب في نيو جيرسي</div>
+
+    <p>Self-employed individuals (1099 contractors, freelancers, business owners) owe both <strong>federal self-employment tax</strong> (15.3%) and <strong>NJ income tax</strong> on net profits. NJ treats self-employment income differently than federal.</p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">💼 Federal Self-Employment Tax</div>
+      <p>You pay 15.3% on 92.35% of net self-employment income: 12.4% for Social Security (capped at ~$168,000 income) and 2.9% for Medicare (no cap). You can deduct half of this tax.</p>
+      <p><span class="ar">تدفع ١٥.٣٪ على دخل العمل الحر — ١٢.٤٪ للضمان الاجتماعي و٢.٩٪ لـ Medicare. بتقدر تخصم نصها من الضريبة.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">🏛️ NJ Income Tax on Self-Employment</div>
+      <p>NJ taxes self-employment income as <strong>"Net Profits From Business"</strong> on Schedule C (federal) transferred to NJ Form NJ-1040. You pay NJ's progressive rates (1.4%-10.75%) on your net profit after deductions.</p>
+      <p><span class="ar">نيو جيرسي تحسب ضرائبها على الدخل الصافي من البزنس بعد الخصومات.</span></p>
+    </div>
+
+    <h3>Business Expense Deductions</h3>
+    <p>Before calculating NJ tax, deduct all legitimate business expenses (same as federal):</p>
+
+    <div class="tip-box blue">
+      <div class="tip-icon">💼</div>
+      <div class="tip-content">
+        <div class="tip-label">Deductible Business Expenses</div>
+        <p><strong>Home Office:</strong> $5/sq ft up to 300 sq ft ($1,500 max) or actual expenses method. <strong>Vehicle:</strong> 70¢/mile in 2025 or actual expenses (gas, repairs, insurance). <strong>Supplies:</strong> Computer, software, tools, printer. <strong>Phone/Internet:</strong> Business portion of monthly bill. <strong>Professional Services:</strong> Accountant, lawyer, bookkeeper fees. <strong>Meals & Entertainment:</strong> 50% of business meals. <strong>Travel:</strong> Hotels, flights, car rentals for business trips.</p>
+        <p><span class="ar">مكتب في البيت، سيارة، أدوات، هاتف وإنترنت، خدمات المحاسب، وجبات عمل، السفر — كلها تنخصم.</span></p>
+      </div>
+    </div>
+
+    <h3>NJ Quarterly Estimated Taxes</h3>
+    <p>If you expect to owe more than $400 in NJ state tax for the year, you <strong>must</strong> make quarterly estimated payments via NJ Form NJ-1040-ES. Dates: April 15, June 15, September 15, January 15.</p>
+
+    <div class="tip-box red">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-content">
+        <div class="tip-label">Underpayment Penalty</div>
+        <p>Failing to pay quarterly can trigger an "underpayment penalty" even if you pay 100% of your tax by the extension deadline (October 15). The penalty is based on how much you should have paid each quarter.</p>
+        <p><span class="ar">عدم دفع الأقساط التقديرية ممكن يسبب غرامة حتى لو دفعت المبلغ كاملا بعدين.</span></p>
+      </div>
+    </div>
+
+    <h3>Pass-Through Entity Tax (BAIT) — Advanced Topic</h3>
+    <p>If your business is taxed as an S-Corporation or LLC with income over $1 million, you can elect <strong>BAIT (Business Alternative Income Tax)</strong> at 10.9% on the entity level. This allows:
+    <span class="ar">لو دخل بزنسك يزيد على مليون دولار، تقدر تختار BAIT — ضريبة بديلة بـ ١٠.٩٪.</span></p>
+
+    <ul style="margin:16px 0 16px 30px; color:var(--text); font-size:15px; line-height:1.8;">
+      <li>Reduction of individual-level taxes</li>
+      <li>Workaround for the $10,000 federal SALT cap</li>
+      <li>Potential savings of 2-3% on high incomes</li>
+    </ul>
+
+    <p><span class="ar">توفير على الضرائب الشخصية، تجنب حد الـ SALT، وتوفير إضافي على الدخل العالي.</span></p>
+  </section>
+
+  <!-- CHAPTER 6 -->
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="line"></span> Chapter 6</div>
+    <h2>NJ Tips & Common Pitfalls</h2>
+    <div class="h2-ar">نصائح وأخطاء شائعة في نيو جيرسي</div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">❌ Pitfall #1: Forgetting No Standard Deduction</div>
+      <p>The biggest mistake: expecting a standard deduction like federal. NJ doesn't have one. Claim your $1,000 personal exemption + $1,500 per dependent instead.</p>
+      <p><span class="ar">أكبر غلط: توقع خصم معياري مثل الفيدرالي. نيو جيرسي ما عندها. بدل ما تخصم ١٥ ألف$ معياري، بتطالب بـ ١٠٠٠$ إعفاء شخصي + ١٥٠٠$ لكل معال.</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">❌ Pitfall #2: Ignoring Property Tax Deductions</div>
+      <p>Up to $15,000 of NJ property taxes are deductible. Don't miss this! Renters: don't forget 18% of rent deduction (up to ~$2,700).</p>
+      <p><span class="ar">خصم ضريبة البيت لحد ١٥٠٠٠$ واحد من أكبر الخصومات في نيو جيرسي. ما تنساه!</span></p>
+    </div>
+
+    <div class="info-card gold-border">
+      <div class="card-title">❌ Pitfall #3: Missing ANCHOR Payments</div>
+      <p>ANCHOR is automatic for most homeowners and renters under $250,000 income, but you have to be enrolled or check annually. Many NJ residents leave $1,000+ on the table by ignoring this.</p>
+      <p><span class="ar">برنامج ANCHOR معظم الناس يهملونه — تفقد ١٠٠٠$ لـ ١٥٠٠$ مجاني!</span></p>
+    </div>
+
+    <div class="info-card navy-border">
+      <div class="card-title">❌ Pitfall #4: Not Claiming NJ EITC</div>
+      <p>If you qualify for federal EITC, automatically claim NJ EITC too (40% of federal). It's refundable — you can get a refund even if you owe $0 in taxes.</p>
+      <p><span class="ar">الـ EITC في نيو جيرسي يعطيك ٤٠٪ إضافية على الـ EITC الفيدرالي!</span></p>
+    </div>
+
+    <h3>Sales Tax & NJ Consumption Tax</h3>
+    <p>NJ sales tax is a flat <strong>6.625%</strong> statewide with no additional local taxes. Some items are exempt (groceries, clothing under $110, medications). While this isn't deductible on your tax return, it's important to know.</p>
+    <p><span class="ar">ضريبة المبيعات في نيو جيرسي ٦.٦٢٥٪ موحدة في كل الولاية. ما في ضرائب إضافية محلية.</span></p>
+
+    <div class="tip-box green">
+      <div class="tip-icon">✅</div>
+      <div class="tip-content">
+        <div class="tip-label">How to Maximize Tax Relief</div>
+        <p>1. Claim $1,000 personal exemption + $1,500 per dependent. 2. Deduct property taxes (up to $15,000) or 18% rent. 3. Claim NJ EITC (40% of federal). 4. Apply for ANCHOR ($1,000-1,500). 5. Check state tuition deduction ($10,000). 6. For high earners: consider BAIT if entity income > $1M. Combining all these can save $2,000-8,000+ depending on your situation.</p>
+        <p><span class="ar">اجمع بين الإعفاءات والخصومات والائتمانات والبرامج الخاصة لتوفر أقصى حد. ممكن توفر ٢٠٠٠ لـ ٨٠٠٠$ أو أكثر!</span></p>
+      </div>
+    </div>
+
+    <h3>EITC Below Filing Threshold</h3>
+    <p>Important: Even if your income is below $10,000 (single) or $20,000 (married), you should still file NJ taxes if you have EITC or had taxes withheld. Both are refundable and you'll get money back.</p>
+    <p><span class="ar">حتى لو دخلك أقل من المتطلب، قدّم إقرار لو عندك EITC أو انخصمت منك ضرائب — بترجعلك فلوس!</span></p>
+
+    <div class="info-card gold-border">
+      <div class="card-title">📞 Getting Help</div>
+      <p><strong>NJ Division of Taxation:</strong> 609-588-2200 or <strong>nj.gov/taxation</strong>. <strong>Free VITA Programs:</strong> Many NJ nonprofits offer free tax preparation for low-income residents. Search "VITA near me" or visit <strong>irs.gov/vita</strong>.</p>
+      <p><span class="ar">لو احتجت مساعدة: خط الضرائب في نيو جيرسي أو مواقع تحضير الضرائب المجاني للدخل المنخفض.</span></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="guide-footer">
+    <div style="font-size:28px;margin-bottom:12px;">🏛️</div>
+    <p style="font-family:var(--font-display);font-size:18px;color:var(--gold);margin-bottom:8px;">New Jersey Tax Guide</p>
+    <p>دليل ضرائب نيو جيرسي</p>
+    <p style="margin-top:16px;">2025 Tax Year (Filing 2026) &middot; Built with ♥ for <span class="gold">Mina</span></p>
+  </footer>
+
+</div>
+
+<script>
+// ── SCROLL TO CHAPTER (main navigation handler) ──
+function scrollToChapter(event, targetId) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  // Scroll the target into view
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Update active state immediately
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const clickedNav = document.querySelector('.nav-item[data-target="' + targetId + '"]');
+  if (clickedNav) clickedNav.classList.add('active');
+
+  // Update URL hash safely (skip if inside iframe)
+  try {
+    if (window.top === window.self) {
+      history.replaceState(null, '', '#' + targetId);
+    }
+  } catch(e) { /* ignore in iframe */ }
+
+  // Close mobile sidebar if open
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+}
+
+// ── Scroll progress bar ──
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+  if (height > 0) {
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  }
+});
+
+// ── Active nav highlight on scroll ──
+const chapters = document.querySelectorAll('.chapter');
+const navItems = document.querySelectorAll('.nav-item');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(item => item.classList.remove('active'));
+      const id = entry.target.id;
+      const activeNav = document.querySelector('.nav-item[data-target="' + id + '"]');
+      if (activeNav) activeNav.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+chapters.forEach(ch => observer.observe(ch));
+
+// ── Mobile sidebar toggle ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// ── Handle hash on page load ──
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    setTimeout(() => {
+      const target = document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  }
+});
+
+// ── Fade-in on scroll ──
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+chapters.forEach(ch => {
+  ch.style.animationPlayState = 'paused';
+  fadeObserver.observe(ch);
+});
+</script>
+</body>
+</html>

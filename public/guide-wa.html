@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Washington Tax Guide — دليل ضرائب واشنطن | Tax Advisor Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d3b66;
+  --navy-light: #1a5276;
+  --navy-dark: #071e38;
+  --navy-deep: #050e1a;
+  --gold: #c9a84c;
+  --gold-light: #dab95e;
+  --gold-dark: #b08f3a;
+  --gold-pale: #f5ecd4;
+  --gold-glow: rgba(201,168,76,0.25);
+  --cream: #faf8f2;
+  --cream-dark: #f0ebe0;
+  --white: #ffffff;
+  --text: #1a1f36;
+  --text-light: #5e6a82;
+  --text-faint: #8b92a5;
+  --border: #e2ddd2;
+  --success: #0f5132;
+  --success-bg: #e8f5ef;
+  --danger: #b03a2e;
+  --danger-bg: #fde8e5;
+  --info-bg: #e8eff8;
+  --font-display: 'Playfair Display', 'Noto Sans Arabic', serif;
+  --font-body: 'Lato', 'Noto Sans Arabic', sans-serif;
+  --shadow-sm: 0 2px 8px rgba(13,59,102,0.06);
+  --shadow-md: 0 4px 20px rgba(13,59,102,0.08);
+  --shadow-lg: 0 8px 40px rgba(13,59,102,0.10);
+  --shadow-gold: 0 0 30px rgba(201,168,76,0.2);
+  --radius: 6px;
+  --radius-lg: 14px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--cream); color: var(--text); line-height: 1.75; font-size: 16px; font-weight: 400; }
+.scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light)); z-index: 10000; transition: width 0.1s linear; }
+.sidebar { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: var(--navy-deep); color: white; overflow-y: auto; z-index: 1000; padding: 0; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
+.sidebar-header { padding: 32px 24px 24px; border-bottom: 1px solid rgba(201,168,76,0.15); text-align: center; }
+.sidebar-header .logo-icon { font-size: 36px; display: block; margin-bottom: 8px; }
+.sidebar-header h2 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; }
+.sidebar-header .subtitle { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+.nav-section { padding: 20px 16px 8px; }
+.nav-section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-dark); font-weight: 700; padding: 0 8px; margin-bottom: 8px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius); color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; font-weight: 400; transition: all 0.18s ease; cursor: pointer; margin-bottom: 2px; }
+.nav-item:hover { background: rgba(201,168,76,0.08); color: white; }
+.nav-item.active { background: rgba(201,168,76,0.12); color: var(--gold); font-weight: 700; }
+.nav-item .nav-num { width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.08); }
+.nav-item.active .nav-num { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); }
+.main { margin-left: 280px; min-height: 100vh; }
+.hero { background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-light) 100%); color: white; padding: 100px 60px 80px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.25); padding: 6px 16px; border-radius: 50px; font-size: 12px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 24px; }
+.hero h1 { font-family: var(--font-display); font-size: 52px; font-weight: 800; line-height: 1.15; margin-bottom: 16px; max-width: 650px; }
+.hero h1 .gold { color: var(--gold); }
+.hero .hero-ar { font-family: 'Noto Sans Arabic', serif; font-size: 28px; font-weight: 700; color: rgba(255,255,255,0.5); margin-bottom: 24px; direction: rtl; }
+.hero p { font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.7); max-width: 560px; font-weight: 300; }
+.chapter { padding: 80px 60px; max-width: 840px; border-bottom: 1px solid var(--border); animation: fadeUp 0.5s ease both; }
+.chapter:last-child { border-bottom: none; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.chapter-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 700; color: var(--gold-dark); margin-bottom: 12px; }
+.chapter-label .line { width: 30px; height: 2px; background: var(--gold); }
+.chapter h2 { font-family: var(--font-display); font-size: 34px; font-weight: 800; color: var(--navy); line-height: 1.25; margin-bottom: 8px; }
+.chapter .h2-ar { font-family: 'Noto Sans Arabic', serif; font-size: 22px; font-weight: 700; color: var(--text-light); direction: rtl; margin-bottom: 28px; }
+.chapter h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--navy); margin: 36px 0 14px; padding-left: 16px; border-left: 3px solid var(--gold); }
+.chapter p { margin-bottom: 16px; color: var(--text); font-size: 16px; line-height: 1.8; }
+.chapter p .ar { display: block; direction: rtl; text-align: right; color: var(--text-light); font-family: 'Noto Sans Arabic', sans-serif; font-size: 14px; margin-top: 4px; }
+.info-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px 28px; margin: 24px 0; box-shadow: var(--shadow-sm); transition: all 0.22s ease; position: relative; }
+.info-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.info-card.gold-border { border-left: 4px solid var(--gold); }
+.info-card.navy-border { border-left: 4px solid var(--navy); }
+.info-card .card-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.info-card p { margin-bottom: 8px; font-size: 15px; }
+.tip-box { display: flex; gap: 14px; padding: 20px 22px; border-radius: var(--radius-lg); margin: 24px 0; }
+.tip-box.gold { background: var(--gold-pale); border: 1px solid rgba(201,168,76,0.3); }
+.tip-box.green { background: var(--success-bg); border: 1px solid rgba(15,81,50,0.15); }
+.tip-box.blue { background: var(--info-bg); border: 1px solid rgba(13,59,102,0.12); }
+.tip-box.red { background: var(--danger-bg); border: 1px solid rgba(176,58,46,0.15); }
+.tip-box .tip-icon { font-size: 22px; flex-shrink: 0; line-height: 1; }
+.tip-box .tip-content { flex: 1; }
+.tip-box .tip-label { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; color: var(--navy); }
+.tip-box p { font-size: 14px; margin-bottom: 4px; }
+.tip-box p:last-child { margin-bottom: 0; }
+table.tax-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+table.tax-table th { background: var(--navy-deep); color: white; padding: 12px; text-align: left; font-weight: 700; }
+table.tax-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+table.tax-table tr:hover { background: var(--gold-pale); }
+.guide-footer { text-align: center; padding: 60px 60px; background: var(--navy-deep); color: white; border-top: 1px solid rgba(201,168,76,0.15); }
+.guide-footer p { margin-bottom: 8px; font-size: 14px; line-height: 1.6; }
+.guide-footer .gold { color: var(--gold); }
+.mobile-menu-btn { display: none; position: fixed; top: 20px; left: 20px; width: 40px; height: 40px; background: var(--navy-deep); color: white; border: none; border-radius: var(--radius); font-size: 18px; z-index: 2000; cursor: pointer; transition: all 0.2s ease; }
+.mobile-menu-btn:hover { background: var(--navy); }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .main { margin-left: 0; }
+  .hero { padding: 80px 24px 60px; }
+  .hero h1 { font-size: 32px; }
+  .hero .hero-ar { font-size: 20px; }
+  .chapter { padding: 50px 24px; }
+  .chapter h2 { font-size: 26px; }
+  .guide-footer { padding: 36px 24px; }
+}
+@media print {
+  .sidebar, .mobile-menu-btn, .scroll-progress { display: none !important; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px; }
+  .chapter { page-break-inside: avoid; padding: 30px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Mobile Menu Button -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="logo-icon">🏔️</span>
+    <h2>Washington Tax</h2>
+    <div class="subtitle">2025 Guide</div>
+  </div>
+
+  <div style="padding:16px 16px 0;">
+    <a href="guide.html" class="nav-item" style="background:var(--gold);color:var(--navy-deep);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;font-size:12px;margin-bottom:8px;">
+      ← Back to Main Guide
+    </a>
+    <a href="index.html" class="nav-item" style="background:rgba(201,168,76,0.15);color:var(--gold);font-weight:800;justify-content:center;border-radius:8px;padding:11px 12px;text-decoration:none;font-size:12px;">
+      ← Back to App — الرجوع للتطبيق
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Washington Taxes</div>
+    <a class="nav-item" href="#ch1" data-target="ch1" onclick="scrollToChapter(event,'ch1')"><span class="nav-num">1</span> Washington: No State Income Tax!</a>
+    <a class="nav-item" href="#ch2" data-target="ch2" onclick="scrollToChapter(event,'ch2')"><span class="nav-num">2</span> Sales & Property Tax</a>
+    <a class="nav-item" href="#ch3" data-target="ch3" onclick="scrollToChapter(event,'ch3')"><span class="nav-num">3</span> Filing & Federal Only</a>
+    <a class="nav-item" href="#ch4" data-target="ch4" onclick="scrollToChapter(event,'ch4')"><span class="nav-num">4</span> Capital Gains Tax Details</a>
+    <a class="nav-item" href="#ch5" data-target="ch5" onclick="scrollToChapter(event,'ch5')"><span class="nav-num">5</span> Self-Employment Advantage</a>
+    <a class="nav-item" href="#ch6" data-target="ch6" onclick="scrollToChapter(event,'ch6')"><span class="nav-num">6</span> Tips & Advantages</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-badge">✦ Washington — 2025 Tax Year</div>
+    <h1>The Washington<br><span class="gold">Tax Guide</span></h1>
+    <div class="hero-ar">دليل ضرائب واشنطن الشامل</div>
+    <p>Everything you need to understand Washington state taxes, maximize your deductions, and navigate tax savings opportunities — explained clearly in English and Arabic.</p>
+  </header>
+
+  <!-- CHAPTERS -->
+
+  <section class="chapter" id="ch1">
+    <div class="chapter-label"><span class="line"></span> Chapter 1</div>
+    <h2>Washington: No State Income Tax!</h2>
+    <div class="h2-ar">واشنطن: لا توجد ضريبة دخل!</div>
+    <div class="tip-box gold" style="margin-bottom:32px;">
+<div class="tip-icon">🎉</div>
+<div class="tip-content">
+<div class="tip-label">Zero State Income Tax</div>
+<p><strong>Washington has NO state income tax.</strong> File federal return only. Major financial advantage.</p>
+<p><span class="ar">واشنطن لا تفرض ضريبة دخل ولائية — فقط الفيدرالي.</span></p>
+</div>
+</div>
+
+<h3>Alternative Revenue: Sales Tax</h3>
+<p>Washington generates revenue through <strong>sales tax (10.25%), property tax, and capital gains tax</strong> (on long-term gains over $250,000 annually).</p>
+
+<h3>Capital Gains Tax (2022 onward)</h3>
+<p>Washington taxes <strong>long-term capital gains at 7% if annual gains exceed $270,000</strong>. For most people, this doesn't apply. But high earners with investment income should be aware.</p>
+  </section>
+
+  <section class="chapter" id="ch2">
+    <div class="chapter-label"><span class="line"></span> Chapter 2</div>
+    <h2>Sales & Property Tax</h2>
+    <div class="h2-ar">ضرائب المبيعات والملكية</div>
+    <h3>Sales Tax: High but No Income Tax Offset</h3><p>Statewide base <strong>6.5%</strong>. Local counties add up to <strong>3.75%</strong> more, for totals of <strong>6.5%–10.25%</strong>. NO exemptions on groceries (unlike most states).</p><h3>Property Tax</h3><p>Washington property tax averages <strong>~0.84% of home value</strong>.</p><div class="info-card gold-border"><div class="card-title">🏠 High Sales Tax Trade-off</div><p>Washington's very high sales tax (up to 10.25%) is the trade-off for no income tax. Essential goods like groceries are taxed.</p></div>
+  </section>
+
+  <section class="chapter" id="ch3">
+    <div class="chapter-label"><span class="line"></span> Chapter 3</div>
+    <h2>Filing & Federal Only</h2>
+    <div class="h2-ar">الإقرارات الفيدرالية فقط</div>
+    <h3>No State Return Required</h3><p>Washington has <strong>NO state income tax return</strong>. File federal Form 1040 with IRS only.</p><h3>Self-Employed: Federal Only</h3><p>Self-employed file federal Schedule C and SE tax — no state equivalent.</p>
+  </section>
+
+  <section class="chapter" id="ch4">
+    <div class="chapter-label"><span class="line"></span> Chapter 4</div>
+    <h2>Capital Gains Tax Details</h2>
+    <div class="h2-ar">ضريبة الأرباح الرأسمالية</div>
+    <h3>7% Tax on Long-Term Gains (If >$270,000/year)</h3><p>Washington taxes long-term capital gains at <strong>7%</strong> if your annual gains exceed <strong>$270,000</strong>. Applies to stocks, bonds, real estate (not primary residence).</p><div class="tip-box blue"><div class="tip-icon">💰</div><div class="tip-content"><div class="tip-label">Most People Unaffected</div><p>If your capital gains are under $270,000/year, Washington has ZERO capital gains tax.</p></div></div>
+  </section>
+
+  <section class="chapter" id="ch5">
+    <div class="chapter-label"><span class="line"></span> Chapter 5</div>
+    <h2>Self-Employment Advantage</h2>
+    <div class="h2-ar">مميزات العمل الحر</div>
+    <h3>No State SE Tax</h3><p>Self-employed pay federal SE tax (~15.3%) only. No state equivalent saves significant money.</p><div class="tip-box green"><div class="tip-icon">✅</div><div class="tip-content"><div class="tip-label">Business Owners Love WA</div><p>Washington is extremely business-friendly: no state income tax, no corporate income tax.</p></div></div>
+  </section>
+
+  <section class="chapter" id="ch6">
+    <div class="chapter-label"><span class="line"></span> Chapter 6</div>
+    <h2>Tips & Advantages</h2>
+    <div class="h2-ar">نصائح والمميزات</div>
+    <div class="tip-box gold"><div class="tip-icon">🎉</div><div class="tip-content"><div class="tip-label">Zero State Income Tax</div><p>Washington saves residents $2,000–$10,000+ per year compared to high-tax states. Over a career, that's $100,000+.</p></div></div><h3>High Sales Tax Trade-off</h3><p>The 10.25% sales tax (especially on groceries) is the downside. Budget for this in consumer purchases.</p><h3>Perfect for High Earners</h3><p>Wealthy retirees and business owners benefit most from no income/corporate tax. Capital gains tax only affects very successful investors.</p>
+  </section>
+
+  <footer class="guide-footer">
+    <div style="font-size:28px;margin-bottom:12px;">🏔️</div>
+    <p style="font-family:var(--font-display);font-size:18px;color:var(--gold);margin-bottom:8px;">Washington Tax Guide</p>
+    <p>دليل ضرائب واشنطن</p>
+    <p style="margin-top:16px;">2025 Tax Year (Filing 2026) &middot; Built with ♥ for <span class="gold">Mina</span></p>
+  </footer>
+
+</div>
+
+<script>
+// ── SCROLL TO CHAPTER (main navigation handler) ──
+function scrollToChapter(event, targetId) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const clickedNav = document.querySelector('.nav-item[data-target="' + targetId + '"]');
+  if (clickedNav) clickedNav.classList.add('active');
+
+  try {
+    if (window.top === window.self) {
+      history.replaceState(null, '', '#' + targetId);
+    }
+  } catch(e) { /* ignore in iframe */ }
+
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+}
+
+// ── Scroll progress bar ──
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = (document.documentElement.scrollHeight || document.body.scrollHeight) - window.innerHeight;
+  if (height > 0) {
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  }
+});
+
+// ── Active nav highlight on scroll ──
+const chapters = document.querySelectorAll('.chapter');
+const navItems = document.querySelectorAll('.nav-item');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(item => item.classList.remove('active'));
+      const id = entry.target.id;
+      const activeNav = document.querySelector('.nav-item[data-target="' + id + '"]');
+      if (activeNav) activeNav.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+chapters.forEach(ch => observer.observe(ch));
+
+// ── Mobile sidebar toggle ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// ── Handle hash on page load ──
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    setTimeout(() => {
+      const target = document.getElementById(hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  }
+});
+
+// ── Fade-in on scroll ──
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+chapters.forEach(ch => {
+  ch.style.animationPlayState = 'paused';
+  fadeObserver.observe(ch);
+});
+</script>
+</body>
+</html>
