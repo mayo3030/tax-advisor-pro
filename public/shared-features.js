@@ -37,6 +37,15 @@
   let saveTimeout;
   let isOnline = navigator.onLine;
 
+  // Detect current language
+  function getLang() {
+    return localStorage.getItem('appLanguage') || document.documentElement.lang || 'en';
+  }
+  function msg(key) {
+    const lang = getLang();
+    return MESSAGES[key]?.[lang] || MESSAGES[key]?.en || '';
+  }
+
   // ==================== STYLES ====================
   function injectStyles() {
     const style = document.createElement('style');
@@ -284,17 +293,17 @@
     const saveIndicator = document.createElement('div');
     saveIndicator.className = 'toast info';
     saveIndicator.style.display = 'none';
-    saveIndicator.textContent = MESSAGES.saving.en;
+    saveIndicator.textContent = msg('saving');
     document.body.appendChild(saveIndicator);
 
     document.addEventListener('input', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
         clearTimeout(saveTimeout);
         saveIndicator.style.display = 'block';
-        saveIndicator.textContent = MESSAGES.saving.en;
+        saveIndicator.textContent = msg('saving');
 
         saveTimeout = setTimeout(() => {
-          saveIndicator.textContent = MESSAGES.saved.en;
+          saveIndicator.textContent = msg('saved');
           setTimeout(() => {
             saveIndicator.style.display = 'none';
           }, 1500);
@@ -306,10 +315,10 @@
       if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) {
         clearTimeout(saveTimeout);
         saveIndicator.style.display = 'block';
-        saveIndicator.textContent = MESSAGES.saving.en;
+        saveIndicator.textContent = msg('saving');
 
         saveTimeout = setTimeout(() => {
-          saveIndicator.textContent = MESSAGES.saved.en;
+          saveIndicator.textContent = msg('saved');
           setTimeout(() => {
             saveIndicator.style.display = 'none';
           }, 1500);
@@ -328,7 +337,7 @@
 
     let dialogHTML = `
       <button class="close-shortcuts" aria-label="Close">×</button>
-      <h2>${MESSAGES.shortcuts.en}</h2>
+      <h2>${msg('shortcuts')}</h2>
     `;
 
     Object.entries(SHORTCUTS).forEach(([key, shortcut]) => {
@@ -342,7 +351,7 @@
 
     dialogHTML += `
       <div class="shortcut-item">
-        <span>${MESSAGES.shortcuts.en}</span>
+        <span>${msg('shortcuts')}</span>
         <span class="shortcut-key">?</span>
       </div>
     `;
@@ -408,7 +417,7 @@
       localStorage.setItem('theme', 'dark');
     }
 
-    showToast(MESSAGES.darkMode.en, 'info', 1500);
+    showToast(msg('darkMode'), 'info', 1500);
   }
 
   // Load saved dark mode preference
@@ -429,7 +438,7 @@
         banner.className = 'network-banner';
         document.body.insertBefore(banner, document.body.firstChild);
       }
-      banner.textContent = MESSAGES.offline.en;
+      banner.textContent = msg('offline');
       banner.style.display = 'block';
     }
 
@@ -438,7 +447,7 @@
       if (banner) {
         banner.style.display = 'none';
       }
-      showToast(MESSAGES.online.en, 'success', 2000);
+      showToast(msg('online'), 'success', 2000);
     }
 
     window.addEventListener('offline', () => {

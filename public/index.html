@@ -915,11 +915,17 @@ body {
   /* PROGRESS INDICATORS */
   .progress-steps {
     margin-bottom: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    gap: 4px;
   }
   .progress-steps .step-dot {
+    min-width: 28px;
     width: 28px;
     height: 28px;
     font-size: 12px;
+    flex-shrink: 0;
   }
   .progress-steps::before {
     top: 14px;
@@ -928,6 +934,8 @@ body {
   }
   .progress-labels {
     display: none;
+    overflow-x: auto;
+    flex-wrap: nowrap;
   }
 
   /* CARDS */
@@ -1193,12 +1201,18 @@ body {
   /* PROGRESS INDICATORS */
   .progress-steps {
     margin-bottom: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    gap: 4px;
   }
   .progress-steps .step-dot {
+    min-width: 24px;
     width: 24px;
     height: 24px;
     font-size: 10px;
     border: 2px solid var(--bg);
+    flex-shrink: 0;
   }
   .progress-steps::before {
     top: 12px;
@@ -1208,6 +1222,8 @@ body {
   }
   .progress-labels {
     display: none;
+    overflow-x: auto;
+    flex-wrap: nowrap;
   }
 
   /* CARDS */
@@ -2363,36 +2379,44 @@ async function downloadPDF() {
 }
 
 // Collect all form fields into one JSON object
+// Sanitize text to prevent XSS
+function sanitize(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 function collectAllFormData() {
   const d = {
     personal: {
-      firstName: document.querySelector('#firstName')?.value || '',
-      lastName: document.querySelector('#lastName')?.value || '',
-      ssn: document.querySelector('#ssn')?.value || '',
-      address: document.querySelector('#address')?.value || '',
-      city: document.querySelector('#city')?.value || '',
-      state: document.querySelector('#state')?.value || '',
-      zip: document.querySelector('#zip')?.value || ''
+      firstName: sanitize(document.querySelector('#firstName')?.value || ''),
+      lastName: sanitize(document.querySelector('#lastName')?.value || ''),
+      ssn: sanitize(document.querySelector('#ssn')?.value || ''),
+      address: sanitize(document.querySelector('#address')?.value || ''),
+      city: sanitize(document.querySelector('#city')?.value || ''),
+      state: sanitize(document.querySelector('#state')?.value || ''),
+      zip: sanitize(document.querySelector('#zip')?.value || '')
     },
     filingStatus: state.filingStatus,
     w2s: [], nec1099s: [], deductions: {}, expenses: {}
   };
   document.querySelectorAll('#w2List .income-entry').forEach(el => {
     d.w2s.push({
-      employer: el.querySelector('.w2-employer')?.value || '',
+      employer: sanitize(el.querySelector('.w2-employer')?.value || ''),
       wages: parseFloat(el.querySelector('.w2-wages')?.value) || 0,
       fedTaxWithheld: parseFloat(el.querySelector('.w2-fed-tax')?.value) || 0,
       ssWages: parseFloat(el.querySelector('.w2-ss-wages')?.value) || 0,
       medicareWages: parseFloat(el.querySelector('.w2-medicare')?.value) || 0,
       stateTax: parseFloat(el.querySelector('.w2-state-tax')?.value) || 0,
-      ein: el.querySelector('.w2-ein')?.value || ''
+      ein: sanitize(el.querySelector('.w2-ein')?.value || '')
     });
   });
   document.querySelectorAll('#form1099List .income-entry').forEach(el => {
     d.nec1099s.push({
-      payer: el.querySelector('.nec-payer')?.value || '',
+      payer: sanitize(el.querySelector('.nec-payer')?.value || ''),
       amount: parseFloat(el.querySelector('.nec-amount')?.value) || 0,
-      ein: el.querySelector('.nec-ein')?.value || ''
+      ein: sanitize(el.querySelector('.nec-ein')?.value || '')
     });
   });
   ['mortgage','salt','charity','medical','ira','studentLoan','hsa','seHealth'].forEach(k => {
@@ -2458,8 +2482,43 @@ function renderProgress() {
   });
 }
 
+// ── WIZARD STEP VALIDATION ──
+function validateCurrentStep() {
+  const step = state.currentStep;
+  let errors = [];
+
+  if (step === 2) { // Personal Info
+    if (!document.querySelector('#firstName')?.value?.trim()) errors.push('First name is required — الاسم الأول مطلوب');
+    if (!document.querySelector('#lastName')?.value?.trim()) errors.push('Last name is required — اسم العائلة مطلوب');
+  }
+  if (step === 3) { // Filing Status
+    if (!state.filingStatus) errors.push('Please select a filing status — اختر حالة التقديم');
+  }
+  if (step === 4) { // W-2 Income
+    let hasW2 = false;
+    document.querySelectorAll('#w2List .income-entry').forEach(el => {
+      const employer = el.querySelector('.w2-employer')?.value?.trim();
+      const wages = el.querySelector('.w2-wages')?.value?.trim();
+      if (employer && wages) hasW2 = true;
+    });
+    if (!hasW2) errors.push('At least one W-2 must have employer and wages — يجب ملء رب عمل وأجور واحدة على الأقل');
+  }
+
+  if (errors.length > 0) {
+    // Show validation toast
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:9999;background:#fde8e5;color:#b03a2e;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;border:1px solid #e0a9a4;box-shadow:0 4px 20px rgba(176,58,46,0.15);max-width:90vw;text-align:center;';
+    toast.innerHTML = errors.map(e => sanitize(e)).join('<br>');
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+    return false;
+  }
+  return true;
+}
+
 // ── NAVIGATION ──
 function goToStep(n) {
+  if (n > state.currentStep && !validateCurrentStep()) return;
   document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
   document.getElementById('step-' + n).classList.add('active');
   state.currentStep = n;
@@ -2467,6 +2526,8 @@ function goToStep(n) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   // Preload PDF.js when user reaches upload step
   if (n === 1 && typeof loadPdfJs === 'function') loadPdfJs();
+  // Update browser history so Back button works
+  history.pushState({ step: n }, '', '#step-' + n);
 }
 
 // ── OPTIONS ──
@@ -2859,12 +2920,10 @@ function fileToBase64(file) {
 
 // Fetch with timeout — never hang forever
 function fetchWithTimeout(url, options, timeoutMs = 180000) {
-  return Promise.race([
-    fetch(url, options),
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Request timed out — الطلب أخذ وقت طويل. Try again.')), timeoutMs)
-    )
-  ]);
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  const fetchOptions = { ...options, signal: controller.signal };
+  return fetch(url, fetchOptions).finally(() => clearTimeout(timeoutId));
 }
 
 // Retry wrapper — retries once on failure with a short pause
@@ -3446,9 +3505,17 @@ function updateRefundTracker() {
 
   amountEl.textContent = (refund >= 0 ? '+' : '-') + formatted;
   amountEl.className = 'rt-amount ' + (refund > 0 ? 'refund' : refund < 0 ? 'owed' : 'zero');
-  detailEl.textContent = refund >= 0
-    ? `Estimated refund based on $${totalIncome.toLocaleString()} income`
-    : `Estimated amount owed based on $${totalIncome.toLocaleString()} income`;
+
+  // Sanity check on refund amount
+  if (Math.abs(refund) > 500000) {
+    detailEl.textContent = '⚠️ Please verify your numbers — تحقق من الأرقام';
+    detailEl.style.color = '#b03a2e';
+  } else {
+    detailEl.textContent = refund >= 0
+      ? `Estimated refund based on $${totalIncome.toLocaleString()} income`
+      : `Estimated amount owed based on $${totalIncome.toLocaleString()} income`;
+    detailEl.style.color = '';
+  }
 }
 
 // Listen for changes on ALL form inputs
@@ -3462,6 +3529,17 @@ document.addEventListener('change', function(e) {
   if (e.target.matches('input, select')) {
     clearTimeout(window._rtDebounce);
     window._rtDebounce = setTimeout(updateRefundTracker, 300);
+  }
+});
+
+// Handle browser Back/Forward buttons
+window.addEventListener('popstate', function(e) {
+  if (e.state && typeof e.state.step === 'number') {
+    const targetStep = e.state.step;
+    document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+    document.getElementById('step-' + targetStep).classList.add('active');
+    state.currentStep = targetStep;
+    renderProgress();
   }
 });
 </script>
@@ -4332,10 +4410,10 @@ function addMessage(role, text, attachments) {
     msgDiv.style.background = 'linear-gradient(135deg, var(--info-light), var(--success-light))';
     msgDiv.style.border = '2px solid var(--primary)';
     msgDiv.style.textAlign = 'center';
-    msgDiv.innerHTML = text;
+    msgDiv.textContent = text;
   } else if (role === 'assistant') {
     msgDiv.className = 'chat-msg bot';
-    let formatted = text
+    let formatted = sanitize(text)
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\n\n/g, '<br><br>')
       .replace(/\n/g, '<br>');
@@ -4888,10 +4966,11 @@ async function sendMessage() {
   } catch (err) {
     showTyping(false);
     console.error('[Chat] Error:', err);
-    const mode = API_BASE ? 'Server mode (' + API_BASE + ')' : 'Standalone mode (file://)';
-    addMessage('assistant',
-      `⚠️ Connection issue — في مشكلة بالاتصال.\n\n**${mode}**\n**Error:** ${err.message}\n\n💡 **Fix:** Run **start.bat** then open **${LOCAL_START_URL}** in Chrome.\nجرب شغّل start.bat وافتح localhost:3000`
-    );
+    if (err.message && err.message.includes('timed out')) {
+      addMessage('assistant', '⏱️ Response took too long — الرد استغرق وقت طويل. Please try again! — جرب مرة ثانية!');
+    } else {
+      addMessage('assistant', '⚠️ Connection issue — في مشكلة بالاتصال. Please try again! — جرب مرة ثانية!');
+    }
   }
 }
 

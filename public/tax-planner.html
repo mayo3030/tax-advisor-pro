@@ -562,7 +562,7 @@ tbody tr:hover {
         <div class="form-row">
           <div class="form-group">
             <label><span class="label-en">Expected Annual Income</span><span class="label-ar">الدخل السنوي المتوقع</span></label>
-            <input type="number" id="est-income" placeholder="100000" oninput="calculateEstimatedTax()">
+            <input type="number" id="est-income" placeholder="100000" min="0" max="10000000" oninput="calculateEstimatedTax()">
           </div>
           <div class="form-group">
             <label><span class="label-en">Filing Status</span><span class="label-ar">حالة الملف</span></label>
@@ -578,11 +578,11 @@ tbody tr:hover {
         <div class="form-row">
           <div class="form-group">
             <label><span class="label-en">Standard Deduction</span><span class="label-ar">الخصم القياسي</span></label>
-            <input type="number" id="est-deduction" placeholder="13850" oninput="calculateEstimatedTax()">
+            <input type="number" id="est-deduction" placeholder="13850" min="0" max="10000000" oninput="calculateEstimatedTax()">
           </div>
           <div class="form-group">
             <label><span class="label-en">Other Tax Credits (if any)</span><span class="label-ar">ائتمانات ضريبية أخرى</span></label>
-            <input type="number" id="est-credits" placeholder="0" oninput="calculateEstimatedTax()">
+            <input type="number" id="est-credits" placeholder="0" min="0" max="10000000" oninput="calculateEstimatedTax()">
           </div>
         </div>
 
@@ -669,7 +669,7 @@ tbody tr:hover {
         <div class="form-row">
           <div class="form-group">
             <label><span class="label-en">Gross Pay Per Period</span><span class="label-ar">إجمالي الراتب لكل فترة</span></label>
-            <input type="number" id="w4-pay" placeholder="5000" oninput="calculateW4()">
+            <input type="number" id="w4-pay" placeholder="5000" min="0" max="10000000" oninput="calculateW4()">
           </div>
           <div class="form-group">
             <label><span class="label-en">Pay Frequency</span><span class="label-ar">تكرار الدفع</span></label>
@@ -700,11 +700,11 @@ tbody tr:hover {
         <div class="form-row">
           <div class="form-group">
             <label><span class="label-en">Other Income (Spouse, Side Gigs)</span><span class="label-ar">دخل آخر</span></label>
-            <input type="number" id="w4-other" placeholder="0" oninput="calculateW4()">
+            <input type="number" id="w4-other" placeholder="0" min="0" max="10000000" oninput="calculateW4()">
           </div>
           <div class="form-group">
             <label><span class="label-en">Total Deductions (if itemizing)</span><span class="label-ar">إجمالي الخصومات</span></label>
-            <input type="number" id="w4-ded" placeholder="0" oninput="calculateW4()">
+            <input type="number" id="w4-ded" placeholder="0" min="0" max="10000000" oninput="calculateW4()">
           </div>
         </div>
 
@@ -764,18 +764,18 @@ tbody tr:hover {
         <div class="form-row">
           <div class="form-group">
             <label><span class="label-en">Self-Employment Income (from Schedule C)</span><span class="label-ar">دخل العمل الحر</span></label>
-            <input type="number" id="se-income" placeholder="80000" oninput="calculateSETax()">
+            <input type="number" id="se-income" placeholder="80000" min="0" max="10000000" oninput="calculateSETax()">
           </div>
           <div class="form-group">
             <label><span class="label-en">Business Expenses</span><span class="label-ar">نفقات العمل</span></label>
-            <input type="number" id="se-expenses" placeholder="15000" oninput="calculateSETax()">
+            <input type="number" id="se-expenses" placeholder="15000" min="0" max="10000000" oninput="calculateSETax()">
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label><span class="label-en">W-2 Wages (if any)</span><span class="label-ar">رواتب W-2</span></label>
-            <input type="number" id="se-w2" placeholder="0" oninput="calculateSETax()">
+            <input type="number" id="se-w2" placeholder="0" min="0" max="10000000" oninput="calculateSETax()">
           </div>
         </div>
 
@@ -863,7 +863,7 @@ tbody tr:hover {
             <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
               <h5 style="color: var(--navy); margin-bottom: 0.5rem;">Traditional IRA Contribution</h5>
               <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">Max: $7,000/year ($8,000 if 50+)</p>
-              <input type="number" id="ira-contrib" placeholder="6500" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <input type="number" id="ira-contrib" placeholder="6500" min="0" max="10000000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
               <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
                 <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
                 <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="ira-save">$0</div>
@@ -874,7 +874,7 @@ tbody tr:hover {
             <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
               <h5 style="color: var(--navy); margin-bottom: 0.5rem;">Health Savings Account (HSA)</h5>
               <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">Individual: $4,150 / Family: $8,300</p>
-              <input type="number" id="hsa-contrib" placeholder="4150" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <input type="number" id="hsa-contrib" placeholder="4150" min="0" max="10000000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
               <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
                 <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
                 <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="hsa-save">$0</div>
@@ -885,7 +885,7 @@ tbody tr:hover {
             <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
               <h5 style="color: var(--navy); margin-bottom: 0.5rem;">529 College Savings Plan</h5>
               <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">State-dependent max; varies by plan</p>
-              <input type="number" id="plan529-contrib" placeholder="5000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <input type="number" id="plan529-contrib" placeholder="5000" min="0" max="10000000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
               <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
                 <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
                 <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="plan529-save">$0</div>
@@ -896,7 +896,7 @@ tbody tr:hover {
             <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
               <h5 style="color: var(--navy); margin-bottom: 0.5rem;">Charitable Giving</h5>
               <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">If itemizing deductions</p>
-              <input type="number" id="charity-contrib" placeholder="3000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <input type="number" id="charity-contrib" placeholder="3000" min="0" max="10000000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
               <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
                 <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
                 <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="charity-save">$0</div>
@@ -907,7 +907,7 @@ tbody tr:hover {
             <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
               <h5 style="color: var(--navy); margin-bottom: 0.5rem;">SEP-IRA (Self-Employed)</h5>
               <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">Max: 25% of net SE income</p>
-              <input type="number" id="sepia-contrib" placeholder="10000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <input type="number" id="sepia-contrib" placeholder="10000" min="0" max="10000000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
               <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
                 <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
                 <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="sepia-save">$0</div>
@@ -918,7 +918,7 @@ tbody tr:hover {
             <div style="padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border);">
               <h5 style="color: var(--navy); margin-bottom: 0.5rem;">Student Loan Interest Deduction</h5>
               <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">Max: $2,500/year</p>
-              <input type="number" id="loan-interest" placeholder="2500" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
+              <input type="number" id="loan-interest" placeholder="2500" min="0" max="10000000" oninput="calculateSavings()" style="margin-bottom: 0.75rem;">
               <div style="padding: 1rem; background: var(--gold-pale); border-radius: var(--radius); text-align: center;">
                 <div style="color: var(--text-light); font-size: 0.85rem;">Tax Saved</div>
                 <div style="font-size: 1.5rem; font-weight: 900; color: var(--navy);" id="loan-save">$0</div>
@@ -1115,6 +1115,19 @@ function calculateEstimatedTax() {
   const deduction = parseFloat(document.getElementById('est-deduction').value) || STANDARD_DEDUCTIONS[status];
   const credits = parseFloat(document.getElementById('est-credits').value) || 0;
 
+  // Validate inputs
+  const resultDiv = document.getElementById('est-results');
+  if (income < 0) {
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<div style="color:#b03a2e;font-weight:600;">⚠️ Income cannot be negative — الدخل لا يمكن أن يكون سالباً</div>';
+    return;
+  }
+  if (income > 10000000) {
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<div style="color:#b03a2e;font-weight:600;">⚠️ Please enter a realistic income amount — أدخل مبلغ دخل واقعي</div>';
+    return;
+  }
+
   if (income === 0) {
     document.getElementById('est-results').style.display = 'none';
     return;
@@ -1154,6 +1167,19 @@ function calculateW4() {
   const otherIncome = parseFloat(document.getElementById('w4-other').value) || 0;
   const deductions = parseFloat(document.getElementById('w4-ded').value) || 0;
   const extraWithholding = document.getElementById('w4-extra').checked;
+
+  // Validate inputs
+  const resultDiv = document.getElementById('w4-results');
+  if (payPerPeriod < 0) {
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<div style="color:#b03a2e;font-weight:600;">⚠️ Income cannot be negative — الدخل لا يمكن أن يكون سالباً</div>';
+    return;
+  }
+  if (payPerPeriod > 10000000) {
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<div style="color:#b03a2e;font-weight:600;">⚠️ Please enter a realistic income amount — أدخل مبلغ دخل واقعي</div>';
+    return;
+  }
 
   if (payPerPeriod === 0) {
     document.getElementById('w4-results').style.display = 'none';
@@ -1211,6 +1237,19 @@ function calculateSETax() {
   const expenses = parseFloat(document.getElementById('se-expenses').value) || 0;
   const w2wages = parseFloat(document.getElementById('se-w2').value) || 0;
 
+  // Validate inputs
+  const resultDiv = document.getElementById('se-results');
+  if (income < 0) {
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<div style="color:#b03a2e;font-weight:600;">⚠️ Income cannot be negative — الدخل لا يمكن أن يكون سالباً</div>';
+    return;
+  }
+  if (income > 10000000) {
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<div style="color:#b03a2e;font-weight:600;">⚠️ Please enter a realistic income amount — أدخل مبلغ دخل واقعي</div>';
+    return;
+  }
+
   if (income === 0) {
     document.getElementById('se-results').style.display = 'none';
     return;
@@ -1252,6 +1291,16 @@ function calculateSavings() {
   const charityContrib = parseFloat(document.getElementById('charity-contrib').value) || 0;
   const sepialeContrib = parseFloat(document.getElementById('sepia-contrib').value) || 0;
   const loanInterest = parseFloat(document.getElementById('loan-interest').value) || 0;
+
+  // Validate inputs
+  if (iraContrib < 0 || hsaContrib < 0 || plan529Contrib < 0 || charityContrib < 0 || sepialeContrib < 0 || loanInterest < 0) {
+    alert('⚠️ Values cannot be negative — لا يمكن أن تكون القيم سالبة');
+    return;
+  }
+  if (iraContrib > 10000000 || hsaContrib > 10000000 || plan529Contrib > 10000000 || charityContrib > 10000000 || sepialeContrib > 10000000 || loanInterest > 10000000) {
+    alert('⚠️ Please enter realistic contribution amounts — أدخل مبالغ واقعية');
+    return;
+  }
 
   const iraSave = iraContrib * rate;
   const hsaSave = hsaContrib * rate;

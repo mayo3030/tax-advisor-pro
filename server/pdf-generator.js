@@ -1,4 +1,20 @@
 const PDFDocument = require('pdfkit');
+const path = require('path');
+const fs = require('fs');
+
+// ── Font initialization ──
+// Try to register an Arabic-compatible font if available
+function initializeFonts(doc) {
+  try {
+    // Check for Noto Sans Mono as fallback (supports basic Unicode)
+    const monoFontPath = '/usr/share/fonts/truetype/noto/NotoSansMono-Regular.ttf';
+    if (fs.existsSync(monoFontPath)) {
+      doc.registerFont('ArabicFallback', monoFontPath);
+    }
+  } catch (err) {
+    console.warn('Could not register Arabic font:', err.message);
+  }
+}
 
 // ── Tax calculation helpers ──
 function calcSETax(netSE) {
@@ -34,11 +50,40 @@ function calcTax(taxableIncome, status) {
   return Math.round(tax * 100) / 100;
 }
 
+// ── Text rendering helper with Arabic support ──
+function drawText(doc, text, x, y, opts = {}) {
+  // If text contains Arabic characters, try to use Arabic-compatible font
+  const hasArabic = /[\u0600-\u06FF]/.test(text);
+
+  if (hasArabic) {
+    try {
+      doc.font('ArabicFallback');
+    } catch (err) {
+      // Fall back to Helvetica if ArabicFallback not available
+      doc.font('Helvetica');
+    }
+  }
+
+  return doc.text(text, x, y, opts);
+}
+
 // ── PDF Section helpers ──
 function drawHeader(doc, text, y) {
   doc.save();
   doc.rect(50, y, 510, 24).fill('#355ebe');
-  doc.fill('#ffffff').font('Helvetica-Bold').fontSize(12).text(text, 58, y + 6, { width: 494 });
+  doc.fill('#ffffff').font('Helvetica-Bold').fontSize(12);
+
+  // Check if header contains Arabic
+  const hasArabic = /[\u0600-\u06FF]/.test(text);
+  if (hasArabic) {
+    try {
+      doc.font('ArabicFallback');
+    } catch (err) {
+      doc.font('Helvetica-Bold');
+    }
+  }
+
+  doc.text(text, 58, y + 6, { width: 494 });
   doc.restore();
   return y + 32;
 }
@@ -48,8 +93,24 @@ function drawRow(doc, label, value, y, opts = {}) {
   if (isTotal) {
     doc.rect(50, y - 2, 510, 20).fill('#f0f4ff');
   }
-  doc.fill('#1a1a2e').font(isTotal ? 'Helvetica-Bold' : 'Helvetica').fontSize(10);
+  doc.fill('#1a1a2e').fontSize(10);
+
+  // Set font for label (with Arabic support)
+  const labelHasArabic = /[\u0600-\u06FF]/.test(label);
+  try {
+    if (isTotal) {
+      doc.font(labelHasArabic ? 'ArabicFallback' : 'Helvetica-Bold');
+    } else {
+      doc.font(labelHasArabic ? 'ArabicFallback' : 'Helvetica');
+    }
+  } catch (err) {
+    doc.font(isTotal ? 'Helvetica-Bold' : 'Helvetica');
+  }
+
   doc.text(label, 58, y, { width: 350 });
+
+  // Value font (numbers don't need Arabic support)
+  doc.font('Helvetica').fontSize(10);
   doc.text(typeof value === 'number' ? '$' + value.toLocaleString('en-US', { minimumFractionDigits: 2 }) : (value || ''), 420, y, { width: 130, align: 'right' });
   return y + 18;
 }
@@ -70,6 +131,9 @@ function generate(taxData, formType) {
   doc.on('data', b => buffers.push(b));
   doc.on('end', () => resolve(Buffer.concat(buffers)));
   doc.on('error', reject);
+
+  // Initialize fonts
+  initializeFonts(doc);
 
   // ── Page 1: Form 1040 Summary ──
   const p = taxData.personal || {};
@@ -192,16 +256,34 @@ function generate(taxData, formType) {
 
   // Big result
   const isRefund = refundOrOwe >= 0;
-  doc.font('Helvetica-Bold').fontSize(16)
-    .fill(isRefund ? '#007a5e' : '#d52b1d')
-    .text(isRefund ? 'ESTIMATED REFUND — المبلغ المسترد' : 'ESTIMATED TAX OWED — الضريبة المستحقة', 50, y + 4, { align: 'center' });
-  doc.fontSize(28)
+  const resultText = isRefund ? 'ESTIMATED REFUND — المبلغ المسترد' : 'ESTIMATED TAX OWED — الضريبة المستحقة';
+
+  // Try to use Arabic-compatible font for result text
+  try {
+    doc.font('ArabicFallback').fontSize(16)
+      .fill(isRefund ? '#007a5e' : '#d52b1d')
+      .text(resultText, 50, y + 4, { align: 'center' });
+  } catch (err) {
+    doc.font('Helvetica-Bold').fontSize(16)
+      .fill(isRefund ? '#007a5e' : '#d52b1d')
+      .text(resultText, 50, y + 4, { align: 'center' });
+  }
+
+  doc.font('Helvetica').fontSize(28)
     .text('$' + Math.abs(refundOrOwe).toLocaleString('en-US', { minimumFractionDigits: 2 }), 50, y + 26, { align: 'center' });
 
   y += 70;
   doc.font('Helvetica').fontSize(8).fill('#999')
-    .text('⚠️  This is an ESTIMATE only — not an official IRS filing. Consult a licensed tax professional before filing.', 50, y, { align: 'center' })
-    .text('هذا تقدير فقط — مش تقديم رسمي لمصلحة الضرائب. استشر محاسب معتمد قبل التقديم.', 50, y + 12, { align: 'center' });
+    .text('⚠️  This is an ESTIMATE only — not an official IRS filing. Consult a licensed tax professional before filing.', 50, y, { align: 'center' });
+
+  // Try to render Arabic warning text with Arabic-compatible font
+  try {
+    doc.font('ArabicFallback').fontSize(8).fill('#999')
+      .text('هذا تقدير فقط — مش تقديم رسمي لمصلحة الضرائب. استشر محاسب معتمد قبل التقديم.', 50, y + 12, { align: 'center' });
+  } catch (err) {
+    // If Arabic font not available, skip the Arabic text to avoid rendering issues
+    console.warn('Arabic font unavailable; Arabic text omitted from PDF');
+  }
 
   doc.end();
   }); // end Promise

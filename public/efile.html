@@ -1326,8 +1326,11 @@
                 refundCard.style.display = 'none';
             }
 
-            // Update user info
-            document.getElementById('userInfo').textContent = `${data.firstName} ${data.lastName} | ${data.year} Tax Year`;
+            // Update user info (only if element exists)
+            const userInfoElem = document.getElementById('userInfo');
+            if (userInfoElem) {
+                userInfoElem.textContent = `${data.firstName} ${data.lastName} | ${data.year} Tax Year`;
+            }
 
             // Generate readiness checklist
             updateReadinessChecklist(data);
@@ -1711,12 +1714,15 @@ Generated: ${new Date().toLocaleDateString()}
             document.documentElement.setAttribute('data-lang', currentLang);
         }
 
-        // Language toggle
-        document.getElementById('langToggle').addEventListener('click', () => {
-            currentLang = currentLang === 'en' ? 'ar' : 'en';
-            updateAllText();
-            document.getElementById('langToggle').textContent = currentLang === 'en' ? 'العربية' : 'English';
-        });
+        // Language toggle (only if element exists)
+        const langToggleBtn = document.getElementById('langToggle');
+        if (langToggleBtn) {
+            langToggleBtn.addEventListener('click', () => {
+                currentLang = currentLang === 'en' ? 'ar' : 'en';
+                updateAllText();
+                langToggleBtn.textContent = currentLang === 'en' ? 'العربية' : 'English';
+            });
+        }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
