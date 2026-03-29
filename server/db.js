@@ -145,5 +145,17 @@ module.exports = {
     const result = db.exec(`SELECT role, content, created_at FROM chat_history WHERE session_id = '${sessionId}' ORDER BY created_at ASC`);
     if (!result.length) return [];
     return result[0].values.map(r => ({ role: r[0], content: r[1], created_at: r[2] }));
+  },
+
+  clearChatHistory(sessionId) {
+    db.run(`DELETE FROM chat_history WHERE session_id = ?`, [sessionId]);
+    persist();
+  },
+
+  getFileById(fileId) {
+    const result = db.exec(`SELECT name, type, base64 FROM documents WHERE id = '${fileId}'`);
+    if (!result.length || !result[0].values.length) return null;
+    const r = result[0].values[0];
+    return { name: r[0], type: r[1], base64: r[2] };
   }
 };

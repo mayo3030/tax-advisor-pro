@@ -3148,12 +3148,21 @@ YOUR EXPERTISE COVERS:
 - State tax considerations
 - Tax planning strategies and legal ways to minimize tax liability
 
+CONTEXT AWARENESS:
+- You have LIVE access to the user's current tax form data, uploaded documents, and all inputs on the website
+- Before each message, you receive a [CONTEXT] block containing ALL current form values, uploaded documents (with extracted text), filing status, income, deductions, credits, and expenses
+- When the user asks about their data ("what did I enter?", "how much income?", "what's my refund?", etc.), ALWAYS reference the actual numbers from the context
+- If a field is empty or zero, tell the user they haven't filled it yet and guide them to the correct step
+- You can reference specific uploaded documents by name and their extracted text content
+- If the user asks about a document they uploaded, use the extracted text from that document to answer
+
 RULES:
 - Always clarify that you provide educational guidance, not formal legal/tax advice
 - When discussing dollar amounts or thresholds, use 2025 tax year figures
 - Keep responses concise but thorough — usually 2-4 paragraphs max
 - Use bold for key terms and numbers when helpful
-- Always give practical, actionable advice — not just theory`;
+- Always give practical, actionable advice — not just theory
+- ALWAYS use the context data to give personalized, specific answers based on what the user has actually entered`;
 
 // Tax Interview system prompt — the real magic
 const INTERVIEW_PROMPT = `You are "Tax Advisor AI" — a warm, expert bilingual (English + Arabic mix, Arabizi style) tax advisor conducting a live tax interview for the 2025 tax year (filing in 2026). You act as both a CPA and a tax attorney sitting face-to-face with the client.
@@ -3203,6 +3212,13 @@ You must conduct this like a REAL in-person tax meeting. Go through these phases
 - Give 2-3 personalized tax-saving tips based on THEIR specific situation
 - Remind them of the April 15, 2026 deadline
 - Tell them: "Now click the '✨ Fill All My Forms' button below and I'll automatically fill everything from what you told me!"
+
+CONTEXT AWARENESS:
+- You receive a [CONTEXT] block before each message with ALL current form data, uploaded documents (with extracted text), and website state
+- Use this context to avoid re-asking questions the user already answered in the form
+- If the user already filled in their W-2 or personal info in the form, acknowledge it: "I can see you already entered your W-2 from [employer] — ممتاز!"
+- Reference uploaded documents by name and use their extracted text
+- If asking about income and you see W-2 data already entered, confirm it rather than asking again
 
 CRITICAL RULES:
 - Ask ONE topic at a time — don't overwhelm with 10 questions at once
@@ -3369,14 +3385,230 @@ function showTyping(show) {
   scrollChat();
 }
 
+// ── GATHER FULL PAGE CONTEXT ──
+// Collects ALL data from the website: form fields, documents, state, etc.
+function gatherPageContext() {
+  const ctx = {};
+
+  // 1. Current step / navigation state
+  ctx.currentStep = state.currentStep;
+  ctx.stepName = ['Welcome','Upload Documents','Personal Info','Filing Status','W-2 Income','1099 Income','Deductions','Credits','Review'][state.currentStep] || '';
+  ctx.filingStatus = state.filingStatus || '(not selected yet)';
+  ctx.deductionType = state.deductionType || 'standard';
+
+  // 2. Personal information
+  ctx.personal = {
+    firstName: document.querySelector('#firstName')?.value || '',
+    lastName: document.querySelector('#lastName')?.value || '',
+    ssn: document.querySelector('#ssn')?.value ? '***-**-' + (document.querySelector('#ssn')?.value || '').slice(-4) : '',
+    dob: document.querySelector('#dob')?.value || '',
+    address: document.querySelector('#address')?.value || '',
+    city: document.querySelector('#city')?.value || '',
+    state: document.querySelector('#state')?.value || '',
+    zip: document.querySelector('#zip')?.value || ''
+  };
+
+  // 3. W-2 income entries
+  ctx.w2s = [];
+  document.querySelectorAll('#w2List .income-entry').forEach(el => {
+    const w2 = {
+      employer: el.querySelector('.w2-employer')?.value || '',
+      wages: el.querySelector('.w2-wages')?.value || '',
+      fedTaxWithheld: el.querySelector('.w2-fed-tax')?.value || '',
+      ssWages: el.querySelector('.w2-ss-wages')?.value || '',
+      medicareWages: el.querySelector('.w2-medicare')?.value || '',
+      stateTax: el.querySelector('.w2-state-tax')?.value || '',
+      ein: el.querySelector('.w2-ein')?.value || ''
+    };
+    if (w2.employer || w2.wages) ctx.w2s.push(w2);
+  });
+
+  // 4. 1099-NEC income entries
+  ctx.nec1099s = [];
+  document.querySelectorAll('#form1099List .income-entry').forEach(el => {
+    const nec = {
+      payer: el.querySelector('.nec-payer')?.value || '',
+      amount: el.querySelector('.nec-amount')?.value || '',
+      ein: el.querySelector('.nec-ein')?.value || ''
+    };
+    if (nec.payer || nec.amount) ctx.nec1099s.push(nec);
+  });
+
+  // 5. Business expenses (for self-employed / 1099)
+  ctx.expenses = {
+    homeOffice: document.querySelector('#expHomeOffice')?.value || '0',
+    vehicle: document.querySelector('#expVehicle')?.value || '0',
+    supplies: document.querySelector('#expSupplies')?.value || '0',
+    phone: document.querySelector('#expPhone')?.value || '0',
+    professional: document.querySelector('#expProfessional')?.value || '0',
+    other: document.querySelector('#expOther')?.value || '0'
+  };
+
+  // 6. Deductions
+  ctx.deductions = {
+    medical: document.querySelector('#dedMedical')?.value || '0',
+    salt: document.querySelector('#dedSALT')?.value || '0',
+    mortgage: document.querySelector('#dedMortgage')?.value || '0',
+    charity: document.querySelector('#dedCharity')?.value || '0',
+    ira: document.querySelector('#dedIRA')?.value || '0',
+    studentLoan: document.querySelector('#dedStudentLoan')?.value || '0',
+    hsa: document.querySelector('#dedHSA')?.value || '0',
+    seHealth: document.querySelector('#dedSEHealth')?.value || '0'
+  };
+
+  // 7. Dependents
+  ctx.dependents = [];
+  document.querySelectorAll('#dependentsList .income-entry, #dependentsList .dependent-entry').forEach(el => {
+    const dep = {
+      name: el.querySelector('.dep-name')?.value || '',
+      ssn: el.querySelector('.dep-ssn')?.value ? '***' : '',
+      dob: el.querySelector('.dep-dob')?.value || '',
+      relationship: el.querySelector('.dep-rel')?.value || ''
+    };
+    if (dep.name) ctx.dependents.push(dep);
+  });
+
+  // 8. Selected tax credits
+  ctx.selectedCredits = { ...state.selectedCredits };
+
+  // 9. Uploaded documents (names, types, extracted text)
+  ctx.documents = [];
+  if (typeof uploadedDocs !== 'undefined' && uploadedDocs.length > 0) {
+    for (const doc of uploadedDocs) {
+      const docInfo = {
+        name: doc.name,
+        type: doc.type,
+        size: (doc.size / 1024).toFixed(1) + 'KB',
+        status: doc.status
+      };
+      // Include extracted text if available (from scan & auto-fill)
+      if (doc.text && doc.text.length > 0) {
+        docInfo.extractedText = doc.text.substring(0, 3000); // Limit to 3000 chars per doc
+      }
+      ctx.documents.push(docInfo);
+    }
+  }
+
+  // 10. Review/results if on step 8
+  const resultsSummary = document.querySelector('#resultsSummary');
+  if (resultsSummary && resultsSummary.textContent.trim()) {
+    ctx.calculatedResults = resultsSummary.textContent.trim().substring(0, 2000);
+  }
+
+  return ctx;
+}
+
+// Format context into a readable string for the AI
+function formatContextForAI() {
+  const ctx = gatherPageContext();
+  let text = '[CONTEXT — Current website data as of now]\n';
+
+  text += '\n== USER PROGRESS ==\n';
+  text += 'Current step: ' + ctx.currentStep + ' (' + ctx.stepName + ')\n';
+  text += 'Filing status: ' + ctx.filingStatus + '\n';
+  text += 'Deduction type: ' + ctx.deductionType + '\n';
+
+  // Personal
+  const p = ctx.personal;
+  if (p.firstName || p.lastName) {
+    text += '\n== PERSONAL INFO ==\n';
+    text += 'Name: ' + (p.firstName + ' ' + p.lastName).trim() + '\n';
+    if (p.ssn) text += 'SSN: ' + p.ssn + '\n';
+    if (p.dob) text += 'DOB: ' + p.dob + '\n';
+    if (p.address) text += 'Address: ' + p.address + ', ' + p.city + ', ' + p.state + ' ' + p.zip + '\n';
+  } else {
+    text += '\n== PERSONAL INFO == (not filled yet)\n';
+  }
+
+  // W-2s
+  if (ctx.w2s.length > 0) {
+    text += '\n== W-2 INCOME ==\n';
+    ctx.w2s.forEach((w, i) => {
+      text += 'W-2 #' + (i+1) + ': ' + (w.employer || '?') + ' — Wages: $' + (w.wages || '0') + ', Fed Tax Withheld: $' + (w.fedTaxWithheld || '0') + ', State Tax: $' + (w.stateTax || '0') + '\n';
+    });
+  } else {
+    text += '\n== W-2 INCOME == (none entered)\n';
+  }
+
+  // 1099s
+  if (ctx.nec1099s.length > 0) {
+    text += '\n== 1099-NEC INCOME ==\n';
+    ctx.nec1099s.forEach((n, i) => {
+      text += '1099 #' + (i+1) + ': ' + (n.payer || '?') + ' — Amount: $' + (n.amount || '0') + '\n';
+    });
+  }
+
+  // Expenses
+  const expTotal = Object.values(ctx.expenses).reduce((s, v) => s + (parseFloat(v) || 0), 0);
+  if (expTotal > 0) {
+    text += '\n== BUSINESS EXPENSES ==\n';
+    if (parseFloat(ctx.expenses.homeOffice)) text += 'Home Office: $' + ctx.expenses.homeOffice + '\n';
+    if (parseFloat(ctx.expenses.vehicle)) text += 'Vehicle: $' + ctx.expenses.vehicle + '\n';
+    if (parseFloat(ctx.expenses.supplies)) text += 'Supplies: $' + ctx.expenses.supplies + '\n';
+    if (parseFloat(ctx.expenses.phone)) text += 'Phone/Internet: $' + ctx.expenses.phone + '\n';
+    if (parseFloat(ctx.expenses.professional)) text += 'Professional Services: $' + ctx.expenses.professional + '\n';
+    if (parseFloat(ctx.expenses.other)) text += 'Other: $' + ctx.expenses.other + '\n';
+    text += 'Total Expenses: $' + expTotal.toFixed(2) + '\n';
+  }
+
+  // Deductions
+  const dedTotal = Object.values(ctx.deductions).reduce((s, v) => s + (parseFloat(v) || 0), 0);
+  if (dedTotal > 0) {
+    text += '\n== DEDUCTIONS ==\n';
+    text += 'Type: ' + ctx.deductionType + '\n';
+    Object.entries(ctx.deductions).forEach(([k, v]) => {
+      if (parseFloat(v) > 0) text += k + ': $' + v + '\n';
+    });
+  }
+
+  // Dependents
+  if (ctx.dependents.length > 0) {
+    text += '\n== DEPENDENTS ==\n';
+    ctx.dependents.forEach((d, i) => {
+      text += (i+1) + '. ' + d.name + (d.relationship ? ' (' + d.relationship + ')' : '') + (d.dob ? ' DOB: ' + d.dob : '') + '\n';
+    });
+  }
+
+  // Credits
+  const activeCredits = Object.entries(ctx.selectedCredits).filter(([,v]) => v).map(([k]) => k);
+  if (activeCredits.length > 0) {
+    text += '\n== SELECTED CREDITS ==\n';
+    const creditNames = { childTax: 'Child Tax Credit', eitc: 'Earned Income Credit', education: 'Education Credit', childCare: 'Child Care Credit', saverCredit: 'Saver\'s Credit', energyCredit: 'Energy Credit' };
+    activeCredits.forEach(c => { text += '- ' + (creditNames[c] || c) + '\n'; });
+  }
+
+  // Documents
+  if (ctx.documents.length > 0) {
+    text += '\n== UPLOADED DOCUMENTS ==\n';
+    ctx.documents.forEach((d, i) => {
+      text += (i+1) + '. ' + d.name + ' (' + d.type + ', ' + d.size + ') — Status: ' + d.status + '\n';
+      if (d.extractedText) {
+        text += '   Extracted text: ' + d.extractedText.substring(0, 1500) + '\n';
+      }
+    });
+  }
+
+  // Results
+  if (ctx.calculatedResults) {
+    text += '\n== CALCULATED RESULTS ==\n';
+    text += ctx.calculatedResults + '\n';
+  }
+
+  text += '\n[END CONTEXT]';
+  return text;
+}
+
 async function callChatAPI(messages) {
-  // Prepend system prompt as first user message (server proxy doesn't support system param)
+  // Build context from all page data
+  const pageContext = formatContextForAI();
+
+  // Prepend system prompt + live context as first user message
   const fullMessages = [
-    { role: 'user', content: '[SYSTEM] ' + activeSystemPrompt },
-    { role: 'assistant', content: 'Understood. I will follow these instructions.' },
+    { role: 'user', content: '[SYSTEM] ' + activeSystemPrompt + '\n\n' + pageContext },
+    { role: 'assistant', content: 'Understood. I have access to all the current form data, uploaded documents, and website state. I will use this context to give personalized, specific answers.' },
     ...messages.slice(-20)
   ];
-  const data = await callServerClaudeChat(fullMessages, 1024);
+  const data = await callServerClaudeChat(fullMessages, 2048);
   return data.content[0].text;
 }
 
