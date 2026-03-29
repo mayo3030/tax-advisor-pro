@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="shared-styles.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tax Advisor Pro — مستشار الضرائب</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -1580,23 +1581,7 @@ body {
   </div>
 </div>
 
-<!-- TOPNAV -->
-<nav class="topnav" role="navigation" aria-label="Main navigation">
-  <div class="logo">
-    <span class="icon" style="color:#c9a84c">🏛️</span>
-    <span>Tax Advisor Pro</span>
-    <span style="font-weight:500;font-size:14px;opacity:0.7;margin-left:4px">— مستشار الضرائب</span>
-  </div>
-  <div class="nav-right">
-    <span class="tax-year">Tax Year 2025</span>
-    <div class="nav-menu" style="display: flex; align-items: center; gap: 16px; margin-left: 24px; padding-left: 24px; border-left: 1px solid rgba(255,255,255,0.2);">
-      <a href="tax-planner.html" class="nav-link-hover">📊 Tax Planner</a>
-      <a href="itin-guide.html" class="nav-link-hover">🗽 ITIN Guide</a>
-      <a href="efile.html" class="nav-link-hover">📮 E-File</a>
-      <a href="auth.html" class="nav-link-hover">👤 My Account</a>
-    </div>
-  </div>
-</nav>
+<!-- Navigation injected by shared-nav.js -->
 
 <div class="app-container" role="main">
 
@@ -5043,6 +5028,9 @@ Use 0 for numbers not mentioned. Use "" for strings not mentioned. Set booleans 
 
 </script>
 
+<script src="shared-nav.js"></script>
+<script src="shared-features.js"></script>
+
 <!-- Tax Document Auto-Import Module — استيراد المستندات الضريبية -->
 <script src="./doc-import.js"></script>
 
@@ -5052,5 +5040,6 @@ Use 0 for numbers not mentioned. Use "" for strings not mentioned. Set booleans 
 <!-- Prior Year Data Import Module — استيراد بيانات السنة الماضية -->
 <script src="prior-year.js"></script>
 
+<script src="auto-persist.js"></script>
 </body>
 </html>

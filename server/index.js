@@ -1,6 +1,7 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env'), override: true });
 const express = require('express');
+const compression = require('compression');
 const cors = require('cors');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
@@ -70,11 +71,52 @@ app.use((req, res, next) => {
   next();
 });
 
+// ── Gzip Compression ──
+app.use(compression());
+
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
+// ── Simple In-Memory Rate Limiter ──
+const apiRateLimits = new Map();
+const RATE_LIMIT_WINDOW = 60000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 30;
+
+function rateLimit(req, res, next) {
+  const ip = req.ip || req.connection.remoteAddress;
+  const now = Date.now();
+
+  if (!apiRateLimits.has(ip)) {
+    apiRateLimits.set(ip, []);
+  }
+
+  const timestamps = apiRateLimits.get(ip);
+  // Remove timestamps outside the current window
+  const recentTimestamps = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
+
+  if (recentTimestamps.length >= RATE_LIMIT_MAX_REQUESTS) {
+    return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+  }
+
+  recentTimestamps.push(now);
+  apiRateLimits.set(ip, recentTimestamps);
+  next();
+}
+
+// ── Cache Control Middleware for HTML ──
+app.use((req, res, next) => {
+  if (req.path.endsWith('.html') || req.path === '/') {
+    res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+  }
+  next();
+});
+
 // Serve frontend
-app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static(path.join(__dirname, '..', 'public'), {
+  maxAge: '1d',
+  etag: true,
+  lastModified: true
+}));
 
 // File upload config
 const storage = multer.memoryStorage();
@@ -226,7 +268,7 @@ app.post('/api/generate-pdf', async (req, res) => {
 // ══════════════════════════════════════════════
 
 // Save a single chat message
-app.post('/api/chat', (req, res) => {
+app.post('/api/chat', rateLimit, (req, res) => {
   try {
     const { sessionId, role, content, attachment } = req.body;
     if (!sessionId || !role || !content) {
@@ -432,6 +474,72 @@ app.get('/api/auth/sessions', requireAuth, (req, res) => {
     const sessions = db.getUserSessions(req.userId);
     res.json(sessions);
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ══════════════════════════════════════════════
+// ── USER STATE — full session persistence ──
+// ══════════════════════════════════════════════
+
+// Save full user state (step position, selections, preferences)
+app.post('/api/user-state', requireAuth, (req, res) => {
+  try {
+    const stateData = req.body;
+    if (!stateData) return res.status(400).json({ error: 'State data required' });
+    db.saveUserState(req.userId, stateData);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Save state error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Load full user state
+app.get('/api/user-state', requireAuth, (req, res) => {
+  try {
+    const userState = db.getUserState(req.userId);
+    if (!userState) return res.json({ exists: false });
+
+    // Also load the tax data for the user's active session
+    let taxData = null;
+    if (userState.sessionId) {
+      taxData = db.loadTaxData(userState.sessionId);
+    }
+
+    // Also load chat history
+    let chatHistory = [];
+    if (userState.sessionId) {
+      chatHistory = db.getChatHistory(userState.sessionId);
+    }
+
+    res.json({
+      exists: true,
+      state: userState,
+      taxData: taxData,
+      chatHistory: chatHistory
+    });
+  } catch (err) {
+    console.error('Load state error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Save tax data WITH auth (links to user account)
+app.post('/api/user-tax-data', requireAuth, (req, res) => {
+  try {
+    const { sessionId, data } = req.body;
+    if (!sessionId || !data) return res.status(400).json({ error: 'sessionId and data required' });
+
+    // Save the tax data
+    db.saveTaxData(sessionId, data);
+
+    // Link session to user
+    db.linkSessionToUser(sessionId, req.userId);
+
+    res.json({ success: true, sessionId });
+  } catch (err) {
+    console.error('Save user tax data error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });

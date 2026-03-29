@@ -1,0 +1,677 @@
+/**
+ * Tax Advisor Pro - Shared Styles
+ * Global design tokens, typography, and base component styles
+ * All pages should include this file for consistent branding and functionality
+ */
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 1. FONT IMPORTS & PRELOAD */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@500;600;700;800&display=swap');
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 2. CSS RESET & BASE STYLES */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 3. DESIGN TOKENS (CSS CUSTOM PROPERTIES) */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ─── Colors: Primary (Navy) ─── */
+  --primary: #0d3b66;
+  --primary-light: #1a5276;
+  --primary-dark: #092847;
+
+  /* ─── Colors: Accent (Gold) ─── */
+  --accent: #c9a84c;
+  --accent-light: #dab95e;
+  --accent-dark: #b08f3a;
+
+  /* ─── Colors: Status ─── */
+  --success: #0f5132;
+  --success-light: #e8f5ef;
+  --danger: #b03a2e;
+  --danger-light: #e74c3c;
+  --warning: #d4a017;
+  --warning-light: #fef9e7;
+  --info: #0d3b66;
+  --info-light: #e8eff8;
+
+  /* ─── Colors: Backgrounds ─── */
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --surface-alt: #fafbfc;
+
+  /* ─── Colors: Text & Borders ─── */
+  --text: #1a1f36;
+  --text-muted: #5e6a82;
+  --border: #dce1e8;
+  --border-light: #e8ecf1;
+
+  /* ─── Border Radius ─── */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ─── Shadows ─── */
+  --shadow-xs: 0 1px 2px rgba(13, 59, 102, 0.04);
+  --shadow-sm: 0 2px 8px rgba(13, 59, 102, 0.06);
+  --shadow-md: 0 4px 16px rgba(13, 59, 102, 0.08);
+  --shadow-lg: 0 8px 32px rgba(13, 59, 102, 0.10);
+  --shadow-glow: 0 0 20px rgba(201, 168, 76, 0.25);
+
+  /* ─── Typography ─── */
+  --font-heading: 'Plus Jakarta Sans', 'Noto Sans Arabic', sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Noto Sans Arabic', sans-serif;
+
+  /* ─── Transitions ─── */
+  --transition-fast: 0.18s ease;
+  --transition-normal: 0.25s ease;
+}
+
+/* ─── Dark Mode Overrides ─── */
+[data-theme='dark'] {
+  --primary: #1a5276;
+  --primary-light: #2a7fa8;
+  --primary-dark: #0d3b66;
+
+  --accent: #dab95e;
+  --accent-light: #ecc976;
+  --accent-dark: #b08f3a;
+
+  --bg: #0f1419;
+  --surface: #1a1f2e;
+  --surface-alt: #242b3a;
+
+  --text: #e8ecf1;
+  --text-muted: #a0aab8;
+  --border: #3a4251;
+  --border-light: #4a5261;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 4. BODY & TYPOGRAPHY */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+h2 { font-size: 2rem; margin-bottom: 0.875rem; }
+h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+h4 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+h5 { font-size: 1.125rem; margin-bottom: 0.5rem; }
+h6 { font-size: 1rem; margin-bottom: 0.5rem; }
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-light);
+}
+
+::selection {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 5. SHARED NAVIGATION STYLES */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.shared-nav {
+  background: var(--primary-dark);
+  border-bottom: 3px solid var(--accent);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(13, 59, 102, 0.18);
+}
+
+.shared-nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* Logo */
+.shared-nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 19px;
+  color: #ffffff;
+  white-space: nowrap;
+  letter-spacing: -0.3px;
+  font-family: var(--font-heading);
+}
+
+.shared-nav-icon {
+  font-size: 24px;
+}
+
+.shared-nav-text {
+  display: none;
+}
+
+/* Navigation Links */
+.shared-nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  flex: 1;
+}
+
+.shared-nav-links a {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+  opacity: 1;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.shared-nav-links a:hover {
+  opacity: 0.7;
+}
+
+.shared-nav-links a.nav-link-active {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.shared-nav-links a.nav-link-active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* Right Section */
+.shared-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+}
+
+.shared-nav-badge {
+  background: rgba(201, 168, 76, 0.15);
+  color: var(--accent);
+  padding: 5px 16px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  letter-spacing: 0.3px;
+}
+
+/* User Greeting */
+.shared-nav-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-user-name {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.nav-user-link {
+  text-decoration: none;
+}
+
+.nav-user-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: var(--primary-dark);
+  font-size: 14px;
+  font-weight: 800;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-user-avatar:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(201, 168, 76, 0.4);
+}
+
+/* Language Toggle Button */
+.shared-nav-lang-toggle {
+  background: transparent;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.shared-nav-lang-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Hamburger Menu (Hidden by default) */
+.shared-nav-hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 6px;
+  transition: opacity var(--transition-fast);
+}
+
+.shared-nav-hamburger:hover {
+  opacity: 0.7;
+}
+
+.shared-nav-hamburger svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Mobile Menu (Hidden by default) */
+.shared-nav-mobile-menu {
+  display: none;
+  padding: 16px 32px;
+  background: var(--primary);
+  border-top: 1px solid rgba(201, 168, 76, 0.2);
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shared-nav-mobile-menu.shared-nav-mobile-menu-open {
+  display: flex;
+}
+
+.shared-nav-mobile-menu a {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.shared-nav-mobile-menu a:last-of-type {
+  border-bottom: none;
+}
+
+.shared-nav-mobile-menu a.nav-link-active {
+  color: var(--accent);
+}
+
+.shared-nav-mobile-lang {
+  background: var(--accent);
+  color: var(--primary-dark);
+  border: none;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  margin-top: 12px;
+}
+
+.shared-nav-mobile-lang:hover {
+  background: var(--accent-light);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 6. RESPONSIVE NAVIGATION (Tablet & Mobile) */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .shared-nav-container {
+    padding: 0 16px;
+    gap: 16px;
+  }
+
+  .shared-nav-logo {
+    gap: 8px;
+    font-size: 16px;
+  }
+
+  .shared-nav-icon {
+    font-size: 20px;
+  }
+
+  .shared-nav-links {
+    display: none;
+  }
+
+  .shared-nav-hamburger {
+    display: block;
+  }
+
+  .shared-nav-badge {
+    display: none;
+  }
+
+  .nav-user-name {
+    display: none;
+  }
+
+  .shared-nav-lang-toggle {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .shared-nav-container {
+    height: 56px;
+    padding: 0 12px;
+    gap: 12px;
+  }
+
+  .shared-nav-logo {
+    font-size: 14px;
+    gap: 6px;
+  }
+
+  .shared-nav-icon {
+    font-size: 18px;
+  }
+
+  .shared-nav-lang-toggle {
+    display: none;
+  }
+
+  .shared-nav-right {
+    gap: 8px;
+  }
+
+  .shared-nav-mobile-menu {
+    padding: 12px 16px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 7. UTILITY CLASSES */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.hidden {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-ar {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir='rtl'] .text-ar {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir='ltr'] .text-ar {
+  direction: rtl;
+  text-align: right;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 8. ACCESSIBILITY */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 9. LOADING SPINNER */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.page-loading {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(13, 59, 102, 0.1);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 10. BACK TO TOP BUTTON */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.back-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 48px;
+  height: 48px;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-fast);
+  z-index: 999;
+}
+
+.back-to-top:hover {
+  background: var(--primary-light);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(13, 59, 102, 0.15);
+}
+
+.back-to-top.visible {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 11. PRINT STYLES */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+@media print {
+  .shared-nav,
+  .back-to-top,
+  .shared-nav-hamburger,
+  .shared-nav-lang-toggle,
+  .chatbot,
+  .cookie-banner,
+  [hidden] {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  a {
+    color: #0d3b66;
+    text-decoration: underline;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  p {
+    page-break-inside: avoid;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 12. COMMON FORM ELEMENTS */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  cursor: pointer;
+  font-family: var(--font-body);
+  border: none;
+  transition: all var(--transition-fast);
+}
+
+button:disabled,
+input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input,
+textarea,
+select {
+  font-family: var(--font-body);
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  transition: all var(--transition-fast);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 59, 102, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 13. RESPONSIVE BASE ADJUSTMENTS */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+  h4 { font-size: 1.125rem; }
+
+  body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.125rem; }
+  h4 { font-size: 1rem; }
+}

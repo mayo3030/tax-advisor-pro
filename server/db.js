@@ -85,6 +85,20 @@ async function init() {
       created_at TEXT DEFAULT (datetime('now'))
     )
   `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS user_state (
+      user_id TEXT PRIMARY KEY,
+      session_id TEXT NOT NULL,
+      current_step INTEGER DEFAULT 0,
+      filing_status TEXT DEFAULT '',
+      deduction_type TEXT DEFAULT 'standard',
+      selected_credits TEXT DEFAULT '{}',
+      guide_progress TEXT DEFAULT '{}',
+      last_page TEXT DEFAULT 'index.html',
+      updated_at TEXT DEFAULT (datetime('now')),
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+  `);
 
   persist();
   // Auto-save every 30 seconds
@@ -263,5 +277,33 @@ module.exports = {
     if (!result.length || !result[0].values.length) return null;
     const r = result[0].values[0];
     return { name: r[0], type: r[1], base64: r[2] };
+  },
+
+  saveUserState(userId, stateData) {
+    const exists = db.exec(`SELECT user_id FROM user_state WHERE user_id = ?`, [userId]);
+    if (!exists.length || !exists[0].values.length) {
+      db.run(`INSERT INTO user_state (user_id, session_id, current_step, filing_status, deduction_type, selected_credits, guide_progress, last_page) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [userId, stateData.sessionId || '', stateData.currentStep || 0, stateData.filingStatus || '', stateData.deductionType || 'standard', JSON.stringify(stateData.selectedCredits || {}), JSON.stringify(stateData.guideProgress || {}), stateData.lastPage || 'index.html']);
+    } else {
+      db.run(`UPDATE user_state SET session_id = ?, current_step = ?, filing_status = ?, deduction_type = ?, selected_credits = ?, guide_progress = ?, last_page = ?, updated_at = datetime('now') WHERE user_id = ?`,
+        [stateData.sessionId || '', stateData.currentStep || 0, stateData.filingStatus || '', stateData.deductionType || 'standard', JSON.stringify(stateData.selectedCredits || {}), JSON.stringify(stateData.guideProgress || {}), stateData.lastPage || 'index.html', userId]);
+    }
+    persist();
+  },
+
+  getUserState(userId) {
+    const result = db.exec(`SELECT session_id, current_step, filing_status, deduction_type, selected_credits, guide_progress, last_page, updated_at FROM user_state WHERE user_id = ?`, [userId]);
+    if (!result.length || !result[0].values.length) return null;
+    const r = result[0].values[0];
+    return {
+      sessionId: r[0],
+      currentStep: r[1],
+      filingStatus: r[2],
+      deductionType: r[3],
+      selectedCredits: JSON.parse(r[4] || '{}'),
+      guideProgress: JSON.parse(r[5] || '{}'),
+      lastPage: r[6],
+      updatedAt: r[7]
+    };
   }
 };

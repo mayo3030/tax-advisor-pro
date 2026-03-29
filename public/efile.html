@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="shared-styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IRS E-Filing Integration - Tax Advisor Pro</title>
     <link rel="stylesheet" href="/css/style.css">
@@ -681,14 +682,7 @@
     </style>
 </head>
 <body>
-    <!-- Topbar -->
-    <div class="topbar">
-        <div class="topbar-logo">📊 Tax Advisor Pro</div>
-        <div class="topbar-right">
-            <div class="user-info" id="userInfo">Loading...</div>
-            <button class="lang-toggle" id="langToggle">العربية</button>
-        </div>
-    </div>
+    <!-- Navigation injected by shared-nav.js -->
 
     <!-- Main Container -->
     <div class="container">
@@ -1732,6 +1726,12 @@ Generated: ${new Date().toLocaleDateString()}
             updateAllText();
         });
     </script>
+<script src="shared-nav.js"></script>
+<script src="shared-features.js"></script>
+<script src="guide-glossary.js"></script>
+<script src="guide-interactive.js"></script>
+<script src="guide-progress.js"></script>
 <script src="guide-chat.js"></script>
+<script src="auto-persist.js"></script>
 </body>
 </html>

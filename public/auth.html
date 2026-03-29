@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="shared-styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tax Advisor Pro — Login / Signup | مستشار الضرائب</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -1015,10 +1016,25 @@
             localStorage.setItem('userId', data.user.id);
             localStorage.setItem('userEmail', data.user.email);
             localStorage.setItem('userLanguage', data.user.language || 'en');
+            localStorage.setItem('taxPro_userData', JSON.stringify(data.user));
           }
           if (rememberMe) {
             localStorage.setItem('rememberEmail', email);
           }
+
+          // Restore user's session from server
+          try {
+            const stateResp = await fetch('/api/user-state', {
+              headers: { 'Authorization': 'Bearer ' + data.token }
+            });
+            if (stateResp.ok) {
+              const stateData = await stateResp.json();
+              if (stateData.exists && stateData.state.sessionId) {
+                localStorage.setItem('taxSessionId', stateData.state.sessionId);
+              }
+            }
+          } catch(e) { console.warn('Could not restore session:', e); }
+
           setSuccess(loginBtn);
         } else {
           const error = await response.json();
@@ -1087,7 +1103,19 @@
             localStorage.setItem('userEmail', data.user.email);
             localStorage.setItem('userLanguage', data.user.language || language);
             localStorage.setItem('userName', data.user.firstName + ' ' + data.user.lastName);
+            localStorage.setItem('taxPro_userData', JSON.stringify(data.user));
           }
+
+          // Link current session to new account
+          const currentSession = localStorage.getItem('taxSessionId');
+          if (currentSession) {
+            fetch('/api/auth/link-session', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + data.token },
+              body: JSON.stringify({ sessionId: currentSession })
+            }).catch(() => {});
+          }
+
           setSuccess(signupBtn);
         } else {
           const error = await response.json();
@@ -1121,5 +1149,8 @@
       document.getElementById('rememberMe').checked = true;
     }
   </script>
+<script src="shared-nav.js"></script>
+<script src="shared-features.js"></script>
+<script src="auto-persist.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="shared-styles.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tax Guides Library — مكتبة الأدلة الضريبية | Tax Advisor Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@300;400;700;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -321,17 +322,7 @@ body { font-family: var(--font-body); background: var(--cream); color: var(--tex
 </head>
 <body>
 
-<!-- TOPBAR -->
-<div class="topbar">
-  <div class="topbar-left">
-    <span class="logo">⚖️</span>
-    <h1>Tax Advisor Pro</h1>
-  </div>
-  <div class="topbar-right">
-    <a href="guide.html" class="topbar-btn outline">📖 Main Guide</a>
-    <a href="index.html" class="topbar-btn gold">← Back to App</a>
-  </div>
-</div>
+<!-- Navigation injected by shared-nav.js -->
 
 <!-- HERO -->
 <header class="hero">
@@ -490,6 +481,12 @@ function filterStates(query) {
   });
 }
 </script>
+<script src="shared-nav.js"></script>
+<script src="shared-features.js"></script>
+<script src="guide-glossary.js"></script>
+<script src="guide-interactive.js"></script>
+<script src="guide-progress.js"></script>
 <script src="guide-chat.js"></script>
+<script src="auto-persist.js"></script>
 </body>
 </html>
